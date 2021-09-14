@@ -79,8 +79,9 @@ def lap_qd_ktra(request):
             # '<noi_nhan>': noi_nhan[nnt.cqt],
             'path': settings.MEDIA_ROOT,
         }
-        QD = process_data.lap_qd_ktra(tt_qd, doan_ktra)
-        file_path = [QD.to_trinh(), QD.qd_ktra(), QD.qd_gsat()]
+        # QD = process_data.lap_qd_ktra(tt_qd, doan_ktra)
+        # file_path = [QD.to_trinh(), QD.qd_ktra(), QD.qd_gsat()]
+        file_path = [os.path.join(settings.STATICFILES_DIRS[0], "media/to_trinh.docx")]
         zip_path = os.path.join(settings.MEDIA_ROOT, tt_qd["<mst>"] + "-" + str(uuid.uuid4()) + ".zip")
         # writing files to a zipfile
         with ZipFile(zip_path,'w') as zip:
