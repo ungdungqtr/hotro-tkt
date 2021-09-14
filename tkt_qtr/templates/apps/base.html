@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <title>{% block title %}CỤC THUẾ QUẢNG TRỊ - HỆ THỐNG ỨNG DỤNG HỖ TRỢ CÁN BỘ THUẾ{% endblock title %}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/all.css' %}">
+    <link rel="icon" type="image/ico" href="{% static 'images/logo.png' %}">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <script src="{% static 'js/jquery-3.5.1.min.js'%}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js'%}"></script>
+
+</head>
+<body>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container"> 
+            {% comment %} <div class="col-md-10 col-sm-8 text-left">   {% endcomment %}
+                {% comment %} <span class="sr-only">               {% endcomment %}
+                <h1><img src={% static 'images/logo.png' %} alt="logo" class="logo" style="max-height: 70px;">
+                    Cục Thuế tỉnh Quảng Trị</h1>
+                    <p>MINH BẠCH, CHUYÊN NGHIỆP, LIÊM CHÍNH VÀ ĐỔI MỚI </p>
+                {% comment %} </span>           {% endcomment %}
+            {% comment %} </div>             {% endcomment %}
+        </div>
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark" id="navbar_top">
+        <span class="navbar-brand mb-0 h1"><span class="sr-only">Navbar</span></span>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'apps:apps_base' %}"> <i class="fas fa-home" style="font-size: 20px;"></i> <span class="sr-only">(current)</span></a>
+                </li>
+                {% comment %} <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li> {% endcomment %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Ứng dụng nội bộ
+                    </a>
+                    <div class="dropdown-menu fade-down" aria-labelledby="navbarDropdown">
+                        {% comment %} Xác minh hóa đơn {% endcomment %}
+                        <a class="dropdown-item" href="{% url 'apps:xmhd_upload' %}">Lập phiếu Xác minh hóa đơn</a>
+                        {% comment %} <a class="dropdown-item" href="{% url 'apps:xmhd:xmhd_upload' %}">LINK_1</a> {% endcomment %}
+                        <div class="dropdown-divider"></div>
+                        {% comment %} Kiểm tra NPT {% endcomment %}
+                        <a class="dropdown-item" href={% url 'apps:ktnpt_upload' %}>Đối chiếu Người phụ thuộc</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Ứng dụng TCT
+                    </a>
+                    <div class="dropdown-menu fade-down" aria-labelledby="navbarDropdown">
+                        {% comment %} Thuế điện tử {% endcomment %}
+                        <a class="dropdown-item" href="http://thuedientu.tct.vn/" target="_blank">Thuế điện tử</a>
+                        {% comment %} Quản lý ấn chỉ {% endcomment %}
+                        <a class="dropdown-item" href="http://webqlac.qtr.tct.vn/QLACWeb/qlac" target="_blank">Quản lý ấn chỉ</a>
+                        {% comment %} Kiểm tra nội bộ {% endcomment %}
+                        <a class="dropdown-item" href="http://webktnb.tct.vn/ktrr/" target="_blank">Hệ thống Kiểm tra nội bộ</a>
+                        <div class="dropdown-divider"></div>
+                        {% comment %} Báo cáo tài chính {% endcomment %}
+                        <a class="dropdown-item" href="http://webbctc.qtr.tct.vn/bctc/" target="_blank">Báo cáo tài chính Doanh nghiệp</a>
+                        {% comment %} TTR {% endcomment %}
+                        <a class="dropdown-item" href="http://webttr.qtr.tct.vn/TTR/log.do" target="_blank">Thanh tra Kiểm tra TTR</a>
+                        {% comment %} TPR {% endcomment %}
+                        <a class="dropdown-item" href="http://webtpr.tct.vn/TPR/index.do" target="_blank">Phân tích rủi ro TPR</a>
+                    </div>
+                </li>
+                {% comment %} <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                </li> {% endcomment %}
+            </ul>
+        </div>
+    </nav>
+    {% block content %}
+    {% endblock content %}
+    {% block footer %}
+        <div style="padding-top: 100px"></div>
+    {% endblock footer %}
+</body>
+<style>
+	@media all and (min-width: 992px) {
+	.navbar .nav-item .dropdown-menu{ display:block; opacity: 0;  visibility: hidden; transition:.3s; margin-top:0;  }
+	.navbar .dropdown-menu.fade-down{ top:80%; transform: rotateX(-75deg); transform-origin: 0% 0%; }
+	.navbar .dropdown-menu.fade-up{ top:180%;  }
+	.navbar .nav-item:hover .dropdown-menu{ transition: .3s; opacity:1; visibility:visible; top:100%; transform: rotateX(0deg); }
+	}
+    .jumbotron {
+        background-color: #238AE6;
+        margin-bottom: 0;
+        padding: 30px 0 20px;
+        border-bottom: 1px solid #117edd;
+        background-image: url({% static 'images/pattern.png' %});
+    }
+    .jumbotron h1 {
+        text-shadow: 3px 4px 0 #238AE6, 7px 8px 0 rgba(0,0,0,0.15);
+        letter-spacing: 3px;
+        line-height: 1;
+        font-family: Sitka Heading, Cambria, Segoe UI Black,Georgia,"Times New Roman",Times,serif;
+        font-size: 60px;
+        font-weight: bold;
+        color: white;
+    }
+    .jumbotron p {
+        color: white;
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        padding-left: 95px;
+        font-size: 20px;
+        font-weight: lighter;
+    }
+    #navbar_top {
+        background-color: #238AE6;
+        background-image: url({% static 'images/pattern.png' %});
+        border-top: 1px solid #117edd;
+        border-bottom: 1px solid #2883d3;
+    }
+    #navbarDropdown {color: #c4dcf2}
+    #navbarDropdown:hover {color: white}
+    .dropdown-item:hover {background-color: #238AE6; color: white; }
+    .navbar .nav-item .nav-link {color: #c4dcf2}
+    .navbar .nav-item:hover .nav-link{ color: white; }
+    {% comment %} .navbar .nav-item .nav-link:hover {color: #red} {% endcomment %}
+    {% block style %}
+    {% endblock style %}
+</style>
+<script>
+    if ($(window).width() > 992) {
+      $(window).scroll(function(){  
+        if ($(this).scrollTop() > 40) {
+            $('#navbar_top').addClass("fixed-top");
+            // add padding top to show content behind navbar
+            $('body').css('padding-top', $('.navbar').outerHeight() + 'px');
+        }else{
+            $('#navbar_top').removeClass("fixed-top");
+            // remove padding top from body
+            $('body').css('padding-top', '0');
+          }   
+      });
+    }
+    {% block script %}
+    {% endblock script %}
+</script>
+</html>

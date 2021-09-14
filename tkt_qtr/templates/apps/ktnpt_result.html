@@ -1,0 +1,114 @@
+{% extends 'apps/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fruid">
+  <div style="font-weight: bold;">
+    <h2 class="text-center"style="padding-top: 20px">Kết quả đối chiếu</h2>
+    <div class="row" style="padding-top: 20px">
+      <div class="col-sm-4"></div>
+      <div class="col-sm-1" style="padding-left: 0; padding-right: 0;">Cơ quan chi trả:</div>
+      <div class="col-sm-7">{{cqct.cqct}}</div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4"></div>
+      <div class="col-sm-1" style="padding-left: 0; padding-right: 0;">Mã số thuế:</div>
+      <div class="col-sm-7">{{cqct.mst}}</div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4"></div>
+      <div class="col-sm-1" style="padding-left: 0; padding-right: 0;">Kỳ kê khai:</div>
+      <div class="col-sm-7">{{cqct.kyKK}}</div>
+    </div>
+  </div>
+  <div style="width: 98%; margin: auto;">
+    <table class='table table-bordered table-sm table-hover' style="font-size:14px">
+      <tbody>
+      <thead class="thead-light">
+        <tr>
+          <th id='npt_h' rowspan="2">STT</th>
+          <th id='npt_h' rowspan="2">MST NNT</th>
+          <th id='npt_h' rowspan="2">Tên NNT</th>
+          <th id='npt_h' rowspan="2">MST NPT</th>
+          <th id='npt_h' rowspan="2">Tên NPT</th>
+          <th id='npt_h' colspan="3">Thông tin trên tờ khai</th>
+          <th id='npt_h' rowspan="2">Số tháng<br>giảm trừ</th>
+          <th id='npt_h' rowspan="2">Lỗi</th>
+          <th id='npt_h' rowspan="2">Tuổi<br>NPT</th>
+          <th id='npt_h' colspan="3">Thông tin trên TMS</th>
+        </tr>
+        <tr>
+          <th id='npt_h'>Ngày sinh</th>
+          <th id='npt_h'>QH đối với<br>ĐTNT</th>
+          <th id='npt_h'>Thời gian<br>giảm trừ</th>
+          <th id='npt_h'>Ngày sinh</th>
+          <th id='npt_h'>QH đối với<br>ĐTNT</th>
+          <th id='npt_h'>Thời gian<br>giảm trừ</th>
+        </tr>
+        <div style="padding-top: 30px"></div>
+      </thead>
+      {% if context.d %}
+      {% for i in context.d %}
+        <tr>
+          <td>{{forloop.counter}}</td>
+          <td class="bg-danger" style="color:white;">{{i.MST_NNT}}</td>
+          <td>{{i.NNT}}</td>
+          <td class="bg-danger" style="color:white;">{{i.MST_NPT}}</td>
+          <td>{{i.NPT}}</td>
+          <td class="bg-success">{{i.birth_date}}</td>
+          <td class="bg-primary">
+            {% if i.relationship == '01' %}
+              Con
+            {% endif %}
+            {% if i.relationship == '02' %}
+              Vợ/Chồng
+            {% endif %}
+            {% if i.relationship == '03' %}
+              Cha/Mẹ
+            {% endif %}
+            {% if i.relationship == '04' %}
+              Khác
+            {% endif %}
+          </td>
+          <td class="bg-warning">{{i.month_start}} - {{i.month_end}}</td>
+          <td>{{i.tg_giam_tru}}</td>
+          <td>
+          {% for e in i.ktra_loi %}
+            {% if 'đăng ký' in e %}
+              <p class="text-danger" id="error"><b>{{e}}</b></p>
+            {% endif %}
+            {% if 'ngày sinh' in e %}
+              <p class="text-success" id="error"><b>{{e}}</b></p>
+            {% endif %}
+            {% if 'tuổi' in e %}
+              <p class="text-success" id="error"><b>{{e}}</b></p>
+            {% endif %}
+            {% if 'quan hệ' in e %}
+              <p class="text-primary" id="error"><b>{{e}}</b></p>
+            {% endif %}
+            {% if 'thời gian' in e %}
+              <p class="text-warning" id="error"><b>{{e}}</b></p>
+            {% endif %}          
+          {% endfor %}
+          </td>
+          {% comment %} <td>{{i.ktra_loi}}</td> {% endcomment %}
+          <td>{{i.tuoi}}</td>
+          <td class="bg-success">{{i.ngay_sinh}}</td>
+          <td class="bg-primary">{{i.quan_he}}</td>
+          <td class="bg-warning">{% for t in i.giam_tru_kk %}{{t}}<br>{% endfor %}</td>
+        </tr>
+      {% endfor %}
+      {% endif %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock content %}
+{% block style %}
+#npt_h {
+  vertical-align: middle;
+  text-align: center;
+}
+#error {
+  margin-bottom:0;
+}
+{% endblock style %}

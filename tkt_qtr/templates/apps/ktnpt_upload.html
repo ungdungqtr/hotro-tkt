@@ -1,0 +1,72 @@
+{% extends 'apps/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container mt-5">    
+		<h2>Đối chiếu thông tin người phụ thuộc</h2>
+		<p style="padding-top: 6px;">
+		Ứng dụng hỗ trợ cán bộ thuế đối chiếu thông tin đăng ký người phụ thuộc giữa Bảng kê thông tin người phụ thuộc giảm trừ gia cảnh
+		(Phụ lục 03, tờ khai quyết toán TNCN - mẫu 05-3/BK-QTT-TNCN) và thông tin người phụ thuộc đã đăng ký trong hệ thống TMS.<br>
+		<p style="padding-top: 6px;">
+		<b><u>Hướng dẫn:</b></u><br>
+		 - Tải tờ khai quyết toán thuế thu nhập cá nhân (mẫu 05/QTT-TNCN) của NNT tại <a href="http://thuedientu.tct.vn" target="_blank">ứng dụng thuế điện tử</a> .<br>
+		 - Kết xuất danh sách người phụ thuộc từ hệ thống TMS <a href="{% static 'media/HD_ket_xuat_NPT.pdf' %}" target="_blank"><u>(hướng dẫn tại đây)</u></a>.<br>
+		 - Tải danh sách và tờ khai lên ứng dụng.</p>
+		<form action="#" method="POST" enctype="multipart/form-data">
+		{% csrf_token %}
+		<div class="row">
+			<div class="col-3">
+				<p style="padding-left: 0%"><b>Danh sách người phụ thuộc:</b></p>
+			</div>
+			<div class="col-6">
+				<div class="custom-file mb-3">
+					<input type="file" class="custom-file-input" id="customFile1" name="myfile1" accept=".xlsx, .xls" required>
+					<label class="custom-file-label"  id="custom-file-label-1"  for="customFile1"></label>
+				</div>
+			</div>
+			<div class="col-4">
+				
+			</div>
+		</div>
+        {% comment %} Upload file xml {% endcomment %}
+        <div class="row">
+			<div class="col-3">
+				<p style="padding-left: 0%"><b>Tờ khai quyết toán:</b></p>
+			</div>
+			<div class="col-6">
+				<div class="custom-file mb-3">
+					<input type="file" class="custom-file-input" id="customFile2" name="myfile2" accept=".xml" required>
+					<label class="custom-file-label" id="custom-file-label-2" for="customFile2"></label>
+				</div>
+			</div>
+			<div class="col-4">
+				
+			</div>
+		</div>
+		<div class="mt-2">
+		  <center><button type="submit" class="btn btn-primary">UPLOAD <i class="fa fa-upload" aria-hidden="true"></i></button></center>
+		</div>
+		</form>
+		<div class="mt-2" style="color:red; font-weight: bold;">
+		{% for error in errors %}
+			<p>- {{error}}</p>
+		{% endfor %}
+		</div>		
+	</div>
+{% endblock content %}
+{% block script %}
+	$('#customFile1').on('change', function(){ 
+		files = $(this)[0].files; 
+		name = ''; 
+		for(var i = 0; i < files.length; i++){ 
+			name += files[i].name + (i != files.length-1 ? ", " : ""); 
+		} 
+	$("#custom-file-label-1").html(name); });
+
+	$('#customFile2').on('change', function(){ 
+		files = $(this)[0].files; 
+		name = ''; 
+		for(var i = 0; i < files.length; i++){ 
+			name += files[i].name + (i != files.length-1 ? ", " : ""); 
+		} 
+	$("#custom-file-label-2").html(name); });
+{% endblock script %}

@@ -1,235 +1,135 @@
-from django.shortcuts import render
-from django.http import JsonResponse, HttpResponse, Http404
-from django.core.exceptions import ObjectDoesNotExist
-from django.conf import settings
-import json
-
-from .forms import *
-from . import process_data
-
 import os
-from zipfile import ZipFile
-import uuid
+import pandas as pd
+import json
+from datetime import datetime
+import time
 
+from django.conf import settings
+from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
+from django.http import Http404
 
+from . import xmhd, kt_npt
+from . import process_data
 # Create your views here.
 def index(request):
-    return render(request, 'tkt_qtr/base.html')
+    return render(request, 'apps/base.html')
 
-# Lập quyết định kiểm tra
-def lap_qd_ktra(request):
-    ky_ten = {
-        'PHÓ CỤC TRƯỞNG' : 'KT.CỤC TRƯỞNG',
-        'CỤC TRƯỞNG': 'CỤC TRƯỞNG'
-    }
-    noi_nhan = {
-        'Cục Thuế tỉnh Quảng Trị': 'Phòng KK&KTT',
-        'CCT KV Đông Hà - Cam Lộ': 'CCT KV Đông Hà - Cam Lộ',
-        'CCT KV Triệu Hải': 'CCT KV Triệu Hải',
-        'CCT KV Vĩnh Linh - Gio Linh': 'CCT KV Vĩnh Linh - Gio Linh',
-        'CCT huyện Đakrông': 'CCT huyện Đakrông',
-        'CCT huyện Hướng Hóa': 'CCT huyện Hướng Hóa',
-        'CCT huyện Cồn Cỏ': 'CCT huyện Cồn Cỏ'
-    }
+def upload_file_url(myfile):
+    fs = FileSystemStorage()
+    filename = fs.save(myfile.name, myfile)
+    uploaded_file_url = os.path.join(settings.MEDIA_ROOT, filename)
+    return uploaded_file_url
+    
+################################# ỨNG DỤNG LẬP PHIẾU XÁC MINH HÓA ĐƠN #################################
+# Mô tả ứng dụng:Cán bộ lập bảng kê hóa đơn cần xác minh theo mẫu cho sẵn, ứng dụng kết xuất theo mẫu #
+# xác minh hóa đơn theo từng đơn vị                                                                   #
+# Thời gian hoàn thành: 3/2020                                                                        #
+# Thời gian triển khai: 6/2021                                                                        #
+# Nhóm tác giả: Nguyễn Đăng Nhật Tâm, ?, ?                                #
+#######################################################################################################
+
+def xmhd_upload(request):
+    if request.method == 'POST' and request.FILES['myfile']:
+        myfile = request.FILES['myfile']
+        """ fs = FileSystemStorage()
+        filename = fs.save(myfile.name, myfile)
+        uploaded_file_url = os.path.join(settings.MEDIA_ROOT, filename)
+        request.session['uploaded_file_url'] = uploaded_file_url """
+        request.session['uploaded_file_url'] = upload_file_url(myfile)
+        errors = process_data.xmhd(request.session['uploaded_file_url']).check_data_valid()
+        if errors == True:
+            return HttpResponseRedirect(reverse('apps:xmhd_index'))
+        else:
+            return render(request, 'apps/xmhd_upload.html', {'errors':errors})   
+    return render(request, 'apps/xmhd_upload.html')
+
+def xmhd_index(request):
+    uploaded_file_url = request.session['uploaded_file_url']
+    index = process_data.xmhd(uploaded_file_url)
+    grp = index.grp_data()
+    dvmh = index.dvmh()
+    dvbh = {}
+    for k, v in grp:
+        v = v.sort_values(by='ngay').reset_index(drop=True)
+        for i in range(len(v)):
+            # Convert datetime to string => do to_join đã đổi datime thành miliseconds
+            v.ngay[i] = v.ngay[i].strftime("%d/%m/%Y")  
+            # Định dạng số với dấu chấm (format number with commas)
+            v.doanh_so[i] = "{:,}".format(v.doanh_so[i]).replace(",",".")
+            if pd.isnull(v.mau[i]):
+                v.mau[i] = ''
+        # convert dataframe to html table
+        json_records = v.to_json(orient ='records')
+        data = [] 
+        data = json.loads(json_records) 
+        dvbh.update({k: data})
     if request.method == 'POST':
-        # query mst
-        mst = request.POST['mst']
-        nnt = NNT.objects.get(mst=mst)
-        # query ng_giam_sat
-        ng_giam_sat = request.POST['ng_giam_sat']
-        gsat = CanBo.objects.get(ten_cb=ng_giam_sat)
-        # query ten_ld_to_trinh
-        ten_ld_to_trinh =request.POST['ten_ld_to_trinh']
-        ky_ttr = CanBo.objects.get(ten_cb=ten_ld_to_trinh)
-        # query ten_ld_qd
-        ten_ld_qd = request.POST['ten_ld_qd']
-        ky_qd = CanBo.objects.get(ten_cb=ten_ld_qd)
-
-        nt = request.POST['ngay_thang'].split("/")
-        nkt = request.POST['ngay_ktra'].split("/")              
-        thanh_vien = request.POST.getlist('thanh_vien', None)
-        cv = ['Trưởng đoàn']
-        cv.extend(["Thành viên"] * (len(thanh_vien)-1))
-        doan_ktra = {
-            "<ten_cb>" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + ": " + tv) for tv in thanh_vien],
-            "<ngach_cb>" : [CanBo.objects.get(ten_cb=tv).ngach_cb for tv in thanh_vien],
-            "<cv_doan>" : cv
-        }
-        tt_qd = { 
-            '<ngay_thang>' : "ngày      tháng " + leading_zero(nt[0], 3) + " năm " + nt[1],
-            '<nam>':nt[1],
-            '<so_qd>' : request.POST['so_qd'],
-            '<ten_dv>' : nnt.ten_nnt,# nnt(mst)['ten_nnt'],
-            '<mst>' : mst,
-            '<dia_chi>' : nnt.dia_chi,# nnt(mst)['dia_chi'],
-            "<sl_cb>" : f"{len(thanh_vien):02d}",
-            "<cb_cv>" : CanBo.objects.get(ten_cb=thanh_vien[0]).gioi_tinh + ": " + thanh_vien[0] + " - " + CanBo.objects.get(ten_cb=thanh_vien[0]).chuc_vu if thanh_vien else "",
-            '<so_nam_ktra>' : leading_zero(request.POST['so_nam_ktra'], 10),
-            '<nam_ktra>' : request.POST['nam_ktra'],
-            '<so_ngay_ktra>' : f"{int(request.POST['so_ngay_ktra']):02d}",         
-            '<ngay_ktra>' : "ngày " + nkt[0] + " tháng " + leading_zero(nkt[1], 3) + " năm " + nkt[2],
-            '<ng_giam_sat>' : gsat.gioi_tinh.lower() + " " + ng_giam_sat,
-            '<Ng_giam_sat>' : gsat.gioi_tinh + " " + ng_giam_sat,
-            '<ng_giam_sat_cv>' : gsat.chuc_vu, 
-            '<ld_to_trinh>' : ky_ttr.chuc_vu.upper(),
-            '<ten_ld_to_trinh>' : ten_ld_to_trinh,
-            '<lq_qd>' : ky_qd.chuc_vu.upper() if ky_qd.chuc_vu != 'Cục trưởng' else '',
-            '<ten_ld_qd>' : ten_ld_qd,
-            '<hinh_thuc_ky>' : ky_ten[ky_qd.chuc_vu.upper()],
-            # '<noi_nhan>': noi_nhan[nnt.cqt],
-            'path': settings.MEDIA_ROOT,
-            'path2': settings.STATICFILES_DIRS[0],
-        }
-        # QD = process_data.lap_qd_ktra(tt_qd, doan_ktra)
-        # file_path = [QD.to_trinh(), QD.qd_ktra(), QD.qd_gsat()]
-        file_path = [os.path.join(settings.STATICFILES_DIRS[0], "media/to_trinh.docx")]
-        zip_path = os.path.join(settings.MEDIA_ROOT, tt_qd["<mst>"] + "-" + str(uuid.uuid4()) + ".zip")
-        # writing files to a zipfile
-        with ZipFile(zip_path,'w') as zip:
-            # writing each file one by one
-            for path in file_path:
-                zip.write(path, os.path.basename(path))
+        kyten = {
+            'cbxm': request.POST['cbxm'].title(),
+            'tp': request.POST['tp'].title(),
+            'lanhdao': request.POST['lanhdao']
+            }
+        download_file_url = index.export_excel(kyten=kyten, grp=grp, dvmh=dvmh)
         # Full path of file
-        if os.path.exists(zip_path):
-            with open(zip_path, 'rb') as fh:
+        if os.path.exists(download_file_url):
+            with open(download_file_url, 'rb') as fh:
                 response = HttpResponse(fh.read(), content_type="application/force_download")
-                response['Content-Disposition'] = 'inline; filename=' + os.path.basename(zip_path)
+                response['Content-Disposition'] = 'inline; filename=' + os.path.basename(download_file_url)
                 return response
         # If file is not exists
         raise Http404
-    return render(request, 'tkt_qtr/lap_qd_ktra.html')
+    return render(request, 'apps/xmhd_index.html', {
+        'dvmh': dvmh,
+        'dvbh': dvbh,
+        })
 
-def leading_zero(s, max):
-    s = int(s)
-    return ('0' + str(s)) if s < max else str(s)
+############################# ỨNG DỤNG KIỂM TRA THÔNG TIN NGƯỜI PHỤ THUỘC #############################
+# Mô tả ứng dụng:Từ thông tin PL03 tờ khai QTT của tổ chức, ứng dụng kiểm tra, đối chiếu thông tin về #
+# MST ngày sinh, mối quan hệ với NNT và thời gian đăng ký giảm trừ gia cảnh giữa tờ khai của đơn vị   #
+# với dữ liệu hệ thống TMS                                                                            #
+# Thời gian thực hiện: 5/2020                                                                         #
+# Thời gian triển khai: 6/2020                                                                        #
+# Nhóm tác giả: Nguyễn Đăng Nhật Tâm, Hoàng Anh Như Ngọc, Trần Kim Chi                                #
+#######################################################################################################
 
-def nnt_thong_tin(request):
-    mst = request.GET.get('mst', None)
-    try:
-        obj = NNT.objects.get(mst=mst)
-        nnt = {'ten_nnt': obj.ten_nnt, 'dia_chi': obj.dia_chi}
-    except ObjectDoesNotExist:
-        nnt = {}
-    return JsonResponse(nnt)
+def ktnpt_upload(request):
+    if request.method == 'POST' and request.FILES['myfile1'] and request.FILES['myfile2']:
+        # save upload excel file
+        myfile1 = request.FILES['myfile1']
+        request.session['uploaded_file_url_1'] = upload_file_url(myfile1)
+        
+        # save upload xml file
+        myfile2 = request.FILES['myfile2']
+        request.session['uploaded_file_url_2'] = upload_file_url(myfile2)
+        # print(request.session['uploaded_file_url_1']) # xml file
+        # print(request.session['uploaded_file_url_2']) #exxcel file
+        # return HttpResponseRedirect(reverse('apps:ktnpt_result'))
+        errors = process_data.kt_npt([request.session['uploaded_file_url_1'],request.session['uploaded_file_url_2']]).ktra_cqt()
+        if errors == True:
+            return HttpResponseRedirect(reverse('apps:ktnpt_result'))
+        else:
+            return render(request, 'apps/ktnpt_upload.html', {'errors':errors}) 
+    return render(request, 'apps/ktnpt_upload.html')
 
-def cb_thong_tin(request):
-    ten_cb = request.GET.get('ten_cb', None)
-    try:
-        obj = CanBo.objects.get(ten_cb=ten_cb)
-        cb = {'chuc_vu': obj.chuc_vu, 'gioi_tinh': obj.gioi_tinh, 'ngach_cb': obj.ngach_cb}
-    except ObjectDoesNotExist:
-        cb = {}
-    return JsonResponse(cb)
+def ktnpt_result(request):
+    path = []
+    path.append(request.session['uploaded_file_url_1'])
+    path.append(request.session['uploaded_file_url_2'])
+    compare = process_data.kt_npt(path)
+    result = compare.kq_ktra()
 
-def mst_autocomplete(request):
-    if 'term' in request.GET:
-        mst_filter = NNT.objects.filter(mst__icontains=request.GET.get('term', None))
-        ma_so = list()
-        for nnt in mst_filter:
-            ma_so.append(nnt.mst)
-        # titles = [product.title for product in qs]
-        return JsonResponse(ma_so, safe=False)
-    return render(request, 'tkt_qtr/lap_qd_ktra.html')
-
-def cb_ten_autocomplete(request):
-    if 'term' in request.GET:
-        ten_cb_filter = CanBo.objects.filter(ten_cb__icontains=request.GET.get('term', None))
-        ten = list()
-        for cb in ten_cb_filter:
-            ten.append(cb.ten_cb)
-        # titles = [product.title for product in qs]
-        return JsonResponse(ten, safe=False)
-    return render(request, 'tkt_qtr/lap_qd_ktra.html')
-
-# Quản lý cán bộ
-
-def qly_cb(request):
-    can_bo = CanBo.objects.all()
-    return render(request, 'tkt_qtr/qly_cb.html', {'can_bo': can_bo})
-
-def them_moi_cb(request):
-    gioi_tinh_1 = request.GET.get('gioi_tinh', None)
-    ten_cb_1 = request.GET.get('ten_cb', None)
-    ngach_cb_1 = request.GET.get('ngach_cb', None)
-    chuc_vu_1 = request.GET.get('chuc_vu', None)
-
-    obj = CanBo.objects.create(
-        gioi_tinh = gioi_tinh_1,
-        ten_cb = ten_cb_1,
-        ngach_cb = ngach_cb_1,
-        chuc_vu = chuc_vu_1
-    )
-
-    user = {'id': obj.id, 'ten_cb': obj.ten_cb, 'gioi_tinh': obj.gioi_tinh, 'ngach_cb': obj.ngach_cb, 'chuc_vu': obj.chuc_vu}
-
-    return JsonResponse({'user': user})
-
-def cap_nhat_thong_tin(request):
-    id_1 = request.GET.get('id', None)
-    gioi_tinh_1 = request.GET.get('gioi_tinh', None)
-    ten_cb_1 = request.GET.get('ten_cb', None)
-    ngach_cb_1 = request.GET.get('ngach_cb', None)
-    chuc_vu_1 = request.GET.get('chuc_vu', None)
-
-    obj = CanBo.objects.get(id=id_1)
-    obj.ten_cb = ten_cb_1
-    obj.gioi_tinh = gioi_tinh_1
-    obj.ngach_cb = ngach_cb_1
-    obj.chuc_vu = chuc_vu_1
-    obj.save()
-
-    user = {'id': obj.id, 'ten_cb': obj.ten_cb, 'gioi_tinh': obj.gioi_tinh, 'ngach_cb': obj.ngach_cb, 'chuc_vu': obj.chuc_vu}
-
-    return JsonResponse({'user': user})
-
-def xoa_cb(request):
-    id_1 = request.GET.get('id', None)
-    CanBo.objects.get(id=id_1).delete()
-    return JsonResponse({'delete': True})
-
-# Danh bạ NNT
-
-def dba_nnt(request):
-    dba = NNT.objects.all()
-    return render(request, 'tkt_qtr/dba_nnt.html', {'dba': dba})
-
-def them_moi_nnt(request):
-    mst_1 = request.GET.get('mst', None)
-    ten_nnt_1 = request.GET.get('ten_nnt', None)
-    dia_chi_1 = request.GET.get('dia_chi', None)
-    cqt_1 = request.GET.get('cqt', None)
-
-    obj = NNT.objects.create(
-        mst = mst_1,
-        ten_nnt = ten_nnt_1,
-        dia_chi = dia_chi_1,
-        cqt = cqt_1
-    )
-
-    nnt = {'id': obj.id, 'mst': obj.mst, 'ten_nnt': obj.ten_nnt, 'dia_chi': obj.dia_chi, 'cqt': obj.cqt}
-
-    return JsonResponse({'nnt': nnt})
-
-def cap_nhat_nnt(request):
-    id_1 = request.GET.get('id', None)
-    ten_nnt_1 = request.GET.get('ten_nnt', None)
-    dia_chi_1 = request.GET.get('dia_chi', None)
-    cqt_1 = request.GET.get('cqt', None)
-
-    obj = NNT.objects.get(id=id_1)
-    obj.ten_nnt = ten_nnt_1
-    obj.dia_chi = dia_chi_1
-    obj.cqt = cqt_1
-    obj.save()
-
-    nnt = {'id': obj.id, 'mst': obj.mst, 'ten_nnt': obj.ten_nnt, 'dia_chi': obj.dia_chi, 'cqt': obj.cqt}
-    
-    return JsonResponse({'nnt': nnt})
-
-def xoa_nnt(request):
-    id_1 = request.GET.get('id', None)
-    NNT.objects.get(id=id_1).delete()
-    data = {'delete': True}
-
-    return JsonResponse(data)
-    
+    result['birth_date'] = result['birth_date'].dt.strftime('%d/%m/%Y')
+    result['month_start'] = result['month_start'].dt.strftime('%m/%Y')
+    result['month_end'] = result['month_end'].dt.strftime('%m/%Y')
+    # convert dataframe to html table
+    json_records = result.reset_index().to_json(orient ='records')
+    data = []
+    data = json.loads(json_records)
+    context = {'d': data}
+    # Cơ quan chi trả
+    cqct = compare.thong_tin_cqct()
+    return render(request, 'apps/ktnpt_result.html', {'context': context, 'cqct': cqct})
