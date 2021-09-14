@@ -78,21 +78,22 @@ def lap_qd_ktra(request):
             '<hinh_thuc_ky>' : ky_ten[ky_qd.chuc_vu.upper()],
             # '<noi_nhan>': noi_nhan[nnt.cqt],
             'path': settings.MEDIA_ROOT,
+            'path2': settings.STATICFILES_DIRS[0],
         }
         # QD = process_data.lap_qd_ktra(tt_qd, doan_ktra)
         # file_path = [QD.to_trinh(), QD.qd_ktra(), QD.qd_gsat()]
-        path = os.path.join(settings.STATICFILES_DIRS[0], "media/to_trinh.docx")
-        # zip_path = os.path.join(settings.MEDIA_ROOT, tt_qd["<mst>"] + "-" + str(uuid.uuid4()) + ".zip")
+        file_path = [os.path.join(settings.STATICFILES_DIRS[0], "media/to_trinh.docx")]
+        zip_path = os.path.join(settings.MEDIA_ROOT, tt_qd["<mst>"] + "-" + str(uuid.uuid4()) + ".zip")
         # writing files to a zipfile
-        # with ZipFile(zip_path,'w') as zip:
-        #     # writing each file one by one
-        #     for path in file_path:
-        #         zip.write(path, os.path.basename(path))
+        with ZipFile(zip_path,'w') as zip:
+            # writing each file one by one
+            for path in file_path:
+                zip.write(path, os.path.basename(path))
         # Full path of file
-        if os.path.exists(path):
-            with open(path, 'rb') as fh:
+        if os.path.exists(zip_path):
+            with open(zip_path, 'rb') as fh:
                 response = HttpResponse(fh.read(), content_type="application/force_download")
-                response['Content-Disposition'] = 'inline; filename=' + os.path.basename(path)
+                response['Content-Disposition'] = 'inline; filename=' + os.path.basename(zip_path)
                 return response
         # If file is not exists
         raise Http404
