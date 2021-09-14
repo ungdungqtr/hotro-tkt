@@ -77,6 +77,7 @@ def lap_qd_ktra(request):
             '<ten_ld_qd>' : ten_ld_qd,
             '<hinh_thuc_ky>' : ky_ten[ky_qd.chuc_vu.upper()],
             # '<noi_nhan>': noi_nhan[nnt.cqt],
+            'path': settings.MEDIA_ROOT,
         }
         QD = process_data.lap_qd_ktra(tt_qd, doan_ktra)
         file_path = [QD.to_trinh(), QD.qd_ktra(), QD.qd_gsat()]
