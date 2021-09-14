@@ -79,7 +79,7 @@ class lap_qd_ktra:
         # document = Document("D:\\Python\\qd_tkt\\mysite\\static\\media\\qd_ktra.docx")
         ghi_du_lieu_para(document, self.tt_qd)
         # ghi dữ liệu thành phần đoàn
-        doc_table = Document(os.path.join(settings.STATICFILES_DIRS[0], "media\doan_ktra_table.docx"))
+        doc_table = Document(os.path.join(settings.STATICFILES_DIRS[0], "media/doan_ktra_table.docx"))
         # doc_table = Document("D:\\Python\\qd_tkt\\mysite\\static\\media\\doan_ktra_table.docx")
         table = doc_table.tables[0]
         # del_row(table, len(doan_ktra['<ten_cb>']), len(table.rows))
