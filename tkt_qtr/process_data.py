@@ -55,31 +55,31 @@ class lap_qd_ktra:
         self.doan_ktra = doan_ktra
 
     def to_trinh(self):
-        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media_store/to_trinh.docx"))
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media/to_trinh.docx"))
         # document = Document("D:\\Python\\qd_tkt\\mysite\\static\\media\\to_trinh.docx")
         ghi_du_lieu_para(document, self.tt_qd)
         filename = self.tt_qd["<mst>"] + "_To_trinh.docx"
-        path = os.path.join(settings.MEDIA_ROOT, filename)   
+        path = os.path.join(settings.STATICFILES_DIRS[0], "media_store/" + filename)   
         # path = os.path.join("D:\Python\qd_tkt\mysite\media", filename)      
         document.save(path)
         return path
     
     def qd_gsat(self):
-        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media_store/qd_giam_sat.docx"))
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media/qd_giam_sat.docx"))
         # document = Document("D:\\Python\\qd_tkt\\mysite\\static\\media\\qd_giam_sat.docx")
         ghi_du_lieu_para(document, self.tt_qd)
         filename = self.tt_qd["<mst>"] + "_QD_giam_sat.docx"
-        path = os.path.join(settings.MEDIA_ROOT, filename)   
+        path = os.path.join(settings.STATICFILES_DIRS[0], "media_store/" + filename)   
         # path = os.path.join("D:\Python\qd_tkt\mysite\media", filename)     
         document.save(path)
         return path
 
     def qd_ktra(self):
-        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media_store/qd_ktra.docx"))
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media/qd_ktra.docx"))
         # document = Document("D:\\Python\\qd_tkt\\mysite\\static\\media\\qd_ktra.docx")
         ghi_du_lieu_para(document, self.tt_qd)
         # ghi dữ liệu thành phần đoàn
-        doc_table = Document(os.path.join(settings.STATICFILES_DIRS[0], "media_store/doan_ktra_table.docx"))
+        doc_table = Document(os.path.join(settings.STATICFILES_DIRS[0], "media/doan_ktra_table.docx"))
         # doc_table = Document("D:\\Python\\qd_tkt\\mysite\\static\\media\\doan_ktra_table.docx")
         table = doc_table.tables[0]
         # del_row(table, len(doan_ktra['<ten_cb>']), len(table.rows))
