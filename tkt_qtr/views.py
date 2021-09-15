@@ -79,6 +79,7 @@ def lap_qd_ktra(request):
             # '<noi_nhan>': noi_nhan[nnt.cqt],
         }
         QD = process_data.lap_qd_ktra(tt_qd, doan_ktra)
+        QD.empty_media()
         file_path = [QD.to_trinh(), QD.qd_ktra(), QD.qd_gsat()]
         zip_path = os.path.join(settings.STATICFILES_DIRS[0], "media_store/" + tt_qd["<mst>"] + "-" + str(uuid.uuid4()) + ".zip")
         # writing files to a zipfile

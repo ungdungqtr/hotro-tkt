@@ -1,4 +1,4 @@
-import os #import ntpath
+import os
 from django.conf import settings
 from datetime import datetime
 from docx import Document
@@ -106,6 +106,13 @@ class lap_qd_ktra:
         # path = os.path.join("D:\Python\qd_tkt\mysite\media", filename)
         document.save(path)
         return path
+    
+    def empty_media(self):
+        media = os.path.join(settings.STATICFILES_DIRS[0], "media_store")
+        for file in os.listdir(media):
+            path = media + "/" + file
+            os.remove(path)
+
 
 """ tt_qd = {
     "<ngay_thang>": "ngày      tháng 3 năm 2021", # nhập tháng
