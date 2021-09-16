@@ -82,27 +82,27 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'tkt-qtr',
-#         'USER': 'postgres',
-#         'PASSWORD': 'cntt-qtr',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd756u6hioceojh',
-        'USER': 'gmzaojkpchcvbm',
+        'NAME': 'tkt-qtr',
+        'USER': 'postgres',
         'PASSWORD': 'cntt-qtr',
-        'HOST': 'ec2-52-72-125-94.compute-1.amazonaws.com',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'd756u6hioceojh',
+#         'USER': 'gmzaojkpchcvbm',
+#         'PASSWORD': 'cntt-qtr',
+#         'HOST': 'ec2-52-72-125-94.compute-1.amazonaws.com',
+#         'PORT': '5432',
+#     }
+# }
 
 db_from_env = dj_database_url.config()
 DATABASES['default'].update(db_from_env)
