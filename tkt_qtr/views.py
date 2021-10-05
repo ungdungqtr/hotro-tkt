@@ -81,7 +81,7 @@ def read_csv_setting(MEDIA_ROOT, filename):
         
         # extracting field names through first row
         fields = next(csvreader)
-        if filename == 'QD.csv':
+        if 'QD' in filename:
             print(filename)
             # extracting each data row one by one, then update database
             for row in csvreader:
@@ -90,7 +90,7 @@ def read_csv_setting(MEDIA_ROOT, filename):
                     ten_qd = row[2],
                     ngay_qd = row[3],
                 )
-        elif filename == 'LD.csv':
+        elif 'LD' in filename:
             print(filename)
             for row in csvreader:
                 obj = LdPheDuyet.objects.create(
