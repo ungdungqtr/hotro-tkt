@@ -111,23 +111,7 @@ $(document).ready(function () {
         });
     });  
 
-    // Phê duyệt tờ trình
-    /* $('.ten_ld_to_trinh').change(function () {
-        var ten_cb = $('.ten_ld_to_trinh').val().trim();
-        $.ajax({
-            url: 'cb_thong_tin',
-            data: {'ten_cb' : ten_cb},
-            dataType: 'json',
-            success: function (data) {
-                if($.isEmptyObject(data)) {
-                    alert("Lãnh đạo không có tên trong danh sách\nVui lòng cập nhật");
-                    $('.ten_ld_to_trinh').val('');   
-                } else {
-                        $('.ld_to_trinh').text(data.chuc_vu);               
-                }          
-            }
-        });
-    }); */
+    // $('tr[class=lq_cuc]')
 
     /* function leading_zero (str, max) {
     str = parseInt(str);
@@ -139,6 +123,7 @@ $(document).ready(function () {
         //source: mst
         source: 'mst_autocomplete',
     });
+
     /* var i = 0;
     var tencb = []; var ngachcb = []; var cvdoan = [];
     $('#tbody tr').each(function() {

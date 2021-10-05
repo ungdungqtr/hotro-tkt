@@ -4,19 +4,19 @@
 {% block content %}
 <div class="container mt-5">
     <div class="row" style=" padding: 20px 0 20px 0;">
-        <h3 style="margin: auto;">LẬP QUYẾT ĐỊNH KIỂM TRA DOANH NGHIỆP</h3>
+        <h3 style="margin: auto;">LẬP QUYẾT ĐỊNH THANH TRA DOANH NGHIỆP</h3>
     </div>   
-    <div class="row" style="margin-left: 15%;">
+    <div class="row" style="margin-left: 10%;">
         <form action="" method='POST' id="qd_ktra"> {% csrf_token %}            
             <p>Thời gian lập Quyết định: <input class="ngay_thang" name="ngay_thang" type="text" size="6" style="text-align: center" required></p>
-            <p>Phòng Thanh tra - Kiểm tra tiến hành kiểm tra chấp hành Pháp Luật Thuế thuế đối với:</p>
+            <p>Phòng Thanh tra – Kiểm tra đã tổ chức thu thập và phân tích thông tin về người nộp thuế để tiến hành thanh tra đối với:</p>
             <p class="ten_dv" style="margin-left: 5%; font-weight: bold;"></p>
             <p style="margin-left: 5%; font-weight: bold;">Mã số thuế: <input class="mst" name="mst" type="text" size="12" minlength="10" maxlength="14" style="text-align: right" required></p>
             <p class="dia_chi" style="margin-left: 5%; font-weight: bold;"></p>
-            <p>- Thời kỳ tiến hành kiểm tra: <input class="so_nam_ktra" name="so_nam_ktra" type="number" min="1" style="width: 48px; text-align: right" required> năm, 
+            <p>- Thời kỳ tiến hành thanh tra:  <input class="so_nam_ktra" name="so_nam_ktra" type="number" min="1" style="width: 48px; text-align: right" required> năm, 
             năm <input class="nam_ktra" name="nam_ktra" type="text" size="8" style="text-align: center" required></p>
-            <p>- Thành phần Đoàn kiểm tra gồm có:</p>
-            <div class="table-responsive" style="margin-left: 5%;">
+            <p>- Thành phần Đoàn thanh tra gồm có:</p>
+            <div class="table-responsive" style="width:80%; margin-left: 5%;">
                 <table class="table table-sm table-borderless" style="border-style:none;">
                     <tbody id="tbody">
 
@@ -51,10 +51,19 @@
             </table>
 
         </form>
-    </div>
+    </div>   
 </div>
 {% endblock content %}
 
 {% block script %}
-<script src={% static 'js/lap_qd_ktra.js' %} type="text/javascript"></script>
+<script src={% static 'js/lap_qd_ttra.js' %} type="text/javascript"></script>
 {% endblock script %}
+
+{% block style %}
+<style>
+    .trinh_ky {
+        margin: auto;
+        width: 50%;%
+    }
+</style>
+{% endblock style %}
