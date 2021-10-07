@@ -139,7 +139,7 @@ def lap_qd_ttra(request):
             '<dia_chi>' : nnt.dia_chi,# nnt(mst)['dia_chi'],
             "<sl_cb>" : f"{len(thanh_vien):02d}",
             '<truong_doan_ttr>': thanh_vien[0],
-            "<cb_cv>" : CanBo.objects.get(ten_cb=thanh_vien[0]).gioi_tinh + ": " + thanh_vien[0] + " - " + CanBo.objects.get(ten_cb=thanh_vien[0]).chuc_vu if thanh_vien else "",
+            # "<cb_cv>" : CanBo.objects.get(ten_cb=thanh_vien[0]).gioi_tinh + ": " + thanh_vien[0] + " - " + CanBo.objects.get(ten_cb=thanh_vien[0]).chuc_vu if thanh_vien else "",
             '<so_nam_ktra>' : leading_zero(request.POST['so_nam_ktra'], 10),
             '<nam_ktra>' : request.POST['nam_ktra'],
             '<so_ngay_ktra>' : f"{int(request.POST['so_ngay_ktra']):02d}",         
@@ -175,6 +175,9 @@ def lap_qd_ttra(request):
     
     return render(request, 'tkt_qtr/lap_qd_ttra.html', context=context)
 
+def truong_doan_cv(truong_doan):
+    return truong_doan.ngach_cb if truong_doan.chuc_vu == 'Công chức' else truong_doan.chuc_vu
+
 # Lập quyết định kiểm tra
 def lap_qd_ktra(request):
     qd_tkt_tct = CanCu.objects.get(id=1)
@@ -197,6 +200,7 @@ def lap_qd_ktra(request):
             "<ngach_cb>" : [CanBo.objects.get(ten_cb=tv).ngach_cb for tv in thanh_vien],
             "<cv_doan>" : cv
         }
+        truong_doan = CanBo.objects.get(ten_cb=thanh_vien[0])
         tt_qd = { 
             '<ngay_thang>' : "ngày      tháng " + leading_zero(ngay_thang[0], 3) + " năm " + ngay_thang[1],
             '<qd_tkt_tct>': 'Quyết định số '+ qd_tkt_tct.so_qd,
@@ -206,7 +210,7 @@ def lap_qd_ktra(request):
             '<mst>' : mst,
             '<dia_chi>' : nnt.dia_chi,# nnt(mst)['dia_chi'],
             "<sl_cb>" : f"{len(thanh_vien):02d}",
-            "<cb_cv>" : CanBo.objects.get(ten_cb=thanh_vien[0]).gioi_tinh + ": " + thanh_vien[0] + " - " + CanBo.objects.get(ten_cb=thanh_vien[0]).chuc_vu if thanh_vien else "",
+            "<cb_cv>" : truong_doan.gioi_tinh + ": " + thanh_vien[0] + " - " + truong_doan_cv(truong_doan) if thanh_vien else "",
             '<so_nam_ktra>' : leading_zero(request.POST['so_nam_ktra'], 10),
             '<nam_ktra>' : request.POST['nam_ktra'],
             '<so_ngay_ktra>' : f"{int(request.POST['so_ngay_ktra']):02d}",         
