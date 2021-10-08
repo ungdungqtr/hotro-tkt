@@ -7,7 +7,7 @@
     <li><b class="text-primary" style="font-size: 18pt;">Quyết định</b></li>
     <div class="row">
         <div class="col-md-8">
-            <table id="can_cu" class="table table-striped table-sm">
+            <table id="can_cu" class="table table-striped">
             <tr>
                 <th>Số QĐ</th>
                 <th>Nội dung</th>
@@ -22,7 +22,7 @@
                 <td class="QDngay QdData" name="QDngay">{{qd.ngay_qd|date:"d/m/Y"}}</td>
                 <td align="center">
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-success btn-sm cap_nhat_qd" value="{{qd.id}}" data-toggle="modal" data-target="#UpdateQD">
+                    <button type="button" class="btn btn-success cap_nhat_qd" value="{{qd.id}}" data-toggle="modal" data-target="#UpdateQD">
                         <i class="bi bi-pencil-fill"></i>
                     </button>                   
                 </td>
@@ -63,7 +63,7 @@
     <li><b class="text-primary" style="font-size: 18pt;">Lãnh đạo phê duyệt</b></li>
     <div class="row">
         <div class="col-md-8">
-            <table id="LDTable" class="table table-striped table-sm">
+            <table id="LDTable" class="table table-striped">
             <tr>
                 <th></th>
                 <th>Tên</th>

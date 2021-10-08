@@ -58,7 +58,7 @@ def cap_nhat_ld(request):
 
     return JsonResponse({'ld': ld})
 
-def import_thiet_lap(request):
+def import_data(request):
     if request.method == 'POST' and request.FILES['myfile']:
         myfile = request.FILES['myfile']
         fs = FileSystemStorage()
@@ -82,7 +82,6 @@ def read_csv_setting(MEDIA_ROOT, filename):
         # extracting field names through first row
         fields = next(csvreader)
         if 'QD' in filename:
-            print(filename)
             # extracting each data row one by one, then update database
             for row in csvreader:
                 obj = CanCu.objects.create(
@@ -91,13 +90,16 @@ def read_csv_setting(MEDIA_ROOT, filename):
                     ngay_qd = row[3],
                 )
         elif 'LD' in filename:
-            print(filename)
             for row in csvreader:
-                obj = LdPheDuyet.objects.create(
-                    ld_ten = row[1],
-                    ld_cv = row[2],
-                    ld_gt = row[3],
-                ) 
+                print(row)
+            # LdPheDuyet.objects.all().delete()
+            # for row in csvreader:
+            #     obj = LdPheDuyet.objects.create(
+            #         id = row[0],
+            #         ld_ten = row[1],
+            #         ld_cv = row[2],
+            #         ld_gt = row[3],
+            #     ) 
 
 def lap_qd_ttra(request):
     noi_nhan = {
@@ -385,6 +387,7 @@ def import_nnt(request):
         fs = FileSystemStorage()
         filename = fs.save(myfile.name, myfile)
         uploaded_file_url = os.path.join(settings.MEDIA_ROOT, filename)
+        
         read_csv_nnt(uploaded_file_url)
         # dba = NNT.objects.all()
         # return render(request, 'tkt_qtr/dba_nnt.html', {'dba': dba})
@@ -399,9 +402,11 @@ def read_csv_nnt(uploaded_file_url):
         
         # extracting field names through first row
         fields = next(csvreader)
-    
+        NNT.objects.all().delete()
         # extracting each data row one by one, then update database
         for row in csvreader:
+            
+            # print(row)
             obj = NNT.objects.create(
                 mst = row[1],
                 ten_nnt = row[2],

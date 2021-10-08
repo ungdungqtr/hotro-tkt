@@ -33,6 +33,6 @@ urlpatterns = [
     path('thiet_lap_chung/cap_nhat_ld/', views.cap_nhat_ld, name='cap_nhat_ld'),
     path('thiet_lap_chung/cb_ten_autocomplete/', views.cb_ten_autocomplete, name='cb_ten_autocomplete'),
     path('thiet_lap_chung/cap_nhat_ld/', views.cap_nhat_ld, name='cap_nhat_ld'),
-    path('thiet_lap_chung/import_thiet_lap/', views.import_thiet_lap, name='import_thiet_lap'),
+    path('thiet_lap_chung/import_data/', views.import_data, name='import_data'),
     
 ]
