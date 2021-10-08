@@ -228,7 +228,7 @@ def lap_qd_ktra(request):
         }
         QD = process_data.lap_qd_ktra(tt_qd, doan_ktra)
         QD.empty_media()
-        file_path = [QD.to_trinh(), QD.qd_ktra(), QD.qd_gsat()]
+        file_path = [QD.to_trinh(), QD.qd_ktra(), QD.qd_gsat(), QD.kh_gsat()]
         zip_path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", mst + "_QD_ktra.zip")
         # writing files to a zipfile
         with ZipFile(zip_path,'w') as zip:

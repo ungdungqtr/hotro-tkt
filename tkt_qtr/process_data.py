@@ -70,6 +70,16 @@ class lap_qd_ktra:
         document.save(path)
         return path
 
+    def kh_gsat(self):
+        # document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media/2.kh_giam_sat.docx"))
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "1.kh_giam_sat.docx"))
+        ghi_du_lieu_para(document, self.tt_qd)
+        filename = self.tt_qd["<mst>"] + "_KH_giam_sat.docx"
+        # path = os.path.join(settings.STATICFILES_DIRS[0], "media_store/" + filename)
+        path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", filename)
+        document.save(path)
+        return path
+
     def qd_ktra(self):
         document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "1.qd_ktra.docx"))
         ghi_du_lieu_para(document, self.tt_qd)
@@ -102,9 +112,10 @@ class lap_qd_ktra:
     
     def empty_media(self):
         media_store = os.path.join(settings.STATICFILES_DIRS[0], "media_store")
-        for file in os.listdir(media_store):
-            path = os.path.join(media_store, file)
-            os.remove(path)
+        if os.listdir(media_store):
+            for file in os.listdir(media_store):
+                path = os.path.join(media_store, file)
+                os.remove(path)
 
 class lap_qd_ttra:
     def __init__(self, tt_qd, doan_ttra):
@@ -180,9 +191,10 @@ class lap_qd_ttra:
     
     def empty_media(self):
         media_store = os.path.join(settings.STATICFILES_DIRS[0], "media_store")
-        for file in os.listdir(media_store):
-            path = os.path.join(media_store, file)
-            os.remove(path)
+        if os.listdir(media_store):
+            for file in os.listdir(media_store):
+                path = os.path.join(media_store, file)
+                os.remove(path)
 """ tt_qd = {
     '<qd_tkt_tct>': 'Quyết định số 2271/QĐ-TCT ngày 30 tháng 12 năm 2020', #qd ttr
     '<nam_qd_tkt_tct>': '2020',
