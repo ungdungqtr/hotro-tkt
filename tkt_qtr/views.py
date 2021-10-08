@@ -4,6 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from django.urls import reverse
+from django.db.models import Q
 
 from .forms import *
 from . import process_data
@@ -58,6 +59,16 @@ def cap_nhat_ld(request):
 
     return JsonResponse({'ld': ld})
 
+def redirect_url(filename):
+    if 'CB' in filename:
+        return 'tkt:qly_cb'
+    elif 'NNT' in filename:
+        return 'tkt:dba_nnt'
+    elif ('QD' in filename) | ('LD' in filename):
+        return 'tkt:thiet_lap_chung'
+    else:
+        return 'home:base'
+
 def import_data(request):
     if request.method == 'POST' and request.FILES['myfile']:
         myfile = request.FILES['myfile']
@@ -65,42 +76,57 @@ def import_data(request):
         filename = fs.save(myfile.name, myfile)
         uploaded_file_url = os.path.join(settings.MEDIA_ROOT, filename)
         read_csv_setting(settings.MEDIA_ROOT, filename)
-        # dba = NNT.objects.all()
-        # return render(request, 'tkt_qtr/dba_nnt.html', {'dba': dba})
-        return HttpResponseRedirect(reverse('tkt:thiet_lap_chung'))
-    return render(request, 'tkt_qtr/import_thiet_lap_chung.html')
+        return HttpResponseRedirect(reverse(redirect_url(filename)))
+    return render(request, 'tkt_qtr/import_data.html')
 
 def read_csv_setting(MEDIA_ROOT, filename):
     uploaded_file_url = os.path.join(MEDIA_ROOT, filename)
-    print(uploaded_file_url)
-    print(filename)
     # reading csv file
     with open(uploaded_file_url, 'r', encoding="utf8") as csvfile:
         # creating a csv reader object
         csvreader = csv.reader(csvfile)
-        
         # extracting field names through first row
         fields = next(csvreader)
-        if 'QD' in filename:
+        if 'CB' in filename:
+            CanBo.objects.all().delete()
             # extracting each data row one by one, then update database
             for row in csvreader:
+                obj = CanBo.objects.create(
+                    ten_cb = row[1],
+                    ngach_cb = row[2],
+                    gioi_tinh = row[3],
+                    chuc_vu = row[4],
+                )
+        if 'NNT' in filename:
+            NNT.objects.all().delete()
+            for row in csvreader:
+                obj = NNT.objects.create(
+                    mst = row[1],
+                    ten_nnt = row[2],
+                    dia_chi = row[3],
+                    cqt = row[4],
+                )
+        if 'QD' in filename:
+            CanCu.objects.all().delete()
+            for row in csvreader:
+                print(row)
                 obj = CanCu.objects.create(
                     so_qd = row[1],
                     ten_qd = row[2],
                     ngay_qd = row[3],
                 )
-        elif 'LD' in filename:
+        if 'LD' in filename:
+            LdPheDuyet.objects.all().delete()
             for row in csvreader:
-                print(row)
-            # LdPheDuyet.objects.all().delete()
-            # for row in csvreader:
-            #     obj = LdPheDuyet.objects.create(
-            #         id = row[0],
-            #         ld_ten = row[1],
-            #         ld_cv = row[2],
-            #         ld_gt = row[3],
-            #     ) 
-
+                obj = LdPheDuyet.objects.create(
+                    ld_ten = row[1],
+                    ld_cv = row[2],
+                    ld_gt = row[3],
+                ) 
+#########################################################################################
+#########################################################################################
+#########################################################################################
+#########################################################################################
 def lap_qd_ttra(request):
     noi_nhan = {
         'Cục Thuế tỉnh Quảng Trị': 'Phòng KK&KTT',
@@ -111,9 +137,9 @@ def lap_qd_ttra(request):
         'CCT huyện Hướng Hóa': 'CCT huyện Hướng Hóa',
         'CCT huyện Cồn Cỏ': 'CCT huyện Cồn Cỏ'
     }
-    qd_tkt_tct = CanCu.objects.get(id=1)
-    ld_cuc = LdPheDuyet.objects.get(id=1)
-    ld_phong = LdPheDuyet.objects.get(id=2)
+    qd_tkt_tct = CanCu.objects.all()[0]
+    ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='Cục')[0]
+    ld_phong = LdPheDuyet.objects.filter(ld_cv__contains='phòng')[0]
     context = {
         'ld_cuc': ld_cuc,
         'ld_phong': ld_phong
@@ -181,10 +207,13 @@ def truong_doan_cv(truong_doan):
     return truong_doan.ngach_cb if truong_doan.chuc_vu == 'Công chức' else truong_doan.chuc_vu
 
 # Lập quyết định kiểm tra
+#########################################################################################
+#########################################################################################
+#########################################################################################
 def lap_qd_ktra(request):
-    qd_tkt_tct = CanCu.objects.get(id=1)
-    ld_cuc = LdPheDuyet.objects.get(id=1)
-    ld_phong = LdPheDuyet.objects.get(id=2)
+    qd_tkt_tct = CanCu.objects.all()[0]
+    ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='Cục')[0]
+    ld_phong = LdPheDuyet.objects.filter(ld_cv__contains='phòng')[0]
     context = {
         'ld_cuc': ld_cuc,
         'ld_phong': ld_phong
@@ -380,38 +409,4 @@ def xoa_nnt(request):
     data = {'delete': True}
 
     return JsonResponse(data)
-
-def import_nnt(request):
-    if request.method == 'POST' and request.FILES['myfile']:
-        myfile = request.FILES['myfile']
-        fs = FileSystemStorage()
-        filename = fs.save(myfile.name, myfile)
-        uploaded_file_url = os.path.join(settings.MEDIA_ROOT, filename)
-        
-        read_csv_nnt(uploaded_file_url)
-        # dba = NNT.objects.all()
-        # return render(request, 'tkt_qtr/dba_nnt.html', {'dba': dba})
-        return HttpResponseRedirect(reverse('tkt:dba_nnt'))
-    return render(request, 'tkt_qtr/import_nnt.html')
-
-def read_csv_nnt(uploaded_file_url):
-    # reading csv file
-    with open(uploaded_file_url, 'r', encoding="utf8") as csvfile:
-        # creating a csv reader object
-        csvreader = csv.reader(csvfile)
-        
-        # extracting field names through first row
-        fields = next(csvreader)
-        NNT.objects.all().delete()
-        # extracting each data row one by one, then update database
-        for row in csvreader:
-            
-            # print(row)
-            obj = NNT.objects.create(
-                mst = row[1],
-                ten_nnt = row[2],
-                dia_chi = row[3],
-                cqt = row[4]
-            )
-
     

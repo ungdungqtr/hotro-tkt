@@ -26,7 +26,6 @@ urlpatterns = [
     path('dba_nnt/them_moi_nnt/', views.them_moi_nnt, name = 'them_moi_nnt'),
     path('dba_nnt/xoa_nnt/', views.xoa_nnt, name = 'xoa_nnt'),
     path('dba_nnt/cap_nhat_nnt/', views.cap_nhat_nnt, name = 'cap_nhat_nnt'),
-    path('dba_nnt/import_nnt/', views.import_nnt, name = 'import_nnt'),  
     # Thiết lập chung
     path('thiet_lap_chung/', views.thiet_lap_chung, name='thiet_lap_chung'),
     path('thiet_lap_chung/cap_nhat_qd/', views.cap_nhat_qd, name='cap_nhat_qd'),
