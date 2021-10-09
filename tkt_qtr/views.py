@@ -2,16 +2,15 @@ from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse, Http404, HttpResponseRedirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.storage import FileSystemStorage
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.conf import settings
 from django.urls import reverse
-from django.db.models import Q
 
 from .forms import *
 from . import process_data
 
 import os
 from zipfile import ZipFile
-# import uuid
 import csv
 from datetime import datetime
 
@@ -20,7 +19,10 @@ ky_ten = {
     'CỤC TRƯỞNG': 'CỤC TRƯỞNG'
 }
 
-# Create your views here.
+# Thiết lập chung
+#########################################################################################
+#########################################################################################
+#########################################################################################
 def thiet_lap_chung(request):    
     cancu = CanCu.objects.all()
     ld_phe_duyet = LdPheDuyet.objects.all()
@@ -123,7 +125,7 @@ def read_csv_setting(MEDIA_ROOT, filename):
                     ld_cv = row[2],
                     ld_gt = row[3],
                 ) 
-#########################################################################################
+# Lập quyết định thanh tra
 #########################################################################################
 #########################################################################################
 #########################################################################################
@@ -319,9 +321,22 @@ def cb_ten_autocomplete(request):
     return render(request, 'tkt_qtr/lap_qd_ktra.html')
 
 # Quản lý cán bộ
-
+#########################################################################################
+#########################################################################################
+#########################################################################################
 def qly_cb(request):
     can_bo = CanBo.objects.all()
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(can_bo, 10)
+
+    try:
+        can_bo = paginator.page(page)
+    except PageNotAnInteger:
+        can_bo = paginator.page(1)
+    except EmptyPage:
+        can_bo = paginator.page(paginator.num_pages)
+
     return render(request, 'tkt_qtr/qly_cb.html', {'can_bo': can_bo})
 
 def them_moi_cb(request):
@@ -365,9 +380,21 @@ def xoa_cb(request):
     return JsonResponse({'delete': True})
 
 # Danh bạ NNT
-
+#########################################################################################
+#########################################################################################
+#########################################################################################
 def dba_nnt(request):
     dba = NNT.objects.all()
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(dba, 50)
+
+    try:
+        dba = paginator.page(page)
+    except PageNotAnInteger:
+        dba = paginator.page(1)
+    except EmptyPage:
+        dba = paginator.page(paginator.num_pages)
     return render(request, 'tkt_qtr/dba_nnt.html', {'dba': dba})
 
 def them_moi_nnt(request):

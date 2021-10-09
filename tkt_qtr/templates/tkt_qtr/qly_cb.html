@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container">
     <div class="row" style="padding: 20px;">
-        <h3 style="margin: auto;">Danh sách cán bộ</h3>
+        <h3 >Danh sách cán bộ</h3>
     </div>
     <div class="row">
         <div class="col-md-3">
@@ -67,6 +67,52 @@
                 </tr>
                 {% endfor %}
             </table>
+
+            <nav aria-label="Page navigation">
+                {% if can_bo.has_other_pages %}
+                <ul class="pagination justify-content-end">
+                    {% if can_bo.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ users.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    {% for i in can_bo.paginator.page_range %}
+                        
+                        {% if can_bo.number == i %}
+                        <li class="page-item active" aria-current="page">
+                            <a class="page-link" href="?page={{ i }}">{{ i }} <span class="sr-only">(current)</span></a>
+                        </li>
+                        {% else %}
+                        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if can_bo.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ can_bo.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+                {% endif %}
+            </nav>
+            
         </div>
     </div>
 </div>
