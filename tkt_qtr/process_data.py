@@ -114,7 +114,7 @@ class lap_qd_ktra:
         media_store = os.path.join(settings.STATICFILES_DIRS[0], "media_store")
         if os.listdir(media_store):
             for file in os.listdir(media_store):
-                path = os.path.join(media_store, file)
+                path = os.path.join(media_store, file) 
                 os.remove(path)
 
 class lap_qd_ttra:
