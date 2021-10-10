@@ -16,13 +16,13 @@ $(document).ready(function () {
         $('#tbody').append(
             `<tr id="R${++rowIdx}">
                 <td class="row-index">
-                        <p class="cb_gioi_tinh"></p></td>
+                    <p class="cb_gioi_tinh"></p></td>
                 <td class="row-index">
                     <input class="thanh_vien" name="thanh_vien" type="text" size="24" required></td>
                 <td class="row-index">
-                        <p class="ngach_cb"></p></td>
+                    <p class="ngach_cb"></p></td>
                 <td class="row-index">
-                        <p class="cv_doan"></p></td>
+                    <p class="cv_doan" name="thanh_vien_cvu"></p></td>
                 <td class="text-center">
                     <button class="btn btn-danger remove" 
                         type="button">Xóa</button></td>
@@ -45,8 +45,12 @@ $(document).ready(function () {
                             thanh_vien.val('');   
                         } else {  
                             var tv =  thanh_vien.closest('tr');
-                            tv.find('.cb_gioi_tinh').text(data.gioi_tinh);      
-                            tv.find('.ngach_cb').text(data.ngach_cb);   
+                            tv.find('.cb_gioi_tinh').text(data.gioi_tinh); 
+                            if (data.chuc_vu == "Công chức") {
+                                tv.find('.ngach_cb').text(data.ngach_cb);   
+                            } else {
+                                tv.find('.ngach_cb').text(data.chuc_vu);   
+                            }   
                             if (tv.attr('id') == 'R1') {
                                 tv.find('.cv_doan').text("Trưởng đoàn"); 
                             } else {

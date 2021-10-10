@@ -205,13 +205,11 @@ def lap_qd_ttra(request):
     
     return render(request, 'tkt_qtr/lap_qd_ttra.html', context=context)
 
-def truong_doan_cv(truong_doan):
-    return truong_doan.ngach_cb if truong_doan.chuc_vu == 'Công chức' else truong_doan.chuc_vu
-
 # Lập quyết định kiểm tra
 #########################################################################################
 #########################################################################################
 #########################################################################################
+
 def lap_qd_ktra(request):
     qd_tkt_tct = CanCu.objects.all()[0]
     ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='Cục')[0]
@@ -230,7 +228,8 @@ def lap_qd_ktra(request):
         cv.extend(["Thành viên"] * (len(thanh_vien)-1))
         doan_ktra = {
             "<ten_cb>" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + ": " + tv) for tv in thanh_vien],
-            "<ngach_cb>" : [CanBo.objects.get(ten_cb=tv).ngach_cb for tv in thanh_vien],
+            # "<ngach_cb>" : [CanBo.objects.get(ten_cb=tv).ngach_cb for tv in thanh_vien],
+            "<ngach_cb>" : [truong_doan_cv(tv) for tv in thanh_vien],
             "<cv_doan>" : cv
         }
         truong_doan = CanBo.objects.get(ten_cb=thanh_vien[0])
@@ -277,6 +276,9 @@ def lap_qd_ktra(request):
         # If file is not exists
         raise Http404
     return render(request, 'tkt_qtr/lap_qd_ktra.html', context=context)
+
+def truong_doan_cv(truong_doan):
+    return truong_doan.ngach_cb if truong_doan.chuc_vu == 'Công chức' else truong_doan.chuc_vu
 
 def leading_zero(s, max):
     s = int(s)
