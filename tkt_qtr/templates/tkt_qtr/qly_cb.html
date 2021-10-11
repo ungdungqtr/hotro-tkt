@@ -18,10 +18,7 @@
                 </div>
                 <div class="form-group">
                   <input type="text" name="ten_cb" class="form-control" placeholder="Tên cán bộ" required>
-                </div>
-                <div class="form-group">
-                  <input type="text" name="ngach_cb" class="form-control" placeholder="Ngạch công chức" required>
-                </div>    
+                </div>                
                 <div class="form-group">
                     <select name="chuc_vu" id="" class="form-control" required>
                         <option value="" disable selected>--Chức vụ--</option>
@@ -29,9 +26,14 @@
                         <option value="Phó Cục trưởng">Phó Cục trưởng</option>
                         <option value="Trưởng phòng">Trưởng phòng</option>
                         <option value="Phó trưởng phòng">Phó trưởng phòng</option>
-                        <option value="Công chức">Công chức</option>
+                        <option value="Kiểm tra viên chính thuế">Kiểm tra viên chính thuế</option>
+                        <option value="Kiểm tra viên thuế">Kiểm tra viên thuế</option>
+                        <option value="Chuyên viên">Chuyên viên</option>
                     </select>
-                </div>            
+                </div>  
+                <div class="form-group">
+                  <input type="text" name="doan_tkt" class="form-control" placeholder="Đoàn TKT">
+                </div>              
                 <button type="submit" class="btn btn-primary form-control">Thêm mới cán bộ</button>
             </form>
         </div>
@@ -39,10 +41,9 @@
             <table id="userTable" class="table table-striped table-sm">
                 <tr>
                     <th></th>
-                    {% comment %} <th></th> {% endcomment %}
                     <th>Tên</th>
-                    <th>Ngạch</th>
                     <th>Chức vụ</th>
+                    <th>Đoàn TKT</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -51,8 +52,8 @@
                     {% comment %} <td>{{forloop.counter}}.</td> {% endcomment %}
                     <td class="userGtinh userData" name="gioi_tinh">{{user.gioi_tinh}}</td>
                     <td class="userTen userData" name="ten_cb">{{user.ten_cb}}</td>
-                    <td class="userNgach userData" name="ngach_cb">{{user.ngach_cb}}</td>
                     <td class="userCvu userData" name="chuc_vu">{{user.chuc_vu}}</td>
+                    <td class="userDoan userData" name="doan_tkt">{{user.doan_tkt}}</td>
                     <td align="center">
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-success btn-sm form-control update_cb" value="{{user.id}}" data-toggle="modal" data-target="#UpdateModal">
@@ -129,24 +130,26 @@
             <form id="updateUser" action="">
                 <div class="modal-body">
                     <input class="form-control" id="form-id" type="hidden" name="formId"/>
-                    <select class="form-control" id="form-gtinh" name="formGtinh" >
+                    <select class="form-control" id="form-gtinh" name="formGtinh" required>
                         <option value="" disable selected>--Ông/Bà--</option>
                         <option value="Ông">Ông</option>
                         <option value="Bà">Bà</option>    
                     </select>
                     <label for="ten_cb">Tên</label>
-                    <input class="form-control" id="form-ten" type="text" name="formTen"/>
-                    <label for="ngach_cb">Ngạch công chức</label>
-                    <input class="form-control" id="form-ngach" type="text" name="formNgach"/>
-                    <label for="chuc_vu">Ngạch công chức</label>
-                    <select class="form-control" id="form-cvu" name="formCvu">
+                    <input class="form-control" id="form-ten" type="text" name="formTen" required/>
+                    <label for="chuc_vu">Chức vụ</label>
+                    <select class="form-control" id="form-cvu" name="formCvu" required>
                         <option value="" disable selected>--Chức vụ--</option>
                         <option value="Cục trưởng">Cục trưởng</option>
                         <option value="Phó Cục trưởng">Phó Cục trưởng</option>
                         <option value="Trưởng phòng">Trưởng phòng</option>
                         <option value="Phó Trưởng phòng">Phó trưởng phòng</option>
-                        <option value="Công chức">Công chức</option>
+                        <option value="Kiểm tra viên chính thuế">Kiểm tra viên chính thuế</option>
+                        <option value="Kiểm tra viên thuế">Kiểm tra viên thuế</option>
+                        <option value="Chuyên viên">Chuyên viên</option>
                     </select>
+                    <label for="doan_tkt">Đoàn TKT</label>
+                    <input class="form-control" id="form-doantkt" type="text" name="formDoan"/>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>

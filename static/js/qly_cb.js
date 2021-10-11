@@ -4,16 +4,16 @@ $(document).ready(function () {
         e.preventDefault();
         var gioi_tinh_input = $('select[name=gioi_tinh]').val();
         var ten_cb_input = $('input[name=ten_cb]').val().trim();
-        var ngach_cb_input = $('input[name=ngach_cb]').val().trim();
         var chuc_vu_input = $('select[name=chuc_vu]').val();
-        if (gioi_tinh_input && ten_cb_input && ngach_cb_input && chuc_vu_input) {
+        var doan_tkt_input = $('input[name=doan_tkt]').val().trim();
+        if (gioi_tinh_input && ten_cb_input && chuc_vu_input) {
             $.ajax({
                 url: "them_moi_cb",
                 data: {
                     'gioi_tinh' : gioi_tinh_input,
                     'ten_cb' : ten_cb_input,
-                    'ngach_cb' : ngach_cb_input,
                     'chuc_vu' : chuc_vu_input,
+                    'doan_tkt' : doan_tkt_input
                 },
                 dataType: "json",
                 success: function (data) {
@@ -35,8 +35,8 @@ $(document).ready(function () {
             <tr id="user-${user.id}">
                 <td class="userGtinh userData" name="gioi_tinh">${user.gioi_tinh}</td>
                 <td class="userTen userData" name="ten_cb">${user.ten_cb}</td>
-                <td class="userNgach userData" name="ngach_cb">${user.ngach_cb}</td>
                 <td class="userCvu userData" name="chuc_vu">${user.chuc_vu}</td>
+                <td class="userDoan userData" name="doan_tkt">${user.doan_tkt}</td>
                 <td align="center">
                 <button type="button" class="btn btn-success btn-sm form-control update_cb" value="{{user.id}}" 
                         data-toggle="modal" data-target="#UpdateModal">
@@ -78,14 +78,14 @@ $(document).ready(function () {
             tr_id = '#user-' + id;
             gioi_tinh = $(tr_id).find('.userGtinh').text();
             ten_cb = $(tr_id).find('.userTen').text();
-            ngach_cb = $(tr_id).find('.userNgach').text();
             chuc_vu = $(tr_id).find('.userCvu').text();
+            doan_tkt = $(tr_id).find('.userDoan').text();
             $('#form-id').val(id);
             // $('#form-gtinh option[value=${gioi_tinh}]').attr("selected",true);
             $('#form-gtinh').val(gioi_tinh);
             $('#form-ten').val(ten_cb);
-            $('#form-ngach').val(ngach_cb);
             $('#form-cvu').val(chuc_vu);
+            $('#form-doantkt').val(doan_tkt);
         }
     });
     //Cập nhật thông tin cán bộ
@@ -94,18 +94,18 @@ $(document).ready(function () {
         var idInput = $('input[name="formId"]').val();
         var gtinhInput = $('select[name="formGtinh"]').val();
         var tenInput = $('input[name="formTen"]').val().trim();
-        var ngachInput = $('input[name="formNgach"]').val().trim();
         var cvuInput = $('select[name="formCvu"]').val();
+        var doanInput = $('input[name="formDoan"]').val().trim();
 
-        if (gtinhInput && tenInput && ngachInput && cvuInput) {
+        if (gtinhInput && tenInput && cvuInput) {
             $.ajax({
                 url: "cap_nhat_thong_tin",
                 data: {
                     'id': idInput,
                     'gioi_tinh': gtinhInput,
                     'ten_cb': tenInput,
-                    'ngach_cb': ngachInput,
                     'chuc_vu': cvuInput,
+                    'doan_tkt': doanInput,
                 },
                 dataType: "json",
                 success: function (data) {
@@ -130,8 +130,8 @@ $(document).ready(function () {
                 $(this).text(user.gioi_tinh);
             } else if (attr == "ten_cb") {
                 $(this).text(user.ten_cb);
-            } else if (attr == "ngach_cb") {
-                $(this).text(user.ngach_cb);
+            } else if (attr == "doan_tkt") {
+                $(this).text(user.doan_tkt);
             } else {
                 $(this).text(user.chuc_vu);
             }

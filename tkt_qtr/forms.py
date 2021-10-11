@@ -5,7 +5,8 @@ class CanBoForm(forms.ModelForm):
 
     class Meta:
         model  = CanBo
-        fields = ['ten_cb', 'gioi_tinh', 'ngach_cb', 'chuc_vu']
+        fields = ['ten_cb', 'gioi_tinh', 'chuc_vu', 'doan_tkt']
+        # fields = ['ten_cb', 'gioi_tinh', 'ngach_cb', 'chuc_vu']
 
 class NNTForm(forms.ModelForm):
 

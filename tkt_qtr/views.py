@@ -95,9 +95,9 @@ def read_csv_setting(MEDIA_ROOT, filename):
             for row in csvreader:
                 obj = CanBo.objects.create(
                     ten_cb = row[1],
-                    ngach_cb = row[2],
-                    gioi_tinh = row[3],
-                    chuc_vu = row[4],
+                    gioi_tinh = row[2],
+                    chuc_vu = row[3],
+                    doan_tkt = row[4]
                 )
         if 'NNT' in filename:
             NNT.objects.all().delete()
@@ -154,9 +154,10 @@ def lap_qd_ttra(request):
         thanh_vien = request.POST.getlist('thanh_vien', None)
         cv = ['Trưởng đoàn']
         cv.extend(["Thành viên"] * (len(thanh_vien)-1))
+        truong_doan = CanBo.objects.get(ten_cb=thanh_vien[0])
         doan_ttra = {
             "<ten_cb>" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + ": " + tv) for tv in thanh_vien],
-            "<ngach_cb>" : [CanBo.objects.get(ten_cb=tv).ngach_cb for tv in thanh_vien],
+            "<ngach_cb>" : [CanBo.objects.get(ten_cb=tv).chuc_vu for tv in thanh_vien],
             "<cv_doan>" : cv
         }
         tt_qd = { 
@@ -169,7 +170,7 @@ def lap_qd_ttra(request):
             '<dia_chi>' : nnt.dia_chi,# nnt(mst)['dia_chi'],
             "<sl_cb>" : f"{len(thanh_vien):02d}",
             '<truong_doan_ttr>': thanh_vien[0],
-            # "<cb_cv>" : CanBo.objects.get(ten_cb=thanh_vien[0]).gioi_tinh + ": " + thanh_vien[0] + " - " + CanBo.objects.get(ten_cb=thanh_vien[0]).chuc_vu if thanh_vien else "",
+            "<cb_cv>" : truong_doan.gioi_tinh + ": " + thanh_vien[0] + " - " + truong_doan.chuc_vu,
             '<so_nam_ktra>' : leading_zero(request.POST['so_nam_ktra'], 10),
             '<nam_ktra>' : request.POST['nam_ktra'],
             '<so_ngay_ktra>' : f"{int(request.POST['so_ngay_ktra']):02d}",         
@@ -228,8 +229,8 @@ def lap_qd_ktra(request):
         cv.extend(["Thành viên"] * (len(thanh_vien)-1))
         doan_ktra = {
             "<ten_cb>" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + ": " + tv) for tv in thanh_vien],
-            # "<ngach_cb>" : [CanBo.objects.get(ten_cb=tv).ngach_cb for tv in thanh_vien],
-            "<ngach_cb>" : [truong_doan_cv(tv) for tv in thanh_vien],
+            "<ngach_cb>" : [CanBo.objects.get(ten_cb=tv).chuc_vu for tv in thanh_vien],
+            # "<ngach_cb>" : [truong_doan_cv(tv) for tv in thanh_vien],
             "<cv_doan>" : cv
         }
         truong_doan = CanBo.objects.get(ten_cb=thanh_vien[0])
@@ -242,7 +243,7 @@ def lap_qd_ktra(request):
             '<mst>' : mst,
             '<dia_chi>' : nnt.dia_chi,# nnt(mst)['dia_chi'],
             "<sl_cb>" : f"{len(thanh_vien):02d}",
-            "<cb_cv>" : truong_doan.gioi_tinh + ": " + thanh_vien[0] + " - " + truong_doan_cv(truong_doan) if thanh_vien else "",
+            "<cb_cv>" : truong_doan.gioi_tinh + ": " + thanh_vien[0] + " - " + truong_doan.chuc_vu,
             '<so_nam_ktra>' : leading_zero(request.POST['so_nam_ktra'], 10),
             '<nam_ktra>' : request.POST['nam_ktra'],
             '<so_ngay_ktra>' : f"{int(request.POST['so_ngay_ktra']):02d}",         
@@ -297,7 +298,7 @@ def cb_thong_tin(request):
     ten_cb = request.GET.get('ten_cb', None)
     try:
         obj = CanBo.objects.get(ten_cb=ten_cb)
-        cb = {'chuc_vu': obj.chuc_vu, 'gioi_tinh': obj.gioi_tinh, 'ngach_cb': obj.ngach_cb}
+        cb = {'chuc_vu': obj.chuc_vu, 'gioi_tinh': obj.gioi_tinh}
     except ObjectDoesNotExist:
         cb = {}
     return JsonResponse(cb)
@@ -344,17 +345,17 @@ def qly_cb(request):
 def them_moi_cb(request):
     gioi_tinh_1 = request.GET.get('gioi_tinh', None)
     ten_cb_1 = request.GET.get('ten_cb', None)
-    ngach_cb_1 = request.GET.get('ngach_cb', None)
     chuc_vu_1 = request.GET.get('chuc_vu', None)
+    doan_tkt_1 = request.GET.get('doan_tkt', None)
 
     obj = CanBo.objects.create(
         gioi_tinh = gioi_tinh_1,
         ten_cb = ten_cb_1,
-        ngach_cb = ngach_cb_1,
-        chuc_vu = chuc_vu_1
+        chuc_vu = chuc_vu_1,
+        doan_tkt = doan_tkt_1,
     )
 
-    user = {'id': obj.id, 'ten_cb': obj.ten_cb, 'gioi_tinh': obj.gioi_tinh, 'ngach_cb': obj.ngach_cb, 'chuc_vu': obj.chuc_vu}
+    user = {'id': obj.id, 'ten_cb': obj.ten_cb, 'gioi_tinh': obj.gioi_tinh, 'chuc_vu': obj.chuc_vu, 'doan_tkt': obj.doan_tkt}
 
     return JsonResponse({'user': user})
 
@@ -362,17 +363,17 @@ def cap_nhat_thong_tin(request):
     id_1 = request.GET.get('id', None)
     gioi_tinh_1 = request.GET.get('gioi_tinh', None)
     ten_cb_1 = request.GET.get('ten_cb', None)
-    ngach_cb_1 = request.GET.get('ngach_cb', None)
     chuc_vu_1 = request.GET.get('chuc_vu', None)
+    doan_tkt_1 = request.GET.get('doan_tkt', None)
 
     obj = CanBo.objects.get(id=id_1)
     obj.ten_cb = ten_cb_1
     obj.gioi_tinh = gioi_tinh_1
-    obj.ngach_cb = ngach_cb_1
     obj.chuc_vu = chuc_vu_1
+    obj.doan_tkt = doan_tkt_1
     obj.save()
 
-    user = {'id': obj.id, 'ten_cb': obj.ten_cb, 'gioi_tinh': obj.gioi_tinh, 'ngach_cb': obj.ngach_cb, 'chuc_vu': obj.chuc_vu}
+    user = {'id': obj.id, 'ten_cb': obj.ten_cb, 'gioi_tinh': obj.gioi_tinh, 'chuc_vu': obj.chuc_vu, 'doan_tkt': obj.doan_tkt}
 
     return JsonResponse({'user': user})
 
