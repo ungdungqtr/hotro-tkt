@@ -72,7 +72,7 @@ class lap_qd_ktra:
 
     def kh_gsat(self):
         # document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media/2.kh_giam_sat.docx"))
-        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "1.kh_giam_sat.docx"))
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "1.kh_giam_sat_ktr.docx"))
         ghi_du_lieu_para(document, self.tt_qd)
         filename = self.tt_qd["<mst>"] + "_KH_giam_sat.docx"
         # path = os.path.join(settings.STATICFILES_DIRS[0], "media_store/" + filename)
@@ -133,7 +133,7 @@ class lap_qd_ttra:
     
     def qd_gsat(self):
         # document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media/2.qd_giam_sat _ttr.docx"))
-        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "2.qd_giam_sat _ttr.docx"))
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "2.qd_giam_sat_ttr.docx"))
         ghi_du_lieu_para(document, self.tt_qd)
         filename = self.tt_qd["<mst>"] + "_QD_giam_sat.docx"
         # path = os.path.join(settings.STATICFILES_DIRS[0], "media_store/" + filename)
@@ -143,7 +143,7 @@ class lap_qd_ttra:
     
     def kh_gsat(self):
         # document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media/2.kh_giam_sat.docx"))
-        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "2.kh_giam_sat.docx"))
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "2.kh_giam_sat_ttr.docx"))
         ghi_du_lieu_para(document, self.tt_qd)
         filename = self.tt_qd["<mst>"] + "_KH_giam_sat.docx"
         # path = os.path.join(settings.STATICFILES_DIRS[0], "media_store/" + filename)
@@ -193,6 +193,60 @@ class lap_qd_ttra:
         for file in os.listdir(media_store):
             path = os.path.join(media_store, file)
             os.remove(path)
+
+class lap_qd_ktra_hoan_gtgt:
+    def __init__(self, tt_qd, doan_ktra):
+            self.tt_qd = tt_qd
+            self.doan_ktra = doan_ktra
+
+    def to_trinh(self):
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "3.to_trinh_ktr_hoan_gtgt.docx"))
+        ghi_du_lieu_para(document, self.tt_qd)
+        filename = self.tt_qd["<mst>"] + "_To_trinh.docx"
+        path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", filename)   
+        document.save(path)
+        return path
+
+    def qd_gsat(self):
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "3.qd_giam_sat_hoan_gtgt.docx"))
+        ghi_du_lieu_para(document, self.tt_qd)
+        filename = self.tt_qd["<mst>"] + "_QD_giam_sat.docx"
+        path = os.path.join(settings.STATICFILES_DIRS[0], "media_store/" + filename)   
+        document.save(path)
+        return path
+
+    def kh_gsat(self):
+        # document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media/2.kh_giam_sat.docx"))
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "3.kh_giam_sat_hoan_gtgt.docx"))
+        ghi_du_lieu_para(document, self.tt_qd)
+        filename = self.tt_qd["<mst>"] + "_KH_giam_sat.docx"
+        # path = os.path.join(settings.STATICFILES_DIRS[0], "media_store/" + filename)
+        path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", filename)
+        document.save(path)
+        return path
+    
+    def qd_ktra(self):
+        # document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media/2.qd_ttra.docx"))
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "3.qd_ktra_hoan_gtgt.docx"))
+        ghi_du_lieu_para(document, self.tt_qd)
+        # ghi dữ liệu thành phần đoàn
+        table = document.tables[0]
+        # del_row(table, len(doan_ktra['<ten_cb>']), len(table.rows))
+        for i in range(len(self.doan_ktra['<ten_cb>'])):
+            row = table.rows[i]
+            for k,v in self.doan_ktra.items():
+                ghi_du_lieu_cell(row, k, v[i])
+        # Xóa các hàng không có dữ liệu
+        del_row(table, len(self.doan_ktra['<ten_cb>']) - 1, len(table.rows))
+        filename = self.tt_qd["<mst>"] + "_QD_kiem_tra.docx"
+        # path = os.path.join(settings.STATICFILES_DIRS[0], "media_store/" + filename)
+        path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", filename)
+        document.save(path)
+        return path
+
+# <ngay_thang>,<hs_hoan_so>, <hs_hoan_ngay>, <hoan_tien>, <sl_cb>, <cb_cv>, <so_ngay_ktra>, <ngay_ktra>
+# <ten_dv>, <mst>, <dia_chi>, <ky_hoan_thue>
+# <hinh_thuc_ky>, <LD_CUC>, <ld_cuc_ten>, <LD_PHONG>, <ld_phong_ten> 
 """ tt_qd = {
     '<qd_tkt_tct>': 'Quyết định số 2271/QĐ-TCT ngày 30 tháng 12 năm 2020', #qd ttr
     '<nam_qd_tkt_tct>': '2020',
@@ -224,28 +278,37 @@ doan_ttra = {
     "<cv_doan>" : ['Trưởng đoàn', 'Thành viên', 'Thành viên'],
 } """
 
-""" tt_qd = {
+tt_qd = {
     "<ngay_thang>": "ngày      tháng 3 năm 2021", # nhập tháng
-    "<so_qd>": "2271/QĐ-TCT của Tổng cục Thuế về việc phê duyệt kế hoạch thanh tra, kiểm tra thuế tại doanh nghiệp năm 2021", # nhập số QĐ
+    "<hs_hoan_so>": "01", 
+    "<hs_hoan_ngay>": "01/10/2021", 
+    "<hoan_tien>": "130.032.903.522",
+    "<ky_hoan_thue>": "tháng 2/2020 đến tháng 9/2021",
+    # "<so_qd>": "2271/QĐ-TCT của Tổng cục Thuế về việc phê duyệt kế hoạch thanh tra, kiểm tra thuế tại doanh nghiệp năm 2021", # nhập số QĐ
     "<ten_dv>" : "Công Ty TNHH Xây Dựng Thủy Điện Đakrông", # lấy từ dữ liệu
     "<mst>" : "3200172428", # nhập
     "<dia_chi>" : "Xã Gio Châu, huyện Gio Linh, tỉnh Quảng Trị", # lấy từ dữ liệu  
     "<sl_cb>" : "03", # đếm số lượng cán bộ
-    "<cb_cv>" : "Ông: Phạm Văn Vui – Phó trưởng phòng", # giới tính : tên - chức vụ (nếu có)
-    "<so_nam_ktra>" : "01", # nhập
-    "<nam_ktra>" : "2020", # tùy số lượng năm kiểm tra
+    "<cb_cv>" : "ông Phạm Văn Vui – Phó trưởng phòng", # giới tính : tên - chức vụ (nếu có)
+    # "<so_nam_ktra>" : "01", # nhập
+    # "<nam_ktra>" : "2020", # tùy số lượng năm kiểm tra
     "<so_ngay_ktra>" : "05", # nhập
     "<ngay_ktra>" : "ngày 02 tháng 3 năm 2021", # nhập
-    "<ng_giam_sat>" : "Ông Nguyễn Tiền Hải", # nhập
+    "<ng_giam_sat>" : "ông Nguyễn Tiền Hải", # nhập
+    '<Ng_giam_sat>' : "Ông Nguyễn Tiền Hải",
     "<ng_giam_sat_cv>" : "Phó Trưởng phòng", # lấy từ dữ liệu
-    "<ld_to_trinh>" : "phó trưởng phòng".upper(), # chọn ['phó trưởng phòng', 'trưởng phòng']
-    "<ten_ld_to_trinh>" : "nguyễn tiền hải".title (), # nhập
+    "<LD_PHONG>" : "phó trưởng phòng".upper(), # chọn ['phó trưởng phòng', 'trưởng phòng']
+    '<ld_phong>' : "Phó trưởng phòng",
+    "<ld_phong_ten>" : "nguyễn tiền hải".title (), # nhập
     "<hinh_thuc_ky>" : "KT.CỤC TRƯỞNG", # chọn
-    "<lq_qd>" : "PHÓ CỤC TRƯỞNG",
-    "<ten_ld_qd>" : "dương quốc hoàn".title(), # nhập
+    "<LD_CUC>" : "PHÓ CỤC TRƯỞNG", 
+    "<ld_cuc_ten>" : "dương quốc hoàn".title(), # nhập
 }
 doan_ktra = {
     "<ten_cb>" : ['Ông: Phạm Văn Vui', 'Bà: Nguyễn Thị Thanh Huyền', "Bà: Hà Thị Thanh Thủy"],
-    "<ngach_cb>" : ['Kiểm soát viên thuế', 'Kiểm tra viên thuế', 'Kiểm soát viên thuế'],
+    "<cv_cb>" : ['Phó trưởng phòng', 'Kiểm tra viên chính thuế', 'Kiểm soát viên thuế'],
     "<cv_doan>" : ['Trưởng đoàn', 'Thành viên', 'Thành viên'],
-} """
+}
+
+# hoan_gtgt = lap_qd_ktra_hoan_gtgt(tt_qd, doan_ktra)
+# print(hoan_gtgt.qd_ktra())
