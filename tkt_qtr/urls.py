@@ -16,6 +16,8 @@ urlpatterns = [
     path('lap_qd_ttra/mst_autocomplete/', views.mst_autocomplete, name = 'mst_autocomplete'),
     path('lap_qd_ttra/nnt_thong_tin/', views.nnt_thong_tin, name = 'nnt_thong_tin'),
     path('lap_qd_ttra/cb_thong_tin/', views.cb_thong_tin, name = 'cb_thong_tin'),
+    # Lập quyết định kiểm tra trước hoàn thuế GTGT
+    path('lap_qd_ktr_truoc_hoan/', views.lap_qd_ktra_trc_hoan, name = 'lap_qd_ktra_trc_hoan'),
     # Quản lý cán bộ
     path('qly_cb/', views.qly_cb, name = 'qly_cb'),
     path('qly_cb/them_moi_cb/', views.them_moi_cb, name = 'them_moi_cb'),

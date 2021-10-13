@@ -278,8 +278,8 @@ def lap_qd_ktra(request):
         raise Http404
     return render(request, 'tkt_qtr/lap_qd_ktra.html', context=context)
 
-def truong_doan_cv(truong_doan):
-    return truong_doan.ngach_cb if truong_doan.chuc_vu == 'Công chức' else truong_doan.chuc_vu
+# def truong_doan_cv(truong_doan):
+#     return truong_doan.ngach_cb if truong_doan.chuc_vu == 'Công chức' else truong_doan.chuc_vu
 
 def leading_zero(s, max):
     s = int(s)
@@ -322,6 +322,14 @@ def cb_ten_autocomplete(request):
         # titles = [product.title for product in qs]
         return JsonResponse(ten, safe=False)
     return render(request, 'tkt_qtr/lap_qd_ktra.html')
+
+# Lập quyết định kiểm tra trước hoàn thuế GTGT
+#########################################################################################
+#########################################################################################
+#########################################################################################
+
+def lap_qd_ktra_trc_hoan(request):
+    return render(request, 'tkt_qtr/lap_qd_ktra_trc_hoan.html')#, context=context)
 
 # Quản lý cán bộ
 #########################################################################################

@@ -1,0 +1,70 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row" style=" padding: 20px 0 20px 0;">
+        <h3 style="margin: auto;">LẬP QUYẾT ĐỊNH KIỂM TRA TRƯỚC HOÀN THUẾ GTGT</h3>
+    </div>   
+    <div class="row" style="margin-left: 15%;">
+        <form action="" method='POST' id="qd_ktra"> {% csrf_token %}            
+            <p>Thời gian lập Quyết định: <input class="ngay_thang" name="ngay_thang" type="text" size="6" style="text-align: center" required></p>
+            <P>Căn cứ hồ sơ đề nghị hoàn thuế GTGT số <input class="hs_hoan_so" name="hs_hoan_so" type="number" min="1" style="width: 48px; text-align: right" required>HTGTGT/PL ngày
+            <input class="hs_hoan_ngay" name="hs_hoan_ngay" type="text" size="6" style="text-align: center" required>
+            </P>
+            <p>Phòng Thanh tra - Kiểm tra tiến hành kiểm tra trước hoàn thuế đối với:</p>
+            <p class="ten_dv" style="margin-left: 5%; font-weight: bold;"></p>
+            <p style="margin-left: 5%; font-weight: bold;">Mã số thuế: <input class="mst" name="mst" type="text" size="12" minlength="10" maxlength="14" style="text-align: right" required></p>
+            <p class="dia_chi" style="margin-left: 5%; font-weight: bold;"></p>
+            <p>- Thời kỳ kiểm tra hoàn thuế: từ
+                <select name="kk_theo_1" class="kk_theo_1" required>
+                    <option value="tháng">tháng</option>
+                    <option value="quý">quý</option>
+                </select>
+            <input class="tgian_1" name="tgian_1" type="text" size="8" style="text-align: center" required> đến 
+            <p name="kk_theo_2" class="kk_theo_2"></p>
+            <input class="tgian_2" name="tgian_2" type="text" size="8" style="text-align: center" required>
+            số tiền là <input class="hoan_tien" name="hoan_tien" type="text" size="8" style="text-align: right" required> đồng</p>
+            <p>- Thành phần Đoàn kiểm tra gồm có:</p>
+            <div class="table-responsive" style="margin-left: 5%;">
+                <table class="table table-sm table-borderless" style="border-style:none;">
+                    <tbody id="tbody">
+
+                    </tbody>
+                </table>
+            </div>
+            <button class="btn btn-md btn-primary" id="addBtn" type="button">
+                Thêm thành viên
+            </button>
+            <p style="margin-top: 20px;">- Thời gian kiểm tra <input class="so_ngay_ktra" name="so_ngay_ktra" type="number" min="1" style="width: 48px; text-align: right" required> ngày, dự kiến từ ngày 
+            <input class="ngay_ktra" name="ngay_ktra" type="text" size="8" style="text-align: center" required></p>
+
+            <table class="table table-sm table-borderless text-center" style="width:100%; font-weight: bold; margin: auto;">
+                <thead>
+                    <tr>
+                        <th colspan='2'>Lãnh đạo phê duyệt</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ld_phong.ld_cv|upper}}</td>
+                        <td>{{ld_cuc.ld_cv|upper}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ld_phong.ld_ten}}</td>
+                        <td>{{ld_cuc.ld_ten}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><button type="submit" class="btn btn-primary mt-4 kx_qd_ktra">Lập QĐ</button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </form>
+    </div>
+</div>
+{% endblock content %}
+
+{% block script %}
+<script src={% static 'js/lap_qd_ktra.js' %} type="text/javascript"></script>
+{% endblock script %}
