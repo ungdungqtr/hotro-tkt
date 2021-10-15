@@ -355,11 +355,10 @@ def lap_qd_ktra_trc_hoan(request):
             '<ky_hoan_thue>' : kk_theo + " " + tgian[0] + " đến " + kk_theo + " " + tgian[1],
             '<hoan_tien>' : request.POST['hoan_tien'],
             '<ngay_thang>' : "ngày      tháng " + leading_zero(ngay_thang[0], 3) + " năm " + ngay_thang[1],
-            '<ten_dv>' : nnt.ten_nnt,# nnt(mst)['ten_nnt'],
+            '<ten_dv>' : nnt.ten_nnt,
             '<mst>' : mst,
-            '<dia_chi>' : nnt.dia_chi,# nnt(mst)['dia_chi'],
+            '<dia_chi>' : nnt.dia_chi,
             "<sl_cb>" : f"{len(thanh_vien):02d}",
-            '<truong_doan_ttr>': thanh_vien[0],
             "<cb_cv>" : truong_doan.gioi_tinh.lower() + " " + thanh_vien[0] + " - " + truong_doan.chuc_vu,
             '<so_ngay_ktra>' : f"{int(request.POST['so_ngay_ktra']):02d}",         
             '<ngay_ktra>' : "ngày " + ngay_ktra[0] + " tháng " + leading_zero(ngay_ktra[1], 3) + " năm " + ngay_ktra[2],
@@ -391,6 +390,73 @@ def lap_qd_ktra_trc_hoan(request):
         # If file is not exists
         raise Http404
     return render(request, 'tkt_qtr/lap_qd_ktra_trc_hoan.html', context=context)
+
+# Lập quyết định kiểm tra giải thể
+#########################################################################################
+#########################################################################################
+#########################################################################################
+def lap_qd_ktra_giai_the(request):
+    qd_tkt_tct = CanCu.objects.all()[0]
+    ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='Cục')[0]
+    ld_phong = LdPheDuyet.objects.filter(ld_cv__contains='phòng')[0]
+    context = {
+        'ld_cuc': ld_cuc,
+        'ld_phong': ld_phong
+    }
+    if request.method == 'POST':
+        mst = request.POST['mst']
+        nnt = NNT.objects.get(mst=mst)
+        ngay_thang = request.POST['ngay_thang'].split("/")
+        ngay_ktra = request.POST['ngay_ktra'].split("/")
+        thanh_vien = request.POST.getlist('thanh_vien', None)
+        cv = ['Trưởng đoàn']
+        cv.extend(["Thành viên"] * (len(thanh_vien)-1))
+        truong_doan = CanBo.objects.get(ten_cb=thanh_vien[0])
+        doan_ktra = {
+            "<ten_cb>" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + ": " + tv) for tv in thanh_vien],
+            "<cv_cb>" : [CanBo.objects.get(ten_cb=tv).chuc_vu for tv in thanh_vien],
+            "<cv_doan>" : cv
+        }
+        tt_qd = { 
+            '<ngay_thang>' : "ngày      tháng " + leading_zero(ngay_thang[0], 3) + " năm " + ngay_thang[1],
+            "<phieu_xly_ngay>": request.POST['phieu_xly_ngay'],
+            '<ten_dv>' : nnt.ten_nnt,
+            '<mst>' : mst,
+            '<dia_chi>' : nnt.dia_chi,
+            '<nam_ktra>' : request.POST['nam_ktra'],
+            "<sl_cb>" : f"{len(thanh_vien):02d}",
+            "<cb_cv>" : truong_doan.gioi_tinh.lower() + " " + thanh_vien[0] + " - " + truong_doan.chuc_vu,
+            '<so_ngay_ktra>' : f"{int(request.POST['so_ngay_ktra']):02d}",         
+            '<ngay_ktra>' : "ngày " + ngay_ktra[0] + " tháng " + leading_zero(ngay_ktra[1], 3) + " năm " + ngay_ktra[2],
+            '<dia_diem_ktra>': request.POST['dia_diem_ktra'],
+            '<ng_giam_sat>' : ld_phong.ld_gt.lower() + " " + ld_phong.ld_ten,
+            '<Ng_giam_sat>' : ld_phong.ld_gt + " " + ld_phong.ld_ten,
+            '<ng_giam_sat_cv>' : ld_phong.ld_cv, 
+            '<LD_PHONG>' : ld_phong.ld_cv.upper(),
+            '<ld_phong>' : ld_phong.ld_cv,
+            '<ld_phong_ten>' : ld_phong.ld_ten,
+            '<LD_CUC>' : ld_cuc.ld_cv.upper() if ld_cuc.ld_cv != 'Cục trưởng' else '',
+            '<ld_cuc_ten>' : ld_cuc.ld_ten,
+            '<hinh_thuc_ky>' : ky_ten[ld_cuc.ld_cv.upper()],
+        }       
+        QD = process_data.lap_qd_ktra_giai_the(tt_qd, doan_ktra)
+        QD.empty_media()
+        file_path = [QD.to_trinh(), QD.qd_ktra(), QD.qd_gsat(), QD.kh_gsat()]
+        zip_path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", mst + "_QD_ktra_giai_the.zip")
+        # writing files to a zipfile
+        with ZipFile(zip_path,'w') as zip:
+            # writing each file one by one
+            for path in file_path:
+                zip.write(path, os.path.basename(path))
+        # Full path of file
+        if os.path.exists(zip_path):
+            with open(zip_path, 'rb') as fh:
+                response = HttpResponse(fh.read(), content_type="application/force_download")
+                response['Content-Disposition'] = 'inline; filename=' + os.path.basename(zip_path)
+                return response
+        # If file is not exists
+        raise Http404
+    return render(request, 'tkt_qtr/lap_qd_ktra_giai_the.html', context=context)
 
 # Quản lý cán bộ
 #########################################################################################

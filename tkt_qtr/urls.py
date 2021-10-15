@@ -22,6 +22,12 @@ urlpatterns = [
     path('lap_qd_ktr_truoc_hoan/cb_ten_autocomplete/', views.cb_ten_autocomplete, name = 'cb_ten_autocomplete'),
     path('lap_qd_ktr_truoc_hoan/nnt_thong_tin/', views.nnt_thong_tin, name = 'nnt_thong_tin'),
     path('lap_qd_ktr_truoc_hoan/cb_thong_tin/', views.cb_thong_tin, name = 'cb_thong_tin'),
+    # Lập quyết định kiểm tra giải thể
+    path('lap_qd_ktra_giai_the/', views.lap_qd_ktra_giai_the, name = 'lap_qd_ktra_giai_the'),
+    path('lap_qd_ktra_giai_the/mst_autocomplete/', views.mst_autocomplete, name = 'mst_autocomplete'),
+    path('lap_qd_ktra_giai_the/cb_ten_autocomplete/', views.cb_ten_autocomplete, name = 'cb_ten_autocomplete'),
+    path('lap_qd_ktra_giai_the/nnt_thong_tin/', views.nnt_thong_tin, name = 'nnt_thong_tin'),
+    path('lap_qd_ktra_giai_the/cb_thong_tin/', views.cb_thong_tin, name = 'cb_thong_tin'),   
     # Quản lý cán bộ
     path('qly_cb/', views.qly_cb, name = 'qly_cb'),
     path('qly_cb/them_moi_cb/', views.them_moi_cb, name = 'them_moi_cb'),
