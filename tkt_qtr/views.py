@@ -219,7 +219,9 @@ def lap_qd_ktra(request):
     if request.method == 'POST':
         mst = request.POST['mst']
         nnt = NNT.objects.get(mst=mst)
-        ngay_thang = request.POST['ngay_thang'].split("/")
+        # ngay_thang = request.POST['ngay_thang'].split("/")
+        thang = leading_zero(request.POST['ngay_thang_1'], 3)
+        nam = ngay_thang = request.POST['ngay_thang_2']
         ngay_ktra = request.POST['ngay_ktra'].split("/")     
         thanh_vien = request.POST.getlist('thanh_vien', None)
         cv = ['Trưởng đoàn']
@@ -231,7 +233,8 @@ def lap_qd_ktra(request):
         }
         truong_doan = CanBo.objects.get(ten_cb=thanh_vien[0])
         tt_qd = { 
-            '<ngay_thang>' : "ngày      tháng " + leading_zero(ngay_thang[0], 3) + " năm " + ngay_thang[1],
+            '<ngay_thang>' : "ngày      tháng " + thang + " năm " + nam,
+            # '<ngay_thang>' : "ngày      tháng " + leading_zero(ngay_thang[0], 3) + " năm " + ngay_thang[1],
             '<qd_tkt_tct>': 'Quyết định số '+ qd_tkt_tct.so_qd,
             '<qd_tkt_tct_ngay_ban_hanh>': qd_tkt_tct.ngay_qd.strftime(" ngày %d tháng %m") + " năm " + qd_tkt_tct.ngay_qd.strftime("%Y"),
             '<nam_kh_tkt>': datetime.now().strftime("%Y"),

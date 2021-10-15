@@ -7,14 +7,14 @@
         <h3 style="margin: auto;">LẬP QUYẾT ĐỊNH KIỂM TRA DOANH NGHIỆP</h3>
     </div>   
     <div class="row" style="margin-left: 15%;">
-        <form action="" method='POST' id="qd_ktra"> {% csrf_token %}            
-            <p>Thời gian lập Quyết định: <input class="ngay_thang" name="ngay_thang" type="text" size="6" style="text-align: center" required></p>
+        <form action="" method='POST' id="qd_ktra"> {% csrf_token %}    
+            {% comment %} <p>Thời gian lập Quyết định: <input class="ngay_thang" name="ngay_thang" type="text" size="6" style="text-align: center" required></p> {% endcomment %}
             <p>Phòng Thanh tra - Kiểm tra tiến hành kiểm tra chấp hành Pháp Luật Thuế thuế đối với:</p>
             <p class="ten_dv" style="margin-left: 5%; font-weight: bold;"></p>
             <p style="margin-left: 5%; font-weight: bold;">Mã số thuế: <input class="mst" name="mst" type="text" size="12" minlength="10" maxlength="14" style="text-align: right" required></p>
             <p class="dia_chi" style="margin-left: 5%; font-weight: bold;"></p>
             <p>- Thời kỳ tiến hành kiểm tra: <input class="so_nam_ktra" name="so_nam_ktra" type="number" min="1" style="width: 48px; text-align: right" required> năm, 
-            năm <input class="nam_ktra" name="nam_ktra" type="text" size="16" style="text-align: center" required></p>
+            năm <input class="nam_ktra" name="nam_ktra" type="text" size="8" style="text-align: center" required></p>
             <p>- Thành phần Đoàn kiểm tra gồm có:</p>
             <div class="table-responsive" style="margin-left: 5%;">
                 <table class="table table-sm table-borderless" style="border-style:none;">
@@ -29,22 +29,25 @@
             <p style="margin-top: 20px;">- Thời gian kiểm tra <input class="so_ngay_ktra" name="so_ngay_ktra" type="number" min="1" style="width: 48px; text-align: right" required> ngày, dự kiến từ ngày 
             <input class="ngay_ktra" name="ngay_ktra" type="text" size="8" style="text-align: center" required></p>
 
-            <table class="table table-sm table-borderless text-center" style="width:100%; font-weight: bold; margin: auto;">
-                <thead>
-                    <tr>
-                        <th colspan='2'>Lãnh đạo phê duyệt</th>
-                    </tr>
-                </thead>
+            <table class="table table-sm table-borderless text-center" style="width:100%;">
                 <tbody>
-                    <tr>
+                    <tr style="text-align: right;">
+                        <td colspan='2'>
+                            <p><em>Quảng Trị, ngày&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tháng <input class="ngay_thang_1" name="ngay_thang_1" type="text" size="1" style="text-align: center" required> năm <input class="ngay_thang_2" name="ngay_thang_2" type="text" size="1" style="text-align: center" required></em></p>
+                        </td>
+                    </tr>
+                    <tr style="font-weight:bold;">
+                        <td colspan='2'>Lãnh đạo phê duyệt</td>
+                    </tr>
+                    <tr style="font-weight:bold;">
                         <td>{{ld_phong.ld_cv|upper}}</td>
                         <td>{{ld_cuc.ld_cv|upper}}</td>
                     </tr>
-                    <tr>
+                    <tr style="font-weight:bold;">
                         <td>{{ld_phong.ld_ten}}</td>
                         <td>{{ld_cuc.ld_ten}}</td>
                     </tr>
-                    <tr>
+                    <tr style="font-weight:bold;">
                         <td colspan="2"><button type="submit" class="btn btn-primary mt-4 kx_qd_ktra">Lập QĐ</button></td>
                     </tr>
                 </tbody>

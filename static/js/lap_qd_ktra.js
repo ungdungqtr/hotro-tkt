@@ -4,10 +4,15 @@ $(document).ready(function () {
         delimiter: '/',
         datePattern: ['d','m','Y']
     });
-    new Cleave('.ngay_thang', {
+    new Cleave('.ngay_thang_1', {
         date: true,
         delimiter: '/',
-        datePattern: ['m','Y']
+        datePattern: ['m']
+    });
+    new Cleave('.ngay_thang_2', {
+        date: true,
+        delimiter: '/',
+        datePattern: ['Y']
     });
     // jQuery button click event to add a row.
     var rowIdx = 0; 
