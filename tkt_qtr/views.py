@@ -96,8 +96,7 @@ def read_csv_setting(MEDIA_ROOT, filename):
                 obj = CanBo.objects.create(
                     ten_cb = row[1],
                     gioi_tinh = row[2],
-                    chuc_vu = row[3],
-                    doan_tkt = row[4]
+                    chuc_vu = row[3]
                 )
         if 'NNT' in filename:
             NNT.objects.all().delete()
@@ -111,7 +110,6 @@ def read_csv_setting(MEDIA_ROOT, filename):
         if 'QD' in filename:
             CanCu.objects.all().delete()
             for row in csvreader:
-                print(row)
                 obj = CanCu.objects.create(
                     so_qd = row[1],
                     ten_qd = row[2],

@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'tkt-qtr-2',
+        'NAME': 'tkt-qtr',
         'USER': 'postgres',
         'PASSWORD': 'cntt-qtr',
         'HOST': 'localhost',
