@@ -351,7 +351,7 @@ def lap_qd_ktra_trc_hoan(request):
             "<cv_doan>" : cv
         }
         tt_qd = { 
-            '<hs_hoan_so>' : f"{len(request.POST['hs_hoan_so']):02d}",
+            '<hs_hoan_so>' : request.POST['hs_hoan_so'],
             '<hs_hoan_ngay>' : request.POST['hs_hoan_ngay'],
             '<ky_hoan_thue>' : kk_theo + " " + tgian[0] + " đến " + kk_theo + " " + tgian[1],
             '<hoan_tien>' : request.POST['hoan_tien'],
