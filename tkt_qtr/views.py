@@ -355,6 +355,8 @@ def lap_qd_ktra_trc_hoan(request):
             '<hs_hoan_ngay>' : request.POST['hs_hoan_ngay'],
             '<ky_hoan_thue>' : kk_theo + " " + tgian[0] + " đến " + kk_theo + " " + tgian[1],
             '<hoan_tien>' : request.POST['hoan_tien'],
+            '<th_hoan>': request.POST['th_hoan'],
+            '<dia_diem_ktra>' : request.POST['dia_diem_ktra'],
             '<ngay_thang>' : "ngày      tháng " + leading_zero(ngay_thang[0], 3) + " năm " + ngay_thang[1],
             '<ten_dv>' : nnt.ten_nnt,
             '<mst>' : mst,

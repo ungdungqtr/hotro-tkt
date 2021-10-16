@@ -9,7 +9,7 @@
     <div class="row" style="margin-left: 15%;">
         <form action="" method='POST' id="qd_ktra"> {% csrf_token %}            
             <p>Thời gian lập Quyết định: <input class="ngay_thang" name="ngay_thang" type="text" size="6" style="text-align: center" required></p>
-            <P>Căn cứ hồ sơ đề nghị hoàn thuế GTGT số <input class="hs_hoan_so" name="hs_hoan_so" type="number" min="1" style="width: 48px; text-align: right" required>HTGTGT/PL ngày
+            <P>Căn cứ hồ sơ đề nghị hoàn thuế GTGT số <input class="hs_hoan_so" name="hs_hoan_so" type="text" style="width: 120px; text-align: right" required> ngày
             <input class="hs_hoan_ngay" name="hs_hoan_ngay" type="text" size="8" style="text-align: center" required>
             </P>
             <p>Phòng Thanh tra - Kiểm tra tiến hành kiểm tra trước hoàn thuế đối với:</p>
@@ -22,6 +22,18 @@
                     <option value="quý">quý</option>
                 </select>
             <input class="tgian_1" name="tgian" type="text" size="4" style="text-align: center" required> đến <input class="tgian_2" name="tgian" type="text" size="4" style="text-align: center" required> số tiền là <input class="hoan_tien" name="hoan_tien" type="text" min="1" style="width: 120px; text-align: right" required> đồng</p>
+            <p>- Trường hợp hoàn:
+                <select class="form-control" name="th_hoan" style="width: 390px; display:inline;">
+                    <option value="Hoàn thuế GTGT đối với dự án đầu tư">Hoàn thuế GTGT đối với dự án đầu tư</option>
+                    <option value="Hoàn thuế GTGT đối với hàng hóa, DV xuất khẩu">Hoàn thuế GTGT đối với hàng hóa, DV xuất khẩu</option>
+                </select>
+            </p>
+            <p>- Địa điểm:  
+                <select name="dia_diem_ktra" class="form-control" style="width: 240px; display:inline;" required>
+                    <option value="tại trụ sở của cơ quan thuế">tại trụ sở của cơ quan thuế</option>
+                    <option value="tại trụ sở của NNT">tại trụ sở của NNT</option>
+                </select> 
+            </p>
             <p>- Thành phần Đoàn kiểm tra gồm có:</p>
             <div class="table-responsive" style="margin-left: 5%;">
                 <table class="table table-sm table-borderless" style="border-style:none;">

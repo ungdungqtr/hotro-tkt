@@ -6,7 +6,6 @@ class CanBo(models.Model):
     # ngach_cb = models.CharField(max_length=30, default='')
     gioi_tinh = models.CharField(max_length=3, default='')
     chuc_vu = models.CharField(max_length=30, default='')
-    doan_tkt = models.CharField(max_length=20, default='')
 
 class NNT(models.Model):
     mst = models.CharField(max_length=14, unique=True, default='')
