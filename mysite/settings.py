@@ -26,18 +26,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-(7pxczn8!=*q7e&)^603wlh#wp%(dnej$s7_-gpdr+jy)08wsu'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = False
+DEBUG = True
+# DEBUG = False
 
 if DEBUG:
     ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 else:
-    ALLOWED_HOSTS = ['.herokuapp.com/']
+    ALLOWED_HOSTS = ["127.0.0.1",".herokuapp.com/"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    # 'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -95,19 +96,9 @@ DATABASES = {
     }
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'd756u6hioceojh',
-#         'USER': 'gmzaojkpchcvbm',
-#         'PASSWORD': 'cntt-qtr',
-#         'HOST': 'ec2-52-72-125-94.compute-1.amazonaws.com',
-#         'PORT': '5432',
-#     }
-# }
+WHITENOISE_USE_FINDERS = True
 
-db_from_env = dj_database_url.config()
-DATABASES['default'].update(db_from_env)
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -154,6 +145,9 @@ else:
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
