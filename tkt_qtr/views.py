@@ -527,34 +527,28 @@ def xoa_cb(request):
 #########################################################################################
 def dba_nnt(request):
     dba = NNT.objects.all()
-    page = request.GET.get('page', 1)
 
-    paginator = Paginator(dba, 50)
-
-    try:
-        dba = paginator.page(page)
-    except PageNotAnInteger:
-        dba = paginator.page(1)
-    except EmptyPage:
-        dba = paginator.page(paginator.num_pages)
     return render(request, 'tkt_qtr/dba_nnt.html', {'dba': dba})
 
 def them_moi_nnt(request):
     mst_1 = request.GET.get('mst', None)
-    ten_nnt_1 = request.GET.get('ten_nnt', None)
-    dia_chi_1 = request.GET.get('dia_chi', None)
-    cqt_1 = request.GET.get('cqt', None)
+    try:
+        search = NNT.objects.get(mst=mst_1)
+    except ObjectDoesNotExist:
+        ten_nnt_1 = request.GET.get('ten_nnt', None)
+        dia_chi_1 = request.GET.get('dia_chi', None)
+        cqt_1 = request.GET.get('cqt', None)
 
-    obj = NNT.objects.create(
-        mst = mst_1,
-        ten_nnt = ten_nnt_1,
-        dia_chi = dia_chi_1,
-        cqt = cqt_1
-    )
-
-    nnt = {'id': obj.id, 'mst': obj.mst, 'ten_nnt': obj.ten_nnt, 'dia_chi': obj.dia_chi, 'cqt': obj.cqt}
-
-    return JsonResponse({'nnt': nnt})
+        obj = NNT.objects.create(
+            mst = mst_1,
+            ten_nnt = ten_nnt_1,
+            dia_chi = dia_chi_1,
+            cqt = cqt_1
+        )
+        nnt = {'id': obj.id, 'mst': obj.mst, 'ten_nnt': obj.ten_nnt, 'dia_chi': obj.dia_chi, 'cqt': obj.cqt}
+        return JsonResponse({'nnt': nnt})
+    else:
+        return JsonResponse({})
 
 def cap_nhat_nnt(request):
     id_1 = request.GET.get('id', None)

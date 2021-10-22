@@ -3,15 +3,14 @@ from django.db import models
 # Create your models here.
 class CanBo(models.Model):
     ten_cb = models.CharField(max_length=30, default='')
-    # ngach_cb = models.CharField(max_length=30, default='')
     gioi_tinh = models.CharField(max_length=3, default='')
     chuc_vu = models.CharField(max_length=30, default='')
 
 class NNT(models.Model):
-    mst = models.CharField(max_length=14, unique=True, default='')
-    ten_nnt = models.CharField(max_length=120, default='')
-    dia_chi = models.CharField(max_length=255, default='')
-    cqt = models.CharField(max_length=50, default='')
+    mst = models.CharField(max_length=14, unique=True, blank=True, null=True)
+    ten_nnt = models.CharField(max_length=120, blank=True, null=True)
+    dia_chi = models.CharField(max_length=255, blank=True, null=True)
+    cqt = models.CharField(max_length=50, blank=True, null=True)
 
 class CanCu(models.Model):
     so_qd= models.CharField(max_length=25, default='')

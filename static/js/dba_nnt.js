@@ -18,7 +18,25 @@ $(document).ready(function () {
             $(this).val('');
         }
     });
+
+    $("#userTable").fancyTable({
+        sortColumn: 0, // column number for initial sorting
+        sortOrder: 'ascending', // 'desc', 'descending', 'asc', 'ascending', -1 (descending) and 1 (ascending)
+        sortable: true,
+        // pagination: true, // default: false
+        searchable: true,
+        globalSearch: true,
+        globalSearchExcludeColumns: [4,5], // exclude column 2 & 5
+
+        pagination: true,
+        paginationClass: "btn btn-success",
+        paginationClassActive: "active",
+        pagClosest: 3,
+        perPage: 15,
+    });
+
     
+
     $('form#them_nnt').submit(function () { 
         // e.preventDefault();
         var mstInput = $('input[name="mst"]').val().trim();
@@ -40,6 +58,8 @@ $(document).ready(function () {
                 success: function (data) {
                     if (data.nnt) {
                         appendToUsrTable(data.nnt);
+                    } else {
+                        alert("MST đã được tạo");
                     }
                 }
             });
