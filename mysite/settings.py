@@ -32,7 +32,7 @@ DEBUG = False
 if DEBUG:
     ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 else:
-    ALLOWED_HOSTS = ['.herokuapp.com/']
+    ALLOWED_HOSTS = ['demo-tkt.herokuapp.com/']
 
 
 # Application definition
