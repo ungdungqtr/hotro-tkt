@@ -16,19 +16,40 @@
             <p class="ten_dv" style="margin-left: 5%; font-weight: bold;"></p>
             <p style="margin-left: 5%; font-weight: bold;">Mã số thuế: <input class="mst" name="mst" type="text" size="12" minlength="10" maxlength="14" style="text-align: right" required></p>
             <p class="dia_chi" style="margin-left: 5%; font-weight: bold;"></p>
-            <p>- Thời kỳ kiểm tra hoàn thuế: từ
+            <p>- Thời kỳ kiểm tra hoàn thuế: từ 
                 <select class="kk_theo" name="kk_theo" required>
                     <option value="tháng">tháng</option>
                     <option value="quý">quý</option>
                 </select>
             <input class="tgian_1" name="tgian" type="text" size="4" style="text-align: center" required> đến <input class="tgian_2" name="tgian" type="text" size="4" style="text-align: center" required> số tiền là <input class="hoan_tien" name="hoan_tien" type="text" min="1" style="width: 120px; text-align: right" required> đồng</p>
-            <p>- Trường hợp hoàn:
-                <select class="form-control" name="th_hoan" style="width: 390px; display:inline;">
+            {% comment %} <p>- Trường hợp hoàn:
+                <select multiple  class="form-control" name="th_hoan" style="width: 390px; display:inline;">
                     <option value="Hoàn thuế GTGT đối với dự án đầu tư">Hoàn thuế GTGT đối với dự án đầu tư</option>
                     <option value="Hoàn thuế GTGT đối với hàng hóa, DV xuất khẩu">Hoàn thuế GTGT đối với hàng hóa, DV xuất khẩu</option>
+                    <option value="Hoàn thuế đối với tổ chức ở Việt Nam sử dụng tiền viện trợ nhân đạo của tổ chức, cá nhân nước ngoài để mua HHDV phục vụ cho chương trình, dự án viện trợ không hoàn lại, viện trợ nhân đạo tại Việt Nam">
+                        Hoàn thuế đối với tổ chức ở Việt Nam sử dụng tiền viện trợ nhân đạo của tổ chức, <br>cá nhân nước ngoài để mua HHDV phục vụ cho chương trình, dự án viện trợ không hoàn lại, viện trợ nhân đạo tại Việt Nam</option>
                 </select>
-            </p>
-            <p>- Địa điểm:  
+            </p> {% endcomment %}
+            <p>- Trường hợp hoàn:</p>
+                <div class="form-check" style="margin-left: 15px;">
+                    <input class="form-check-input" type="radio" name="th_hoan" id="Radios1" value="Hoàn thuế GTGT đối với dự án đầu tư" checked>
+                    <label class="form-check-label" for="Radios1">
+                        Hoàn thuế GTGT đối với dự án đầu tư
+                    </label>
+                </div>
+                <div class="form-check" style="margin-left: 15px;">
+                    <input class="form-check-input" type="radio" name="th_hoan" id="Radios2" value="Hoàn thuế GTGT đối với hàng hóa, DV xuất khẩu">
+                    <label class="form-check-label" for="Radios2">
+                        Hoàn thuế GTGT đối với hàng hóa, DV xuất khẩu
+                    </label>
+                </div>
+                <div class="form-check" style="margin-left: 15px;">
+                    <input class="form-check-input" type="radio" name="th_hoan" id="Radios3" value="Hoàn thuế đối với tổ chức ở Việt Nam sử dụng tiền viện trợ nhân đạo của tổ chức, cá nhân nước ngoài để mua HHDV phục vụ cho chương trình, dự án viện trợ không hoàn lại, viện trợ nhân đạo tại Việt Nam">
+                    <label class="form-check-label" for="Radios3">
+                        Hoàn thuế đối với tổ chức ở Việt Nam sử dụng tiền viện trợ nhân đạo của tổ chức, cá nhân nước ngoài<br> để mua HHDV phục vụ cho chương trình, dự án viện trợ không hoàn lại, viện trợ nhân đạo tại Việt Nam
+                    </label>
+                </div>
+            <p class="mt-3">- Địa điểm:  
                 <select name="dia_diem_ktra" class="form-control" style="width: 240px; display:inline;" required>
                     <option value="tại trụ sở của cơ quan thuế">tại trụ sở của cơ quan thuế</option>
                     <option value="tại trụ sở của NNT">tại trụ sở của NNT</option>
