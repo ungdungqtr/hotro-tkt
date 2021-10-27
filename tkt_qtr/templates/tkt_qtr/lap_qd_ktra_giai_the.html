@@ -36,23 +36,28 @@
                     <option value="tại trụ sở của NNT">tại trụ sở của NNT</option>
                 </select> 
             </p>
+            <p style="margin-top: 20px;">- Lập trình ký ngày <input class="trinh_ky" name="trinh_ky" type="text" size="8" style="text-align: center" required></p>
+
             {% comment %} <input class="dia_diem_ktra" name="dia_diem_ktra" type="text" style="width: 48px; text-align: right" required> {% endcomment %}
-            <table class="table table-sm table-borderless text-center" style="width:100%; font-weight: bold; margin: auto;">
-                <thead>
-                    <tr>
-                        <th colspan='2'>Lãnh đạo phê duyệt</th>
-                    </tr>
-                </thead>
+            <table class="table table-sm table-borderless text-center" style="width:100%;">
                 <tbody>
-                    <tr>
+                    <tr style="text-align: right;">
+                        <td colspan='2'>
+                            <p><em>Quảng Trị, ngày&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tháng <input class="ngay_thang_1" name="ngay_thang_1" type="text" size="1" style="text-align: center" required> năm <input class="ngay_thang_2" name="ngay_thang_2" type="text" size="1" style="text-align: center" required></em></p>
+                        </td>
+                    </tr>
+                    <tr style="font-weight:bold;">
+                        <td colspan='2'>Lãnh đạo phê duyệt</td>
+                    </tr>
+                    <tr style="font-weight:bold;">
                         <td>{{ld_phong.ld_cv|upper}}</td>
                         <td>{{ld_cuc.ld_cv|upper}}</td>
                     </tr>
-                    <tr>
+                    <tr style="font-weight:bold;">
                         <td>{{ld_phong.ld_ten}}</td>
                         <td>{{ld_cuc.ld_ten}}</td>
                     </tr>
-                    <tr>
+                    <tr style="font-weight:bold;">
                         <td colspan="2"><button type="submit" class="btn btn-primary mt-4 kx_qd_ktra">Lập QĐ</button></td>
                     </tr>
                 </tbody>

@@ -3,18 +3,18 @@ $(document).ready(function () {
         date: true,
         delimiter: '/',
         datePattern: ['d','m','Y']
-    });    
-    new Cleave('.phieu_xly_ngay', {
+    });
+    new Cleave('.trinh_ky', {
         date: true,
         delimiter: '/',
         datePattern: ['d','m','Y']
     });
-    new Cleave('.ngay_thang', {
+    new Cleave('.ngay_thang_1', {
         date: true,
         delimiter: '/',
-        datePattern: ['m','Y']
+        datePattern: ['m']
     });
-    new Cleave('.nam_ktra', {
+    new Cleave('.ngay_thang_2', {
         date: true,
         delimiter: '/',
         datePattern: ['Y']

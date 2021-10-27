@@ -4,21 +4,20 @@ $(document).ready(function () {
         delimiter: '/',
         datePattern: ['d','m','Y']
     });
-    new Cleave('.hs_hoan_ngay', {
+    new Cleave('.trinh_ky', {
         date: true,
         delimiter: '/',
         datePattern: ['d','m','Y']
     });
-    new Cleave('.ngay_thang', {
+    new Cleave('.ngay_thang_1', {
         date: true,
         delimiter: '/',
-        datePattern: ['m','Y']
+        datePattern: ['m']
     });
-    new Cleave('.hoan_tien', {
-        numeral: true,
-        numeralThousandsGroupStyle: 'thousand',
-        numeralDecimalMark: ',', 
-        delimiter: '.'
+    new Cleave('.ngay_thang_2', {
+        date: true,
+        delimiter: '/',
+        datePattern: ['Y']
     });
 /*     new Cleave('.tgian_1', {
         delimiter: '/',

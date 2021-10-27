@@ -142,7 +142,8 @@ def lap_qd_ktra(request):
         # ngay_thang = request.POST['ngay_thang'].split("/")
         thang = leading_zero(request.POST['ngay_thang_1'], 3)
         nam = ngay_thang = request.POST['ngay_thang_2']
-        ngay_ktra = request.POST['ngay_ktra'].split("/")     
+        trinh_ky =   request.POST['trinh_ky'].split("/")   
+        ngay_ktra = request.POST['ngay_ktra'].split("/")  
         thanh_vien = request.POST.getlist('thanh_vien', None)
         cv = ['Trưởng đoàn']
         cv.extend(["Thành viên"] * (len(thanh_vien)-1))
@@ -153,6 +154,7 @@ def lap_qd_ktra(request):
         }
         truong_doan = CanBo.objects.get(ten_cb=thanh_vien[0])
         tt_qd = { 
+            '<trinh_ky>' : "ngày " + trinh_ky[0] + " tháng " + leading_zero(trinh_ky[1], 3) + " năm " + trinh_ky[2],
             '<ngay_thang>' : "ngày      tháng " + thang + " năm " + nam,
             # '<ngay_thang>' : "ngày      tháng " + leading_zero(ngay_thang[0], 3) + " năm " + ngay_thang[1],
             '<qd_tkt_tct>': 'Quyết định số '+ qd_tkt_tct.so_qd,
@@ -266,7 +268,9 @@ def lap_qd_ttra(request):
     if request.method == 'POST':
         mst = request.POST['mst']
         nnt = NNT.objects.get(mst=mst)
-        ngay_thang = request.POST['ngay_thang'].split("/")
+        thang = leading_zero(request.POST['ngay_thang_1'], 3)
+        nam = ngay_thang = request.POST['ngay_thang_2']
+        trinh_ky =   request.POST['trinh_ky'].split("/")
         ngay_ktra = request.POST['ngay_ktra'].split("/")
         thanh_vien = request.POST.getlist('thanh_vien', None)
         cv = ['Trưởng đoàn']
@@ -278,10 +282,11 @@ def lap_qd_ttra(request):
             "<cv_doan>" : cv
         }
         tt_qd = { 
+            '<trinh_ky>' : "ngày " + trinh_ky[0] + " tháng " + leading_zero(trinh_ky[1], 3) + " năm " + trinh_ky[2],
             '<qd_tkt_tct>': 'Quyết định số '+ qd_tkt_tct.so_qd,
             '<qd_tkt_tct_ngay_ban_hanh>': qd_tkt_tct.ngay_qd.strftime(" ngày %d tháng %m") + " năm " + qd_tkt_tct.ngay_qd.strftime("%Y"),
             '<nam_kh_tkt>': datetime.now().strftime("%Y"),
-            '<ngay_thang>' : "ngày      tháng " + leading_zero(ngay_thang[0], 3) + " năm " + ngay_thang[1],
+            '<ngay_thang>' : "ngày      tháng " + thang + " năm " + nam,
             '<ten_dv>' : nnt.ten_nnt,# nnt(mst)['ten_nnt'],
             '<mst>' : mst,
             '<dia_chi>' : nnt.dia_chi,# nnt(mst)['dia_chi'],
@@ -338,7 +343,9 @@ def lap_qd_ktra_trc_hoan(request):
     if request.method == 'POST':
         mst = request.POST['mst']
         nnt = NNT.objects.get(mst=mst)
-        ngay_thang = request.POST['ngay_thang'].split("/")
+        thang = leading_zero(request.POST['ngay_thang_1'], 3)
+        nam = ngay_thang = request.POST['ngay_thang_2']
+        trinh_ky =   request.POST['trinh_ky'].split("/")
         ngay_ktra = request.POST['ngay_ktra'].split("/")
         thanh_vien = request.POST.getlist('thanh_vien', None)
         kk_theo = request.POST['kk_theo']
@@ -352,13 +359,14 @@ def lap_qd_ktra_trc_hoan(request):
             "<cv_doan>" : cv
         }
         tt_qd = { 
+            '<trinh_ky>' : "ngày " + trinh_ky[0] + " tháng " + leading_zero(trinh_ky[1], 3) + " năm " + trinh_ky[2],
+            '<ngay_thang>' : "ngày      tháng " + thang + " năm " + nam,
             '<hs_hoan_so>' : request.POST['hs_hoan_so'],
             '<hs_hoan_ngay>' : request.POST['hs_hoan_ngay'],
             '<ky_hoan_thue>' : kk_theo + " " + tgian[0] + " đến " + kk_theo + " " + tgian[1],
             '<hoan_tien>' : request.POST['hoan_tien'],
             '<th_hoan>': request.POST['th_hoan'],
             '<dia_diem_ktra>' : request.POST['dia_diem_ktra'],
-            '<ngay_thang>' : "ngày      tháng " + leading_zero(ngay_thang[0], 3) + " năm " + ngay_thang[1],
             '<ten_dv>' : nnt.ten_nnt,
             '<mst>' : mst,
             '<dia_chi>' : nnt.dia_chi,
@@ -410,7 +418,9 @@ def lap_qd_ktra_giai_the(request):
     if request.method == 'POST':
         mst = request.POST['mst']
         nnt = NNT.objects.get(mst=mst)
-        ngay_thang = request.POST['ngay_thang'].split("/")
+        thang = leading_zero(request.POST['ngay_thang_1'], 3)
+        nam = ngay_thang = request.POST['ngay_thang_2']
+        trinh_ky =   request.POST['trinh_ky'].split("/")
         ngay_ktra = request.POST['ngay_ktra'].split("/")
         thanh_vien = request.POST.getlist('thanh_vien', None)
         cv = ['Trưởng đoàn']
@@ -422,7 +432,8 @@ def lap_qd_ktra_giai_the(request):
             "<cv_doan>" : cv
         }
         tt_qd = { 
-            '<ngay_thang>' : "ngày      tháng " + leading_zero(ngay_thang[0], 3) + " năm " + ngay_thang[1],
+            '<trinh_ky>' : "ngày " + trinh_ky[0] + " tháng " + leading_zero(trinh_ky[1], 3) + " năm " + trinh_ky[2],
+            '<ngay_thang>' : "ngày      tháng " + thang + " năm " + nam,
             "<phieu_xly_ngay>": request.POST['phieu_xly_ngay'],
             '<ten_dv>' : nnt.ten_nnt,
             '<mst>' : mst,
