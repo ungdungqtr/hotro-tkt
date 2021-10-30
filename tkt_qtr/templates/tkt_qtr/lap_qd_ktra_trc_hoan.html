@@ -8,7 +8,6 @@
     </div>   
     <div class="row" style="margin-left: 15%;">
         <form action="" method='POST' id="qd_ktra"> {% csrf_token %}            
-            <p>Thời gian lập Quyết định: <input class="ngay_thang" name="ngay_thang" type="text" size="6" style="text-align: center" required></p>
             <P>Căn cứ hồ sơ đề nghị hoàn thuế GTGT số <input class="hs_hoan_so" name="hs_hoan_so" type="text" style="width: 120px; text-align: right" required> ngày
             <input class="hs_hoan_ngay" name="hs_hoan_ngay" type="text" size="8" style="text-align: center" required>
             </P>
@@ -51,8 +50,8 @@
                 </div>
             <p class="mt-3">- Địa điểm:  
                 <select name="dia_diem_ktra" class="form-control" style="width: 240px; display:inline;" required>
-                    <option value="tại trụ sở của cơ quan thuế">tại trụ sở của cơ quan thuế</option>
                     <option value="tại trụ sở của NNT">tại trụ sở của NNT</option>
+                    <option value="tại trụ sở của cơ quan thuế">tại trụ sở của cơ quan thuế</option>
                 </select> 
             </p>
             <p>- Thành phần Đoàn kiểm tra gồm có:</p>
