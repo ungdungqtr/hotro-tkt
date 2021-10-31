@@ -19,14 +19,11 @@ $(document).ready(function () {
         delimiter: '/',
         datePattern: ['Y']
     });
-/*     new Cleave('.tgian_1', {
-        delimiter: '/',
-        blocks: [2, 4]
-    });
-    new Cleave('.tgian_2', {
-        delimiter: '/',
-        blocks: [2, 4]
-    }); */
+    var dNow = new Date();
+    var localdate= dNow.getDate() + '/' + (dNow.getMonth()+1) + '/' + dNow.getFullYear();
+    $('.trinh_ky').val(localdate);
+    $('.ngay_thang_1').val(dNow.getMonth()+1);
+    $('.ngay_thang_2').val(dNow.getFullYear());
     // jQuery button click event to add a row.
     var rowIdx = 0; 
     $('#addBtn').on('click', function () {

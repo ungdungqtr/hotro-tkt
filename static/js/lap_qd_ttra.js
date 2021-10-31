@@ -19,6 +19,11 @@ $(document).ready(function () {
         delimiter: '/',
         datePattern: ['Y']
     });
+    var dNow = new Date();
+    var localdate= dNow.getDate() + '/' + (dNow.getMonth()+1) + '/' + dNow.getFullYear();
+    $('#trinh_ky').val(localdate);
+    $('.ngay_thang_1').val(dNow.getMonth()+1);
+    $('.ngay_thang_2').val(dNow.getFullYear());
     // jQuery button click event to add a row.
     var rowIdx = 0; 
     $('#addBtn').on('click', function () {
