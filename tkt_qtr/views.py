@@ -108,7 +108,7 @@ def read_csv_setting(MEDIA_ROOT, filename):
                     cqt = row[4],
                 )
         if 'QD' in filename:
-            CanCu.objects.all().delete()
+            # CanCu.objects.all().delete()
             for row in csvreader:
                 obj = CanCu.objects.create(
                     so_qd = row[1],
@@ -129,7 +129,11 @@ def read_csv_setting(MEDIA_ROOT, filename):
 #########################################################################################
 #########################################################################################
 def lap_qd_ktra(request):
+    # Căn cứ
     qd_tkt_tct = CanCu.objects.all()[0]
+    luat_qlt = CanCu.objects.all()[1]
+    quy_trinh_ktra = CanCu.objects.all()[3]
+    # Lãnh đạo phê duyệt
     ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='Cục')[0]
     ld_phong = LdPheDuyet.objects.filter(ld_cv__contains='phòng')[0]
     context = {
@@ -154,11 +158,12 @@ def lap_qd_ktra(request):
         }
         truong_doan = CanBo.objects.get(ten_cb=thanh_vien[0])
         tt_qd = { 
-            '<trinh_ky>' : "ngày " + trinh_ky[0] + " tháng " + leading_zero(trinh_ky[1], 3) + " năm " + trinh_ky[2],
+            '<trinh_ky>' : "ngày " + f"{int(trinh_ky[0]):02d}" + " tháng " + leading_zero(trinh_ky[1], 3) + " năm " + trinh_ky[2],
             '<ngay_thang>' : "ngày      tháng " + thang + " năm " + nam,
-            # '<ngay_thang>' : "ngày      tháng " + leading_zero(ngay_thang[0], 3) + " năm " + ngay_thang[1],
-            '<qd_tkt_tct>': 'Quyết định số '+ qd_tkt_tct.so_qd,
-            '<qd_tkt_tct_ngay_ban_hanh>': qd_tkt_tct.ngay_qd.strftime(" ngày %d tháng %m") + " năm " + qd_tkt_tct.ngay_qd.strftime("%Y"),
+            '<qd_tkt_tct>': "Quyết định số " + qd_tkt_tct.so_qd,
+            # '<qd_tkt_tct_ngay_ban_hanh>': qd_tkt_tct.ngay_qd.strftime(" ngày %d tháng %m") + " năm " + qd_tkt_tct.ngay_qd.strftime("%Y"),
+            '<luat_qlt_ngay>': luat_qlt.ngay_qd.strftime("ngày %d tháng %m") + " năm " + luat_qlt.ngay_qd.strftime("%Y"),
+            '<quy_trinh_ktra>': "Quyết định số " + quy_trinh_ktra.so_qd + quy_trinh_ktra.ngay_qd.strftime(" ngày %d tháng %m") + " năm " + quy_trinh_ktra.ngay_qd.strftime("%Y"),
             '<nam_kh_tkt>': datetime.now().strftime("%Y"),
             '<ten_dv>' : nnt.ten_nnt,# nnt(mst)['ten_nnt'],
             '<mst>' : mst,
@@ -198,9 +203,6 @@ def lap_qd_ktra(request):
         # If file is not exists
         raise Http404
     return render(request, 'tkt_qtr/lap_qd_ktra.html', context=context)
-
-# def truong_doan_cv(truong_doan):
-#     return truong_doan.ngach_cb if truong_doan.chuc_vu == 'Công chức' else truong_doan.chuc_vu
 
 def leading_zero(s, max):
     s = int(s)
@@ -258,7 +260,13 @@ def lap_qd_ttra(request):
         'CCT huyện Hướng Hóa': 'CCT huyện Hướng Hóa',
         'CCT huyện Cồn Cỏ': 'CCT huyện Cồn Cỏ'
     }
+    # Căn cứ
     qd_tkt_tct = CanCu.objects.all()[0]
+    luat_qlt = CanCu.objects.all()[1]
+    luat_ttra = CanCu.objects.all()[2]
+    quy_trinh_ttra = CanCu.objects.all()[4]
+    bsung_qtrinh_ttra = CanCu.objects.all()[5]
+    # Lãnh đạo phê duyệt
     ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='Cục')[0]
     ld_phong = LdPheDuyet.objects.filter(ld_cv__contains='phòng')[0]
     context = {
@@ -282,10 +290,16 @@ def lap_qd_ttra(request):
             "<cv_doan>" : cv
         }
         tt_qd = { 
-            '<trinh_ky>' : "ngày " + trinh_ky[0] + " tháng " + leading_zero(trinh_ky[1], 3) + " năm " + trinh_ky[2],
-            '<qd_tkt_tct>': 'Quyết định số '+ qd_tkt_tct.so_qd,
-            '<qd_tkt_tct_ngay_ban_hanh>': qd_tkt_tct.ngay_qd.strftime(" ngày %d tháng %m") + " năm " + qd_tkt_tct.ngay_qd.strftime("%Y"),
+            '<trinh_ky>' : "ngày " + f"{int(trinh_ky[0]):02d}" + " tháng " + leading_zero(trinh_ky[1], 3) + " năm " + trinh_ky[2],
+            '<qd_tkt_tct>': "Quyết định số " + qd_tkt_tct.so_qd,
+            '<qd_tkt_tct_ngay_ban_hanh>': qd_tkt_tct.ngay_qd.strftime("ngày %d tháng %m") + " năm " + qd_tkt_tct.ngay_qd.strftime("%Y"),
             '<nam_kh_tkt>': datetime.now().strftime("%Y"),
+            '<quy_trinh_ttra>': "Quyết định số " + quy_trinh_ttra.so_qd + quy_trinh_ttra.ngay_qd.strftime(" ngày %d tháng %m") + " năm " + quy_trinh_ttra.ngay_qd.strftime("%Y"),
+            '<quy_trinh_ttra_rut_gon>': "Quyết định số " + quy_trinh_ttra.so_qd + quy_trinh_ttra.ngay_qd.strftime(" ngày %d/%m/%Y"),
+            '<bsung_qtrinh_ttra>': "Quyết định số " + bsung_qtrinh_ttra.so_qd + bsung_qtrinh_ttra.ngay_qd.strftime(" ngày %d tháng %m") + " năm " + bsung_qtrinh_ttra.ngay_qd.strftime("%Y"),
+            '<bsung_qtrinh_ttra_rut_gon>': "Quyết định số " + bsung_qtrinh_ttra.so_qd + bsung_qtrinh_ttra.ngay_qd.strftime(" ngày %d/%m/%Y"),
+            '<luat_qlt_ngay>': luat_qlt.ngay_qd.strftime("ngày %d tháng %m") + " năm " + luat_qlt.ngay_qd.strftime("%Y"),
+            '<luat_ttra>': luat_ttra.ngay_qd.strftime("ngày %d tháng %m") + " năm " + luat_ttra.ngay_qd.strftime("%Y"),
             '<ngay_thang>' : "ngày      tháng " + thang + " năm " + nam,
             '<ten_dv>' : nnt.ten_nnt,# nnt(mst)['ten_nnt'],
             '<mst>' : mst,
