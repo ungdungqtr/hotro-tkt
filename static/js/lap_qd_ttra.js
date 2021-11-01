@@ -61,11 +61,6 @@ $(document).ready(function () {
                         } else {  
                             var tv =  thanh_vien.closest('tr');
                             tv.find('.cb_gioi_tinh').text(data.gioi_tinh);      
-                            if (data.chuc_vu == "Công chức") {
-                                tv.find('.ngach_cb').text(data.ngach_cb);   
-                            } else {
-                                tv.find('.ngach_cb').text(data.chuc_vu);   
-                            }   
                             if (tv.attr('id') == 'R1') {
                                 tv.find('.cv_doan').text("Trưởng đoàn"); 
                             } else {
