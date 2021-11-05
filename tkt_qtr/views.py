@@ -5,6 +5,7 @@ from django.core.files.storage import FileSystemStorage
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.conf import settings
 from django.urls import reverse
+import pandas as pd
 
 from .forms import *
 from . import process_data
@@ -607,4 +608,15 @@ def xoa_nnt(request):
     data = {'delete': True}
 
     return JsonResponse(data)
-    
+
+def upload_nnt(request):
+    if request.method == 'POST' and request.FILES['myfile']:
+        myfile = request.FILES['myfile']
+        fs = FileSystemStorage()
+        filename = fs.save(myfile.name, myfile)
+        uploaded_file_url = os.path.join(settings.MEDIA_ROOT, filename)
+        request.session['uploaded_file_url'] = uploaded_file_url
+        return HttpResponseRedirect(reverse(redirect_url(filename)))
+    return render(request, 'tkt_qtr/upload_nnt.html')
+
+# def valid_data(url):

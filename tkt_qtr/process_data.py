@@ -2,6 +2,7 @@ import os
 from django.conf import settings
 from datetime import datetime
 from docx import Document
+import pandas as pd
 
 def ghi_du_lieu_table(document, data):
     for k, v in data.items():
@@ -374,5 +375,4 @@ doan_ktra = {
     "<cv_doan>" : ['Trưởng đoàn', 'Thành viên', 'Thành viên'],
 }
 
-# giai_the = lap_qd_ktra_giai_the(tt_qd, doan_ktra)
-# print(giai_the.qd_ktra())
+# df = pd.read_excel("D:\\python\\demo-tkt\\static\\media\\cap_nhat_nnt.xlsx", converters={'Mã số thuế':str})
