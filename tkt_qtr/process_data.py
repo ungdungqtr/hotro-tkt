@@ -2,7 +2,6 @@ import os
 from django.conf import settings
 from datetime import datetime
 from docx import Document
-import pandas as pd
 
 def ghi_du_lieu_table(document, data):
     for k, v in data.items():
@@ -374,21 +373,3 @@ doan_ktra = {
     "<cv_cb>" : ['Phó trưởng phòng', 'Kiểm tra viên chính thuế', 'Kiểm soát viên thuế'],
     "<cv_doan>" : ['Trưởng đoàn', 'Thành viên', 'Thành viên'],
 }
-class cap_nhat_nnt:
-    def __init__(self, path):
-        self.path = path
-        self.df = pd.read_excel(self.path, converters={'Mã số thuế':str})
-
-    def check_data_valid(self):
-        df = self.df
-        errors = []
-        for row in range(df.shape[0]):
-            if pd.isnull(df.iloc[row, :]).any():
-                errors.append(f"Điền đầy đủ thông tin NNT tại dòng dữ liệu thứ {row+1}")
-        return errors if errors else True
-
-df = pd.read_excel("D:\\python\\demo-tkt\\static\\media\\cap_nhat_nnt.xlsx", converters={'Mã số thuế':str})
-""" for row in range(df.shape[0]):
-    print(df.iloc[row]['Mã số thuế']) """
-        
-    
