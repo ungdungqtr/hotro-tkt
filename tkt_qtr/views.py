@@ -642,6 +642,6 @@ def upload_nnt(request):
             if mst_exist:
                 return render(request, 'tkt_qtr/upload_nnt.html', {'mst_exist':mst_exist})
             else:
-                return render(request, 'tkt_qtr/dba_nnt.html', {'dba': dba})
+                return HttpResponseRedirect(reverse('tkt:dba_nnt'))
     return render(request, 'tkt_qtr/upload_nnt.html')
 
