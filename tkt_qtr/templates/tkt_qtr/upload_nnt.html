@@ -2,7 +2,8 @@
 {% load static %}
 {% block content %}
 <div class="container mt-5">    
-    <h2>Tải dữ liệu</h2>
+    <h2>Cập nhật thông tin NNT</h2>
+    <p>Tải mẫu thông tin NNT <a href="{% static 'media/cap_nhat_nnt.xlsx' %}"><u>tại đây</u></a></p>
     <form action="#" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="row">
@@ -13,7 +14,7 @@
                 <label class="custom-file-label" for="customFile"></label>
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-3">
             
         </div>
     </div>
@@ -21,7 +22,18 @@
         <center><button type="submit" class="btn btn-primary">UPLOAD</button></center>
     </div>
     </form>
-    <div class="mt-2">
+    <div class="mt-2" style="color:red; font-weight: bold;">
+        {% if errors %}
+            {% for error in errors %}
+                <p>- {{error}}</p>
+            {% endfor %}
+        {% endif %}
+        {% if mst_exist %}
+            {% for error in mst_exist %}
+                <p>- Mã số thuế {{error}} đã tồn tại</p>
+            {% endfor %}
+        {% endif %}
+	</div>		
 </div>
 {% endblock content %}
 {% block script %}

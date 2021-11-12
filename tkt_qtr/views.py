@@ -610,13 +610,38 @@ def xoa_nnt(request):
     return JsonResponse(data)
 
 def upload_nnt(request):
+    errors = []
     if request.method == 'POST' and request.FILES['myfile']:
         myfile = request.FILES['myfile']
         fs = FileSystemStorage()
         filename = fs.save(myfile.name, myfile)
         uploaded_file_url = os.path.join(settings.MEDIA_ROOT, filename)
-        request.session['uploaded_file_url'] = uploaded_file_url
-        return HttpResponseRedirect(reverse(redirect_url(filename)))
+
+        df = pd.read_excel(uploaded_file_url, converters={'Mã số thuế':str})
+        for row in range(df.shape[0]):
+            if pd.isnull(df.iloc[row, :]).any():
+                errors.append(f"Điền đầy đủ thông tin NNT tại dòng dữ liệu thứ {row+1}")
+        if errors:
+            return render(request, 'tkt_qtr/upload_nnt.html', {'errors':errors})
+        else:
+            mst_exist = []
+            for row in range(df.shape[0]):
+                mst = df.iloc[row]['Mã số thuế']
+                try:
+                    search = NNT.objects.get(mst=mst)
+                except ObjectDoesNotExist:
+                    obj = NNT.objects.create(
+                        mst = mst,
+                        ten_nnt = df.iloc[row]['Tên NNT'],
+                        dia_chi = df.iloc[row]['Địa chỉ'],
+                        cqt = df.iloc[row]['CQT quản lý']
+                    )
+                    print(mst)
+                else:
+                    mst_exist.append(mst)
+            if mst_exist:
+                return render(request, 'tkt_qtr/upload_nnt.html', {'mst_exist':mst_exist})
+            else:
+                return render(request, 'tkt_qtr/dba_nnt.html', {'dba': dba})
     return render(request, 'tkt_qtr/upload_nnt.html')
 
-# def valid_data(url):
