@@ -48,7 +48,9 @@ def vi_tri_bang(document, repalce_text):
             if repalce_text in inline[j].text:
                 return i
         i = i + 1
-
+#########################################################################################
+#########################################################################################
+#########################################################################################
 class lap_qd_ktra:
     def __init__(self, tt_qd, doan_ktra):
         self.tt_qd = tt_qd
@@ -115,7 +117,9 @@ class lap_qd_ktra:
         for file in os.listdir(media_store):
             path = os.path.join(media_store, file) 
             os.remove(path)
-
+#########################################################################################
+#########################################################################################
+#########################################################################################
 class lap_qd_ttra:
     def __init__(self, tt_qd, doan_ttra):
         self.tt_qd = tt_qd
@@ -193,7 +197,9 @@ class lap_qd_ttra:
         for file in os.listdir(media_store):
             path = os.path.join(media_store, file)
             os.remove(path)
-
+#########################################################################################
+#########################################################################################
+#########################################################################################
 class lap_qd_ktra_hoan_gtgt:
     def __init__(self, tt_qd, doan_ktra):
             self.tt_qd = tt_qd
@@ -249,7 +255,9 @@ class lap_qd_ktra_hoan_gtgt:
         for file in os.listdir(media_store):
             path = os.path.join(media_store, file) 
             os.remove(path)
-
+#########################################################################################
+#########################################################################################
+#########################################################################################
 class lap_qd_ktra_giai_the:
     def __init__(self, tt_qd, doan_ktra):
             self.tt_qd = tt_qd
@@ -283,7 +291,7 @@ class lap_qd_ktra_giai_the:
 
     def qd_ktra(self):
         # document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media/2.qd_ttra.docx"))
-        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "4.qd_ktra_giai_the.docx"))
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "4.qd_ktr_giai_the.docx"))
         ghi_du_lieu_para(document, self.tt_qd)
         # ghi dữ liệu thành phần đoàn
         table = document.tables[0]
@@ -305,7 +313,129 @@ class lap_qd_ktra_giai_the:
         for file in os.listdir(media_store):
             path = os.path.join(media_store, file) 
             os.remove(path)
+
+#########################################################################################
+#########################################################################################
+#########################################################################################
+class lap_qd_ktra_dot_xuat:
+    def __init__(self, tt_qd, doan_ktra):
+        self.tt_qd = tt_qd
+        self.doan_ktra = doan_ktra
+
+    def to_trinh(self):
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "5.to_trinh_ktr_dot_xuat.docx"))
+        ghi_du_lieu_para(document, self.tt_qd)
+        filename = self.tt_qd["<mst>"] + "_To_trinh.docx"
+        path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", filename)      
+        document.save(path)
+        return path
     
+    def qd_gsat(self):
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "5.qd_giam_sat_ktr_dot_xuat.docx"))
+        ghi_du_lieu_para(document, self.tt_qd)
+        filename = self.tt_qd["<mst>"] + "_QD_giam_sat.docx"
+        path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", filename)
+        document.save(path)
+        return path
+    
+    def kh_gsat(self):
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "5.kh_giam_sat_ktr_dot_xuat.docx"))
+        ghi_du_lieu_para(document, self.tt_qd)
+        filename = self.tt_qd["<mst>"] + "_KH_giam_sat.docx"
+        path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", filename)
+        document.save(path)
+        return path
+
+    def qd_ktra(self):
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "5.qd_ktr_dot_xuat.docx"))
+        ghi_du_lieu_para(document, self.tt_qd)
+        # ghi dữ liệu thành phần đoàn
+        table = document.tables[0]
+        for i in range(len(self.doan_ktra['<ten_cb>'])):
+            row = table.rows[i]
+            for k,v in self.doan_ktra.items():
+                ghi_du_lieu_cell(row, k, v[i])
+        # Xóa các hàng không có dữ liệu
+        del_row(table, len(self.doan_ktra['<ten_cb>']) - 1, len(table.rows))
+        filename = self.tt_qd["<mst>"] + "_QD_kiem_tra.docx"
+        path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", filename)
+        document.save(path)
+        return path
+    
+    def empty_media(self):
+        media_store = os.path.join(settings.STATICFILES_DIRS[0], "media_store")
+        for file in os.listdir(media_store):
+            path = os.path.join(media_store, file)
+            os.remove(path)    
+
+#########################################################################################
+#########################################################################################
+#########################################################################################
+class lap_qd_ttra_dot_xuat:
+    def __init__(self, tt_qd, doan_ttra):
+        self.tt_qd = tt_qd
+        self.doan_ttra = doan_ttra
+
+    def to_trinh(self):
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "6.to_trinh_ttr_dot_xuat.docx"))
+        ghi_du_lieu_para(document, self.tt_qd)
+        filename = self.tt_qd["<mst>"] + "_To_trinh.docx"
+        path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", filename)      
+        document.save(path)
+        return path
+    
+    def qd_gsat(self):
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "6.qd_giam_sat_ttr_dot_xuat.docx"))
+        ghi_du_lieu_para(document, self.tt_qd)
+        filename = self.tt_qd["<mst>"] + "_QD_giam_sat.docx"
+        path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", filename)
+        document.save(path)
+        return path
+    
+    def kh_gsat(self):
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "6.kh_giam_sat_ttr_dot_xuat.docx"))
+        ghi_du_lieu_para(document, self.tt_qd)
+        filename = self.tt_qd["<mst>"] + "_KH_giam_sat.docx"
+        path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", filename)
+        document.save(path)
+        return path
+
+    def qd_ttra(self):
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "6.qd_ttra_dot_xuat.docx"))
+        ghi_du_lieu_para(document, self.tt_qd)
+        # ghi dữ liệu thành phần đoàn
+        table = document.tables[0]
+        for i in range(len(self.doan_ttra['<ten_cb>'])):
+            row = table.rows[i]
+            for k,v in self.doan_ttra.items():
+                ghi_du_lieu_cell(row, k, v[i])
+        # Xóa các hàng không có dữ liệu
+        del_row(table, len(self.doan_ttra['<ten_cb>']) - 1, len(table.rows))
+        filename = self.tt_qd["<mst>"] + "_QD_thanh_tra.docx"
+        path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", filename)
+        document.save(path)
+        return path
+    
+    def kh_ttra(self):
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "6.kh_ttra_dot_xuat.docx"))
+        ghi_du_lieu_para(document, self.tt_qd)
+        table = document.tables[1]
+        for i in range(len(self.doan_ttra['<ten_cb>'])):
+            row = table.rows[i]
+            for k,v in self.doan_ttra.items():
+                ghi_du_lieu_cell(row, k, v[i])
+        # Xóa các hàng không có dữ liệu
+        del_row(table, len(self.doan_ttra['<ten_cb>']) - 1, len(table.rows))
+        filename = self.tt_qd["<mst>"] + "_KH_thanh_tra.docx"
+        path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", filename)
+        document.save(path)
+        return path
+    
+    def empty_media(self):
+        media_store = os.path.join(settings.STATICFILES_DIRS[0], "media_store")
+        for file in os.listdir(media_store):
+            path = os.path.join(media_store, file)
+            os.remove(path)
 # <ngay_thang>, <phieu_xly_ngay>, <sl_cb>, <cb_cv>, <so_ngay_ktra>, <ngay_ktra>
 # <ten_dv>, <mst>, <dia_chi>, <ky_hoan_thue>
 # <hinh_thuc_ky>, <LD_CUC>, <ld_cuc_ten>, <LD_PHONG>, <ld_phong_ten> 
@@ -340,7 +470,7 @@ doan_ttra = {
     "<cv_doan>" : ['Trưởng đoàn', 'Thành viên', 'Thành viên'],
 } """
 
-tt_qd = {
+""" tt_qd = {
     "<ngay_thang>": "ngày      tháng 3 năm 2021", # nhập tháng
     "<phieu_xly_ngay>": "22/6/2021",
     # "<hs_hoan_so>": "01", 
@@ -372,4 +502,4 @@ doan_ktra = {
     "<ten_cb>" : ['Ông: Phạm Văn Vui', 'Bà: Nguyễn Thị Thanh Huyền', "Bà: Hà Thị Thanh Thủy"],
     "<cv_cb>" : ['Phó trưởng phòng', 'Kiểm tra viên chính thuế', 'Kiểm soát viên thuế'],
     "<cv_doan>" : ['Trưởng đoàn', 'Thành viên', 'Thành viên'],
-}
+} """

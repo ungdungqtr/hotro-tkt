@@ -27,7 +27,19 @@ urlpatterns = [
     path('lap_qd_ktra_giai_the/mst_autocomplete/', views.mst_autocomplete, name = 'mst_autocomplete'),
     path('lap_qd_ktra_giai_the/cb_ten_autocomplete/', views.cb_ten_autocomplete, name = 'cb_ten_autocomplete'),
     path('lap_qd_ktra_giai_the/nnt_thong_tin/', views.nnt_thong_tin, name = 'nnt_thong_tin'),
-    path('lap_qd_ktra_giai_the/cb_thong_tin/', views.cb_thong_tin, name = 'cb_thong_tin'),   
+    path('lap_qd_ktra_giai_the/cb_thong_tin/', views.cb_thong_tin, name = 'cb_thong_tin'),
+    # Lập quyết định kiểm tra đột xuất
+    path('lap_qd_ktra_dot_xuat/', views.lap_qd_ktra_dot_xuat, name = 'lap_qd_ktra_dot_xuat'),
+    path('lap_qd_ktra_dot_xuat/mst_autocomplete/', views.mst_autocomplete, name = 'mst_autocomplete'),
+    path('lap_qd_ktra_dot_xuat/cb_ten_autocomplete/', views.cb_ten_autocomplete, name = 'cb_ten_autocomplete'),
+    path('lap_qd_ktra_dot_xuat/nnt_thong_tin/', views.nnt_thong_tin, name = 'nnt_thong_tin'),
+    path('lap_qd_ktra_dot_xuat/cb_thong_tin/', views.cb_thong_tin, name = 'cb_thong_tin'), 
+    # Lập quyết định thanh tra đột xuất
+    path('lap_qd_ttra_dot_xuat/', views.lap_qd_ttra_dot_xuat, name = 'lap_qd_ttra_dot_xuat'),
+    path('lap_qd_ttra_dot_xuat/mst_autocomplete/', views.mst_autocomplete, name = 'mst_autocomplete'),
+    path('lap_qd_ttra_dot_xuat/cb_ten_autocomplete/', views.cb_ten_autocomplete, name = 'cb_ten_autocomplete'),
+    path('lap_qd_ttra_dot_xuat/nnt_thong_tin/', views.nnt_thong_tin, name = 'nnt_thong_tin'),
+    path('lap_qd_ttra_dot_xuat/cb_thong_tin/', views.cb_thong_tin, name = 'cb_thong_tin'),   
     # Quản lý cán bộ
     path('qly_cb/', views.qly_cb, name = 'qly_cb'),
     path('qly_cb/them_moi_cb/', views.them_moi_cb, name = 'them_moi_cb'),

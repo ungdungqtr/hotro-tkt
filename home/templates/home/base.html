@@ -78,6 +78,8 @@
                         <a class="dropdown-item" href="{% url 'tkt:lap_qd_ttra' %}">QĐ Thanh tra</a>
                         <a class="dropdown-item" href="{% url 'tkt:lap_qd_ktra_trc_hoan' %}">QĐ Kiểm tra trước hoàn </a>
                         <a class="dropdown-item" href="{% url 'tkt:lap_qd_ktra_giai_the' %}">QĐ Kiểm tra giải thể</a>
+                        <a class="dropdown-item" href="{% url 'tkt:lap_qd_ktra_dot_xuat' %}">QĐ Kiểm tra đột xuất</a>
+                        <a class="dropdown-item" href="{% url 'tkt:lap_qd_ttra_dot_xuat' %}">QĐ Thanh tra đột xuất</a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -97,12 +99,14 @@
         {% comment %} <h3>Nội dung cập nhật:</h3> {% endcomment %}
         <ul>
             <li>
-                <h4>Nội dung cập nhật</h4>
-                <p>Bổ sung chức năng</p>
+                <h4>Chức năng hiện có</h4>
                 <ul>
+                    <li>Lập Quyết định kiểm tra</li>
+                    <li>Lập Quyết định thanh tra</li>
                     <li>Lập Quyết định kiểm tra trước hoàn thuế GTGT</li>
                     <li>Lập Quyết định kiểm tra giải thể</li>
-                    <li>Chỉnh sửa bố cục ở chức năng <b>Lập Quyết định kiểm tra</b></li>
+                    <li>Lập Quyết định kiểm tra đột xuất</li>
+                    <li>Lập Quyết định thanh tra đột xuất</li>
                 </ul>    
             </li>
     </div>

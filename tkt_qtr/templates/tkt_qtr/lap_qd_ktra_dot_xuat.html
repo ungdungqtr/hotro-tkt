@@ -4,11 +4,11 @@
 {% block content %}
 <div class="container mt-3">
     <div class="row" style=" padding: 20px 0 20px 0;">
-        <h3 style="margin: auto;">LẬP QUYẾT ĐỊNH KIỂM TRA DOANH NGHIỆP</h3>
+        <h3 style="margin: auto;">LẬP QUYẾT ĐỊNH KIỂM TRA ĐỘT XUẤT</h3>
     </div>   
     <div class="row" style="margin-left: 15%;">
-        <form action="" method='POST' id="qd_ktra"> {% csrf_token %}    
-            {% comment %} <p>Thời gian lập Quyết định: <input class="ngay_thang" name="ngay_thang" type="text" size="6" style="text-align: center" required></p> {% endcomment %}
+        <form action="" method='POST' id="qd_ktra"> {% csrf_token %}   
+            <p>Căn cứ <input class="can_cu" name="can_cu" type="text" size="88" required></p> 
             <p>Phòng Thanh tra - Kiểm tra tiến hành kiểm tra chấp hành Pháp Luật Thuế thuế đối với:</p>
             <p class="ten_dv" style="margin-left: 5%; font-weight: bold;"></p>
             <p style="margin-left: 5%; font-weight: bold;">Mã số thuế: <input class="mst" name="mst" type="text" size="12" minlength="10" maxlength="14" style="text-align: right" required></p>
