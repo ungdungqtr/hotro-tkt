@@ -18,6 +18,7 @@ class Migration(migrations.Migration):
                 ('ten_cb', models.CharField(default='', max_length=30)),
                 ('gioi_tinh', models.CharField(default='', max_length=3)),
                 ('chuc_vu', models.CharField(default='', max_length=30)),
+                ('doan_tkt', models.CharField(default='', max_length=30)),
             ],
         ),
         migrations.CreateModel(

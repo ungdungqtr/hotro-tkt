@@ -698,16 +698,16 @@ def them_moi_cb(request):
     gioi_tinh_1 = request.GET.get('gioi_tinh', None)
     ten_cb_1 = request.GET.get('ten_cb', None)
     chuc_vu_1 = request.GET.get('chuc_vu', None)
-    doan_tkt_1 = request.GET.get('doan_tkt', None)
+    # doan_tkt_1 = request.GET.get('doan_tkt', None)
 
     obj = CanBo.objects.create(
         gioi_tinh = gioi_tinh_1,
         ten_cb = ten_cb_1,
         chuc_vu = chuc_vu_1,
-        doan_tkt = doan_tkt_1,
+        # doan_tkt = doan_tkt_1,
     )
 
-    user = {'id': obj.id, 'ten_cb': obj.ten_cb, 'gioi_tinh': obj.gioi_tinh, 'chuc_vu': obj.chuc_vu, 'doan_tkt': obj.doan_tkt}
+    user = {'id': obj.id, 'ten_cb': obj.ten_cb, 'gioi_tinh': obj.gioi_tinh, 'chuc_vu': obj.chuc_vu}
 
     return JsonResponse({'user': user})
 
