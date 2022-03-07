@@ -7,6 +7,8 @@ from django.conf import settings
 from django.urls import reverse
 import pandas as pd
 
+from django.contrib.auth.decorators import login_required
+
 from .forms import *
 from . import process_data
 
@@ -20,6 +22,7 @@ ky_ten = {
     'CỤC TRƯỞNG': 'CỤC TRƯỞNG'
 }
 
+@login_required
 # Thiết lập chung
 #########################################################################################
 #########################################################################################
