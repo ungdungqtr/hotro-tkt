@@ -1,10 +1,23 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class CanBo(models.Model):
     ten_cb = models.CharField(max_length=30, default='')
     gioi_tinh = models.CharField(max_length=3, default='')
     chuc_vu = models.CharField(max_length=30, default='')
+
+    def has_perm(self, perm, obj=None):
+        return True
+
+    class Meta:
+        permissions = (
+            ('canbo_view', 'CanBo View'),
+            ('canbo_add', 'CanBo Add'),
+            ('canbo_edit', 'CanBo Edit'),
+            ('canbo_delete', 'CanBo Delete'),
+        )
+
 
 class NNT(models.Model):
     mst = models.CharField(max_length=14, unique=True, blank=True, null=True)
@@ -21,4 +34,3 @@ class LdPheDuyet(models.Model):
     ld_gt= models.CharField(max_length=3, default='')
     ld_ten = models.CharField(max_length=30, default='')
     ld_cv = models.CharField(max_length=20, default='')
-  

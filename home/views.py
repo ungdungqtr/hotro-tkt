@@ -18,7 +18,7 @@ def login_request(request):
             login(request, user)
             return redirect('/index/')
         else:
-            messages.error(request, 'Error wrong username/password')
+            messages.error(request, 'Sai tên đăng nhập hoặc mật khẩu')
     return render(request, "home/login.html")
             
 def logout_request(request):

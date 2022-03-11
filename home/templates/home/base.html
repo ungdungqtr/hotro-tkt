@@ -93,6 +93,11 @@
                 </li>
             </ul>
         </div>
+        <form class="form-inline">
+            <a class="nav-link text-light" href="">Xin chào! {{user.last_name}} {{user.first_name}}</a>
+            {% comment %} <p class="text-light">sfg</p> {% endcomment %}
+            <a class="nav-link text-light" href="{% url 'home:logout' %}">Đăng xuất</a>
+        </form>
     </nav>
     {% block content %}
     <div class="container mt-5" style="height: 800px;">
@@ -109,6 +114,7 @@
                     <li>Lập Quyết định thanh tra đột xuất</li>
                 </ul>    
             </li>
+        </ul>
     </div>
     
     {% endblock content %}
