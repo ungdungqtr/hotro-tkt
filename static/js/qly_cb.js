@@ -111,7 +111,7 @@ $(document).ready(function () {
             alert("Vui lòng điền đầy đủ thông tin");
         }
         $('form#updateUser').trigger("reset");
-        $('#UpdateModal').modal('hide');
+        // $('#UpdateModal').modal('hide');
         return false;
     });
     

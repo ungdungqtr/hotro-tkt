@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse, Http404, HttpResponseRedirect
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.core.files.storage import FileSystemStorage
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.conf import settings
 from django.urls import reverse
 import pandas as pd
+
+from django.contrib.auth.decorators import login_required, permission_required
 
 from .forms import *
 from . import process_data
@@ -20,10 +22,14 @@ ky_ten = {
     'CỤC TRƯỞNG': 'CỤC TRƯỞNG'
 }
 
+
 # Thiết lập chung
 #########################################################################################
 #########################################################################################
 #########################################################################################
+@login_required
+
+
 def thiet_lap_chung(request):    
     cancu = CanCu.objects.all()
     ld_phe_duyet = LdPheDuyet.objects.all()
@@ -33,6 +39,7 @@ def thiet_lap_chung(request):
     }
     return render(request, 'tkt_qtr/thiet_lap_chung.html', context=context)
 
+@permission_required('tkt_qtr.cancu_edit')
 def cap_nhat_qd(request):
     id_1 = request.GET.get('id', None)
     so_qd_1 = request.GET.get('so_qd', None)
@@ -48,6 +55,7 @@ def cap_nhat_qd(request):
     qd = {'id': obj.id, 'so_qd': obj.so_qd, 'ten_qd': obj.ten_qd, 'ngay_qd': obj.ngay_qd}
     return JsonResponse({'qd': qd})
 
+@permission_required('tkt_qtr.ld_edit')
 def cap_nhat_ld(request):
     id_1 = request.GET.get('id', None)
     ld_ten_1 = request.GET.get('ld_ten', None)
@@ -59,6 +67,7 @@ def cap_nhat_ld(request):
     obj.ld_cv = obj_1.chuc_vu
     obj.save()
     ld = {'id': obj.id, 'ld_gt': obj.ld_gt, 'ld_ten': obj.ld_ten,'ld_cv': obj.ld_cv}
+    print(ld)
 
     return JsonResponse({'ld': ld})
 
@@ -129,6 +138,8 @@ def read_csv_setting(MEDIA_ROOT, filename):
 #########################################################################################
 #########################################################################################
 #########################################################################################
+@login_required
+
 def lap_qd_ktra(request):
     # Căn cứ
     qd_tkt_tct = CanCu.objects.all()[0]
@@ -251,6 +262,8 @@ def cb_ten_autocomplete(request):
 #########################################################################################
 #########################################################################################
 #########################################################################################
+@login_required
+
 def lap_qd_ttra(request):
     noi_nhan = {
         'Cục Thuế tỉnh Quảng Trị': 'Phòng KK&KTT',
@@ -347,6 +360,8 @@ def lap_qd_ttra(request):
 #########################################################################################
 #########################################################################################
 #########################################################################################
+@login_required
+
 def lap_qd_ktra_trc_hoan(request):
     # Căn cứ
     qd_tkt_tct = CanCu.objects.all()[0]
@@ -426,6 +441,8 @@ def lap_qd_ktra_trc_hoan(request):
 #########################################################################################
 #########################################################################################
 #########################################################################################
+@login_required
+
 def lap_qd_ktra_giai_the(request):
     # Căn cứ
     qd_tkt_tct = CanCu.objects.all()[0]
@@ -502,6 +519,8 @@ def lap_qd_ktra_giai_the(request):
 #########################################################################################
 #########################################################################################
 #########################################################################################
+@login_required
+
 def lap_qd_ktra_dot_xuat(request):
     # Căn cứ
     qd_tkt_tct = CanCu.objects.all()[0]
@@ -582,6 +601,8 @@ def lap_qd_ktra_dot_xuat(request):
 #########################################################################################
 #########################################################################################
 #########################################################################################
+@login_required
+
 def lap_qd_ttra_dot_xuat(request):
     noi_nhan = {
         'Cục Thuế tỉnh Quảng Trị': 'Phòng KK&KTT',
@@ -679,6 +700,9 @@ def lap_qd_ttra_dot_xuat(request):
 #########################################################################################
 #########################################################################################
 #########################################################################################
+@login_required
+
+# @permission_required('tkt.canbo_view', raise_exception=True)
 def qly_cb(request):
     can_bo = CanBo.objects.all()
     page = request.GET.get('page', 1)
@@ -694,41 +718,40 @@ def qly_cb(request):
 
     return render(request, 'tkt_qtr/qly_cb.html', {'can_bo': can_bo})
 
+@permission_required('tkt_qtr.canbo_add')
 def them_moi_cb(request):
     gioi_tinh_1 = request.GET.get('gioi_tinh', None)
     ten_cb_1 = request.GET.get('ten_cb', None)
     chuc_vu_1 = request.GET.get('chuc_vu', None)
-    # doan_tkt_1 = request.GET.get('doan_tkt', None)
 
     obj = CanBo.objects.create(
         gioi_tinh = gioi_tinh_1,
         ten_cb = ten_cb_1,
         chuc_vu = chuc_vu_1,
-        # doan_tkt = doan_tkt_1,
     )
 
     user = {'id': obj.id, 'ten_cb': obj.ten_cb, 'gioi_tinh': obj.gioi_tinh, 'chuc_vu': obj.chuc_vu}
 
     return JsonResponse({'user': user})
 
+@permission_required('tkt_qtr.canbo_edit')
 def cap_nhat_thong_tin(request):
     id_1 = request.GET.get('id', None)
     gioi_tinh_1 = request.GET.get('gioi_tinh', None)
     ten_cb_1 = request.GET.get('ten_cb', None)
     chuc_vu_1 = request.GET.get('chuc_vu', None)
-    doan_tkt_1 = request.GET.get('doan_tkt', None)
 
     obj = CanBo.objects.get(id=id_1)
     obj.ten_cb = ten_cb_1
     obj.gioi_tinh = gioi_tinh_1
     obj.chuc_vu = chuc_vu_1
-    obj.doan_tkt = doan_tkt_1
     obj.save()
 
-    user = {'id': obj.id, 'ten_cb': obj.ten_cb, 'gioi_tinh': obj.gioi_tinh, 'chuc_vu': obj.chuc_vu, 'doan_tkt': obj.doan_tkt}
+    user = {'id': obj.id, 'ten_cb': obj.ten_cb, 'gioi_tinh': obj.gioi_tinh, 'chuc_vu': obj.chuc_vu}
 
     return JsonResponse({'user': user})
 
+@permission_required('tkt_qtr.canbo_delete')
 def xoa_cb(request):
     id_1 = request.GET.get('id', None)
     CanBo.objects.get(id=id_1).delete()
@@ -738,11 +761,14 @@ def xoa_cb(request):
 #########################################################################################
 #########################################################################################
 #########################################################################################
+@login_required
+
 def dba_nnt(request):
     dba = NNT.objects.all()
 
     return render(request, 'tkt_qtr/dba_nnt.html', {'dba': dba})
 
+@permission_required('tkt_qtr.nnt_add')
 def them_moi_nnt(request):
     mst_1 = request.GET.get('mst', None)
     try:
@@ -763,6 +789,7 @@ def them_moi_nnt(request):
     else:
         return JsonResponse({})
 
+@permission_required('tkt_qtr.nnt_edit')
 def cap_nhat_nnt(request):
     id_1 = request.GET.get('id', None)
     ten_nnt_1 = request.GET.get('ten_nnt', None)
@@ -779,6 +806,7 @@ def cap_nhat_nnt(request):
     
     return JsonResponse({'nnt': nnt})
 
+@permission_required('tkt_qtr.nnt_delete')
 def xoa_nnt(request):
     id_1 = request.GET.get('id', None)
     NNT.objects.get(id=id_1).delete()
@@ -813,7 +841,7 @@ def upload_nnt(request):
                         dia_chi = df.iloc[row]['Địa chỉ'],
                         cqt = df.iloc[row]['CQT quản lý']
                     )
-                    print(mst)
+                    # print(mst)
                 else:
                     mst_exist.append(mst)
             if mst_exist:
