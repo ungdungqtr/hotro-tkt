@@ -142,9 +142,9 @@ def read_csv_setting(MEDIA_ROOT, filename):
 
 def lap_qd_ktra(request):
     # Căn cứ
-    qd_tkt_tct = CanCu.objects.all()[0]
-    luat_qlt = CanCu.objects.all()[1]
-    quy_trinh_ktra = CanCu.objects.all()[3]
+    qd_tkt_tct = CanCu.objects.filter(ten_qd__contains='Kế hoạch thanh tra, kiểm tra năm')[0]
+    luat_qlt = CanCu.objects.filter(ten_qd__contains='Luật quản lý Thuế')[0]
+    quy_trinh_ktra = CanCu.objects.filter(ten_qd__contains='Quy trình thanh tra')[0]
     # Lãnh đạo phê duyệt
     ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='Cục')[0]
     ld_phong = LdPheDuyet.objects.filter(ld_cv__contains='phòng')[0]
@@ -275,11 +275,11 @@ def lap_qd_ttra(request):
         'CCT huyện Cồn Cỏ': 'CCT huyện Cồn Cỏ'
     }
     # Căn cứ
-    qd_tkt_tct = CanCu.objects.all()[0]
-    luat_qlt = CanCu.objects.all()[1]
-    luat_ttra = CanCu.objects.all()[2]
-    quy_trinh_ttra = CanCu.objects.all()[4]
-    bsung_qtrinh_ttra = CanCu.objects.all()[5]
+    qd_tkt_tct = CanCu.objects.filter(ten_qd__contains='Kế hoạch thanh tra, kiểm tra năm')[0]
+    luat_qlt = CanCu.objects.filter(ten_qd__contains='Luật quản lý Thuế')[0]
+    luat_ttra = CanCu.objects.filter(ten_qd__contains='Luật Thanh tra')[0]
+    quy_trinh_ttra = CanCu.objects.filter(ten_qd__contains='Quy trình thanh tra')[0]
+    bsung_qtrinh_ttra = CanCu.objects.filter(ten_qd__contains='Sửa đổi, bổ sung quy trình thanh tra')[0]
     # Lãnh đạo phê duyệt
     ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='Cục')[0]
     ld_phong = LdPheDuyet.objects.filter(ld_cv__contains='phòng')[0]
@@ -364,8 +364,8 @@ def lap_qd_ttra(request):
 
 def lap_qd_ktra_trc_hoan(request):
     # Căn cứ
-    qd_tkt_tct = CanCu.objects.all()[0]
-    luat_qlt = CanCu.objects.all()[1]
+    qd_tkt_tct = CanCu.objects.filter(ten_qd__contains='Kế hoạch thanh tra, kiểm tra năm')[0]
+    luat_qlt = CanCu.objects.filter(ten_qd__contains='Luật quản lý Thuế')[0]
     # Lãnh đạo phê duyệt
     ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='Cục')[0]
     ld_phong = LdPheDuyet.objects.filter(ld_cv__contains='phòng')[0]
@@ -445,9 +445,9 @@ def lap_qd_ktra_trc_hoan(request):
 
 def lap_qd_ktra_giai_the(request):
     # Căn cứ
-    qd_tkt_tct = CanCu.objects.all()[0]
-    luat_qlt = CanCu.objects.all()[1]
-    quy_trinh_ktra = CanCu.objects.all()[3]
+    qd_tkt_tct = CanCu.objects.filter(ten_qd__contains='Kế hoạch thanh tra, kiểm tra năm')[0]
+    luat_qlt = CanCu.objects.filter(ten_qd__contains='Luật quản lý Thuế')[0]
+    quy_trinh_ktra = CanCu.objects.filter(ten_qd__contains='Phê duyệt quy trình kiểm tra')[0]
     # Lãnh đạo phê duyệt
     ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='Cục')[0]
     ld_phong = LdPheDuyet.objects.filter(ld_cv__contains='phòng')[0]
@@ -523,9 +523,9 @@ def lap_qd_ktra_giai_the(request):
 
 def lap_qd_ktra_dot_xuat(request):
     # Căn cứ
-    qd_tkt_tct = CanCu.objects.all()[0]
-    luat_qlt = CanCu.objects.all()[1]
-    quy_trinh_ktra = CanCu.objects.all()[3]
+    qd_tkt_tct = CanCu.objects.filter(ten_qd__contains='Kế hoạch thanh tra, kiểm tra năm')[0]
+    luat_qlt = CanCu.objects.filter(ten_qd__contains='Luật quản lý Thuế')[0]
+    quy_trinh_ktra = CanCu.objects.filter(ten_qd__contains='Phê duyệt quy trình kiểm tra')[0]
     # Lãnh đạo phê duyệt
     ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='Cục')[0]
     ld_phong = LdPheDuyet.objects.filter(ld_cv__contains='phòng')[0]
@@ -614,11 +614,11 @@ def lap_qd_ttra_dot_xuat(request):
         'CCT huyện Cồn Cỏ': 'CCT huyện Cồn Cỏ'
     }
     # Căn cứ
-    qd_tkt_tct = CanCu.objects.all()[0]
-    luat_qlt = CanCu.objects.all()[1]
-    luat_ttra = CanCu.objects.all()[2]
-    quy_trinh_ttra = CanCu.objects.all()[4]
-    bsung_qtrinh_ttra = CanCu.objects.all()[5]
+    qd_tkt_tct = CanCu.objects.filter(ten_qd__contains='Kế hoạch thanh tra, kiểm tra năm')[0]
+    luat_qlt = CanCu.objects.filter(ten_qd__contains='Luật quản lý Thuế')[0]
+    luat_ttra = CanCu.objects.filter(ten_qd__contains='Luật Thanh tra')[0]
+    quy_trinh_ttra = CanCu.objects.filter(ten_qd__contains='Quy trình thanh tra')[0]
+    bsung_qtrinh_ttra = CanCu.objects.filter(ten_qd__contains='Sửa đổi, bổ sung quy trình thanh tra')[0]
     # Lãnh đạo phê duyệt
     ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='Cục')[0]
     ld_phong = LdPheDuyet.objects.filter(ld_cv__contains='phòng')[0]
