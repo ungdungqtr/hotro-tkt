@@ -704,7 +704,7 @@ def lap_qd_ttra_dot_xuat(request):
 
 # @permission_required('tkt.canbo_view', raise_exception=True)
 def qly_cb(request):
-    can_bo = CanBo.objects.all()
+    can_bo = CanBo.objects.all().order_by('id')
     page = request.GET.get('page', 1)
 
     paginator = Paginator(can_bo, 10)
