@@ -144,7 +144,7 @@ def lap_qd_ktra(request):
     # Căn cứ
     qd_tkt_tct = CanCu.objects.filter(ten_qd__contains='Kế hoạch thanh tra, kiểm tra năm')[0]
     luat_qlt = CanCu.objects.filter(ten_qd__contains='Luật quản lý Thuế')[0]
-    quy_trinh_ktra = CanCu.objects.filter(ten_qd__contains='Quy trình thanh tra')[0]
+    quy_trinh_ktra = CanCu.objects.filter(ten_qd__contains='Phê duyệt quy trình kiểm tra')[0]
     # Lãnh đạo phê duyệt
     ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='Cục')[0]
     ld_phong = LdPheDuyet.objects.filter(ld_cv__contains='phòng')[0]
