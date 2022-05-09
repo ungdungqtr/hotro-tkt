@@ -67,7 +67,6 @@ def cap_nhat_ld(request):
     obj.ld_cv = obj_1.chuc_vu
     obj.save()
     ld = {'id': obj.id, 'ld_gt': obj.ld_gt, 'ld_ten': obj.ld_ten,'ld_cv': obj.ld_cv}
-    print(ld)
 
     return JsonResponse({'ld': ld})
 
@@ -278,7 +277,6 @@ def lap_qd_ttra(request):
     qd_tkt_tct = CanCu.objects.filter(ten_qd__contains='Kế hoạch thanh tra, kiểm tra năm')[0]
     luat_qlt = CanCu.objects.filter(ten_qd__contains='Luật quản lý Thuế')[0]
     luat_ttra = CanCu.objects.filter(ten_qd__contains='Luật Thanh tra')[0]
-    print(luat_ttra.ngay_qd)
     quy_trinh_ttra = CanCu.objects.filter(ten_qd__contains='Quy trình thanh tra')[0]
     bsung_qtrinh_ttra = CanCu.objects.filter(ten_qd__contains='Sửa đổi, bổ sung quy trình thanh tra')[0]
     # Lãnh đạo phê duyệt
