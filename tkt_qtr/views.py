@@ -537,7 +537,8 @@ def lap_qd_ktra_dot_xuat(request):
         nnt = NNT.objects.get(mst=mst)
         # ngay_thang = request.POST['ngay_thang'].split("/")
         thang = leading_zero(request.POST['ngay_thang_1'], 3)
-        nam = ngay_thang = request.POST['ngay_thang_2']
+        # nam = ngay_thang = request.POST['ngay_thang_2']
+        nam = request.POST['ngay_thang_2']
         trinh_ky =   request.POST['trinh_ky'].split("/")   
         ngay_ktra = request.POST['ngay_ktra'].split("/")  
         thanh_vien = request.POST.getlist('thanh_vien', None)
