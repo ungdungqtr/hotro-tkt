@@ -743,8 +743,7 @@ def huy_qd_tktra(request):
             '<ngay_nhan_ttrinh>': request.POST['ngay_nhan_ttrinh'],
             '<so_ttrinh>': leading_zero(request.POST['so_ttrinh'], 9) if tktra == 'kiểm tra'
                             else request.POST['so_ttrinh'].strip(),
-            '<ngay_ttrinh>': request.POST['ngay_ttrinh'] if tktra == 'kiểm tra'
-                            else f"số {request.POST['so_ttrinh'].strip()} ngày {request.POST['ngay_ttrinh']}",
+            '<ngay_ttrinh>': request.POST['ngay_ttrinh'],
             '<ten_dv>': nnt.ten_nnt,
             '<mst>': mst,
             '<dia_chi>': nnt.dia_chi,
@@ -767,10 +766,10 @@ def huy_qd_tktra(request):
         QD = process_data.huy_qd_tktra(tt_qd)
         QD.empty_media()
         if tktra == 'kiểm tra':
-            file_path = [QD.tb_chap_nhan(), QD.dx_bai_bo_qd(), QD.huy_qd_ktra()]
+            file_path = [QD.tb_chap_nhan(), QD.dx_bai_bo_qd_ktra(), QD.huy_qd_ktra()]
             zip_path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", mst + "_huy_qd_ktra.zip")
         else:
-            file_path = [QD.tb_chap_nhan(), QD.dx_bai_bo_qd(), QD.huy_qd_ttra()]
+            file_path = [QD.tb_chap_nhan(), QD.dx_bai_bo_qd_ttra(), QD.huy_qd_ttra()]
             zip_path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", mst + "_huy_qd_ttra.zip")
         # writing files to a zipfile
         with ZipFile(zip_path,'w') as zip:

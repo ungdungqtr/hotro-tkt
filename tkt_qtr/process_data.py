@@ -452,8 +452,16 @@ class huy_qd_tktra:
         document.save(path)
         return path
     
-    def dx_bai_bo_qd(self):
-        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "7.dx_bai_bo_qd.docx"))
+    def dx_bai_bo_qd_ktra(self):
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "7.dx_bai_bo_qd_ktra.docx"))
+        ghi_du_lieu_para(document, self.tt_qd)
+        filename = self.tt_qd["<mst>"] + "_de_xuat.docx"
+        path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", filename)
+        document.save(path)
+        return path
+    
+    def dx_bai_bo_qd_ttra(self):
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "7.dx_bai_bo_qd_ttra.docx"))
         ghi_du_lieu_para(document, self.tt_qd)
         filename = self.tt_qd["<mst>"] + "_de_xuat.docx"
         path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", filename)
