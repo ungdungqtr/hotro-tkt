@@ -40,6 +40,11 @@ urlpatterns = [
     path('lap_qd_ttra_dot_xuat/cb_ten_autocomplete/', views.cb_ten_autocomplete, name = 'cb_ten_autocomplete'),
     path('lap_qd_ttra_dot_xuat/nnt_thong_tin/', views.nnt_thong_tin, name = 'nnt_thong_tin'),
     path('lap_qd_ttra_dot_xuat/cb_thong_tin/', views.cb_thong_tin, name = 'cb_thong_tin'),   
+    # Hủy quyết định thanh tra, kiểm tra
+    path('huy_qd_tktra/', views.huy_qd_tktra, name = 'huy_qd_tktra'),
+    path('huy_qd_tktra/mst_autocomplete/', views.mst_autocomplete, name = 'mst_autocomplete'),
+    path('huy_qd_tktra/nnt_thong_tin/', views.nnt_thong_tin, name = 'nnt_thong_tin'),
+
     # Quản lý cán bộ
     path('qly_cb/', views.qly_cb, name = 'qly_cb'),
     path('qly_cb/them_moi_cb/', views.them_moi_cb, name = 'them_moi_cb'),

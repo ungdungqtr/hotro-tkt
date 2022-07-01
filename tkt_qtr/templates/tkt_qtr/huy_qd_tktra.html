@@ -1,0 +1,78 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-3">
+    <div class="row" style=" padding: 20px 0 20px 0;">
+        <h3 style="margin: auto;">HỦY QUYẾT ĐỊNH THANH TRA - KIỂM TRA</h3>
+    </div>   
+    <div class="row" style="margin: 0 5% 0 5%;">
+        <form action="" method='POST' id="qd_ktra"> {% csrf_token %}
+            <h6>Hủy quyết định 
+                <select name="tktra_slt" id="tktra_slt" class="form-control" required>
+                    <option disable select></option>
+                    <option value="kiểm tra">Kiểm tra</option>
+                    <option value="thanh tra">Thanh tra</option>
+                </select>
+            </h5> 
+
+            <p>Ngày <input class="form-control ngay_nhan_ttrinh" name="ngay_nhan_ttrinh" type="text" required> 
+            Cục Thuế tỉnh Quảng Trị nhận được tờ trình số <input class="form-control so_ttrinh" name="so_ttrinh" type="text" required> 
+            ngày <input class="form-control ngay_ttrinh" name="ngay_ttrinh" type="text" required> về việc xin gia hạn thời gian <label class="tktra">...</label> của:</p>
+            
+            <p class="ten_dv" style="margin-left: 5%; font-weight: bold;"></p>
+            <p style="margin-left: 5%; font-weight: bold;">Mã số thuế: <input class="form-control mst" name="mst" type="text" minlength="10" maxlength="14" required></p>
+            <p class="dia_chi" style="margin-left: 5%; font-weight: bold;"></p>
+            
+            <p>Căn cứ Công văn số <input class="form-control cv_gia_han" name="cv_gia_han" type="number" min="1" required>/CTQTR-TTKT 
+                ngày <input class="form-control ngay_cv_gia_han" name="ngay_cv_gia_han" type="text" required> của Cục Thuế tỉnh Quảng Trị về việc gia hạn thời gian <label class="tktra">...</label> thuế.</p>
+            
+            <p>Phòng Thanh tra - Kiểm tra thuế kính đề xuất Lãnh đạo Cục Thuế tỉnh Quảng Trị ra quyết định bãi bỏ quyết định <label class="tktra">...</label> số <input class="form-control qd_tkt_dn" name="qd_tkt_dn" type="number" min="1" required>/QĐ-CTQTR 
+                ngày <input class="form-control ngay_qd_tkt_dn" name="ngay_qd_tkt_dn" type="text" required></p>
+            
+            <p>Lý do: Thời gian đơn vị xin gia hạn quá <input class="form-control tg_qua_han" name="tg_qua_han" type="number" min="1" required> ngày.</p>
+            
+            <p>Cục Thuế tỉnh Quảng Trị đồng ý gia hạn thời gian <label class="tktra">...</label> thuế theo nội dung tờ trình của đơn vị và sẽ thực hiện <label class="tktra">...</label> thuế tại đơn vị vào tháng 
+                <input class="form-control thang_tktra" name="thang_tktra" type="text" required>
+            </p>
+            {% comment %} <p>- Thời kỳ tiến hành kiểm tra: <input class="so_nam_ktra" name="so_nam_ktra" type="number" min="1" style="width: 48px; text-align: right" required> năm, 
+            năm <input class="nam_ktra" name="nam_ktra" type="text" size="8" style="text-align: center" required></p>
+            
+            <p style="margin-top: 20px;">- Thời gian kiểm tra <input class="so_ngay_ktra" name="so_ngay_ktra" type="number" min="1" style="width: 48px; text-align: right" required> ngày, dự kiến từ ngày 
+            <input class="ngay_ktra" name="ngay_ktra" type="text" size="8" style="text-align: center" required></p> {% endcomment %}
+                       
+            <table class="table table-sm table-borderless text-center" style="width:100%;">
+                <tbody>
+                    <tr style="text-align: right;">
+                        <td colspan='2'>
+                            <p><em>Quảng Trị, ngày&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tháng <input class="form-control ngay_thang_1" name="ngay_thang_1" type="text" size="1" required> năm <input class="form-control ngay_thang_2" name="ngay_thang_2" type="text" size="1" required></em></p>
+                        </td>
+                    </tr>
+                    <tr style="font-weight:bold;">
+                        <td colspan='2'>Lãnh đạo phê duyệt</td>
+                    </tr>
+                    <tr style="font-weight:bold;">
+                        <td>{{ld_phong.ld_cv|upper}}</td>
+                        <td>{{ld_cuc.ld_cv|upper}}</td>
+                    </tr>
+                    <tr style="font-weight:bold;">
+                        <td>{{ld_phong.ld_ten}}</td>
+                        <td>{{ld_cuc.ld_ten}}</td>
+                    </tr>
+                    <tr style="font-weight:bold;">
+                        <td colspan="2"><button type="submit" class="btn btn-primary mt-4 kx_qd_ktra">Lập QĐ</button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </form>
+    </div>
+</div>
+{% endblock content %}
+{% block footer %}
+    {% include 'tkt_qtr/footer.html' %} 
+{% endblock footer %}
+{% block script %}
+<script src={% static 'js/huy_qd_tktra.js' %} type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/huy_qd_tktra.css' %}">
+{% endblock script %}

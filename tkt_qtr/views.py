@@ -696,6 +696,99 @@ def lap_qd_ttra_dot_xuat(request):
     
     return render(request, 'tkt_qtr/lap_qd_ttra_dot_xuat.html', context=context)
 
+# Hủy quyết định thanh tra, kiểm tra
+#########################################################################################
+#########################################################################################
+#########################################################################################
+@login_required
+
+def huy_qd_tktra(request):
+    noi_nhan = {
+        'Cục Thuế tỉnh Quảng Trị': 'Phòng KK&KTT',
+        'CCT KV Đông Hà - Cam Lộ': 'CCT KV Đông Hà - Cam Lộ',
+        'CCT KV Triệu Hải': 'CCT KV Triệu Hải',
+        'CCT KV Vĩnh Linh - Gio Linh': 'CCT KV Vĩnh Linh - Gio Linh',
+        'CCT huyện Đakrông': 'CCT huyện Đakrông',
+        'CCT huyện Hướng Hóa': 'CCT huyện Hướng Hóa',
+        'CCT huyện Cồn Cỏ': 'CCT huyện Cồn Cỏ'
+    }
+    # Căn cứ
+    qd_tkt_tct = CanCu.objects.filter(ten_qd__contains='Kế hoạch thanh tra, kiểm tra năm')[0]
+    luat_qlt = CanCu.objects.filter(ten_qd__contains='Luật quản lý Thuế')[0]
+    quy_trinh_ktra = CanCu.objects.filter(ten_qd__contains='Phê duyệt quy trình kiểm tra')[0]
+    quy_trinh_ttra = CanCu.objects.filter(ten_qd__contains='Quy trình thanh tra')[0]
+
+    # Lãnh đạo phê duyệt
+    ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='Cục')[0]
+    ld_phong = LdPheDuyet.objects.filter(ld_cv__contains='phòng')[0]
+    context = {
+        'ld_cuc': ld_cuc,
+        'ld_phong': ld_phong
+    }
+    if request.method == 'POST':
+        mst = request.POST['mst']
+        nnt = NNT.objects.get(mst=mst)
+        thang = leading_zero(request.POST['ngay_thang_1'], 3)
+        nam = request.POST['ngay_thang_2']
+        ngay_qd_tkt_dn = request.POST['ngay_qd_tkt_dn'].split("/")
+        tktra = request.POST['tktra_slt']
+        
+        tt_qd = { 
+            '<tktra>': request.POST['tktra_slt'],
+            '<qd_tkt_tct>': "Quyết định số " + qd_tkt_tct.so_qd,
+            '<qd_tkt_tct_ngay_ban_hanh>': qd_tkt_tct.ngay_qd.strftime("ngày %d/%m/%Y"),
+            '<nam_kh_tkt>': datetime.now().strftime("%Y"),
+            '<luat_qlt_ngay>': luat_qlt.ngay_qd.strftime("ngày %d tháng %m") + " năm " + luat_qlt.ngay_qd.strftime("%Y"),
+            '<ngay_thang>' : "ngày      tháng " + thang + " năm " + nam,
+            '<ngay_nhan_ttrinh>': request.POST['ngay_nhan_ttrinh'],
+            '<so_ttrinh>': leading_zero(request.POST['so_ttrinh'], 9) if tktra == 'kiểm tra'
+                            else request.POST['so_ttrinh'].strip(),
+            '<ngay_ttrinh>': request.POST['ngay_ttrinh'] if tktra == 'kiểm tra'
+                            else f"số {request.POST['so_ttrinh'].strip()} ngày {request.POST['ngay_ttrinh']}",
+            '<ten_dv>': nnt.ten_nnt,
+            '<mst>': mst,
+            '<dia_chi>': nnt.dia_chi,
+            '<cv_gia_han>': leading_zero(request.POST['cv_gia_han'], 9),
+            '<ngay_cv_gia_han>': request.POST['ngay_cv_gia_han'],
+            '<quy_trinh_tktra>': quy_trinh_ktra.so_qd + quy_trinh_ktra.ngay_qd.strftime(" ngày %d/%m/%Y") if tktra == 'kiểm tra'
+                                else quy_trinh_ttra.so_qd + quy_trinh_ttra.ngay_qd.strftime(" ngày %d/%m/%Y"),
+            '<qd_tkt_dn>': leading_zero(request.POST['qd_tkt_dn'], 9),
+            '<ngay_qd_tkt_dn>': f"{ngay_qd_tkt_dn[0]} tháng {ngay_qd_tkt_dn[1]} năm {ngay_qd_tkt_dn[2]}",
+            '<tg_qua_han>': leading_zero(request.POST['tg_qua_han'], 9),
+            '<thang_tktra>' : request.POST['thang_tktra'],
+            '<LD_PHONG>' : ld_phong.ld_cv.upper(),
+            '<ld_phong>' : ld_phong.ld_cv,
+            '<ld_phong_ten>' : ld_phong.ld_ten,
+            '<LD_CUC>' : ld_cuc.ld_cv.upper() if ld_cuc.ld_cv != 'Cục trưởng' else '',
+            '<ld_cuc_ten>' : ld_cuc.ld_ten,
+            '<hinh_thuc_ky>' : ky_ten[ld_cuc.ld_cv.upper()],
+            '<noi_nhan>': noi_nhan[nnt.cqt],
+        }        
+        QD = process_data.huy_qd_tktra(tt_qd)
+        QD.empty_media()
+        if tktra == 'kiểm tra':
+            file_path = [QD.tb_chap_nhan(), QD.dx_bai_bo_qd(), QD.huy_qd_ktra()]
+            zip_path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", mst + "_huy_qd_ktra.zip")
+        else:
+            file_path = [QD.tb_chap_nhan(), QD.dx_bai_bo_qd(), QD.huy_qd_ttra()]
+            zip_path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", mst + "_huy_qd_ttra.zip")
+        # writing files to a zipfile
+        with ZipFile(zip_path,'w') as zip:
+            # writing each file one by one
+            for path in file_path:
+                zip.write(path, os.path.basename(path))
+        # Full path of file
+        if os.path.exists(zip_path):
+            with open(zip_path, 'rb') as fh:
+                response = HttpResponse(fh.read(), content_type="application/force_download")
+                response['Content-Disposition'] = 'inline; filename=' + os.path.basename(zip_path)
+                return response
+        # If file is not exists
+        raise Http404
+    
+    return render(request, 'tkt_qtr/huy_qd_tktra.html', context=context)
+    # return render(request, 'tkt_qtr/huy_qd_tktra.html')
+
 # Quản lý cán bộ
 #########################################################################################
 #########################################################################################

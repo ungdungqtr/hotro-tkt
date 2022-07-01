@@ -436,6 +436,51 @@ class lap_qd_ttra_dot_xuat:
         for file in os.listdir(media_store):
             path = os.path.join(media_store, file)
             os.remove(path)
+
+#########################################################################################
+#########################################################################################
+#########################################################################################
+class huy_qd_tktra:
+    def __init__(self, tt_qd):
+        self.tt_qd = tt_qd
+    
+    def tb_chap_nhan(self):
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "7.tb_chap_nhan.docx"))
+        ghi_du_lieu_para(document, self.tt_qd)
+        filename = self.tt_qd["<mst>"] + "_TB_chap_nhan.docx"
+        path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", filename)
+        document.save(path)
+        return path
+    
+    def dx_bai_bo_qd(self):
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "7.dx_bai_bo_qd.docx"))
+        ghi_du_lieu_para(document, self.tt_qd)
+        filename = self.tt_qd["<mst>"] + "_de_xuat.docx"
+        path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", filename)
+        document.save(path)
+        return path
+    
+    def huy_qd_ktra(self):
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "7.huy_qd_ktra.docx"))
+        ghi_du_lieu_para(document, self.tt_qd)
+        filename = self.tt_qd["<mst>"] + "_huy_qd_ktra.docx"
+        path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", filename)
+        document.save(path)
+        return path
+
+    def huy_qd_ttra(self):
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "7.huy_qd_ttra.docx"))
+        ghi_du_lieu_para(document, self.tt_qd)
+        filename = self.tt_qd["<mst>"] + "_huy_qd_ttra.docx"
+        path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", filename)
+        document.save(path)
+        return path
+
+    def empty_media(self):
+        media_store = os.path.join(settings.STATICFILES_DIRS[0], "media_store")
+        for file in os.listdir(media_store):
+            path = os.path.join(media_store, file)
+            os.remove(path)
 # <ngay_thang>, <phieu_xly_ngay>, <sl_cb>, <cb_cv>, <so_ngay_ktra>, <ngay_ktra>
 # <ten_dv>, <mst>, <dia_chi>, <ky_hoan_thue>
 # <hinh_thuc_ky>, <LD_CUC>, <ld_cuc_ten>, <LD_PHONG>, <ld_phong_ten> 
