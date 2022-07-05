@@ -10,7 +10,7 @@
         <form action="" method='POST' id="qd_ktra"> {% csrf_token %}
             <h6>Hủy quyết định 
                 <select name="tktra_slt" id="tktra_slt" class="form-control" required>
-                    <option disable select></option>
+                    <option disable select>.....</option>
                     <option value="kiểm tra">Kiểm tra</option>
                     <option value="thanh tra">Thanh tra</option>
                 </select>
@@ -18,21 +18,21 @@
 
             <p>Ngày <input class="form-control ngay_nhan_ttrinh" name="ngay_nhan_ttrinh" type="text" required> 
             Cục Thuế tỉnh Quảng Trị nhận được tờ trình số <input class="form-control so_ttrinh" name="so_ttrinh" type="text" required> 
-            ngày <input class="form-control ngay_ttrinh" name="ngay_ttrinh" type="text" required> về việc xin gia hạn thời gian <label class="tktra">...</label> của:</p>
+            ngày <input class="form-control ngay_ttrinh" name="ngay_ttrinh" type="text" required> về việc xin gia hạn thời gian <label class="tktra"></label> của:</p>
             
             <p class="ten_dv" style="margin-left: 5%; font-weight: bold;"></p>
             <p style="margin-left: 5%; font-weight: bold;">Mã số thuế: <input class="form-control mst" name="mst" type="text" minlength="10" maxlength="14" required></p>
             <p class="dia_chi" style="margin-left: 5%; font-weight: bold;"></p>
             
             <p>Căn cứ Công văn số <input class="form-control cv_gia_han" name="cv_gia_han" type="number" min="1" required>/CTQTR-TTKT 
-                ngày <input class="form-control ngay_cv_gia_han" name="ngay_cv_gia_han" type="text" required> của Cục Thuế tỉnh Quảng Trị về việc gia hạn thời gian <label class="tktra">...</label> thuế.</p>
+                ngày <input class="form-control ngay_cv_gia_han" name="ngay_cv_gia_han" type="text" required> của Cục Thuế tỉnh Quảng Trị về việc gia hạn thời gian <label class="tktra"></label> thuế.</p>
             
-            <p>Phòng Thanh tra - Kiểm tra thuế kính đề xuất Lãnh đạo Cục Thuế tỉnh Quảng Trị ra quyết định bãi bỏ quyết định <label class="tktra">...</label> số <input class="form-control qd_tkt_dn" name="qd_tkt_dn" type="number" min="1" required>/QĐ-CTQTR 
+            <p>Phòng Thanh tra - Kiểm tra thuế kính đề xuất Lãnh đạo Cục Thuế tỉnh Quảng Trị ra quyết định bãi bỏ quyết định <label class="tktra"></label> số <input class="form-control qd_tkt_dn" name="qd_tkt_dn" type="number" min="1" required>/QĐ-CTQTR 
                 ngày <input class="form-control ngay_qd_tkt_dn" name="ngay_qd_tkt_dn" type="text" required></p>
             
             <p>Lý do: Thời gian đơn vị xin gia hạn quá <input class="form-control tg_qua_han" name="tg_qua_han" type="number" min="1" required> ngày.</p>
             
-            <p>Cục Thuế tỉnh Quảng Trị đồng ý gia hạn thời gian <label class="tktra">...</label> thuế theo nội dung tờ trình của đơn vị và sẽ thực hiện <label class="tktra">...</label> thuế tại đơn vị vào tháng 
+            <p>Cục Thuế tỉnh Quảng Trị đồng ý gia hạn thời gian <label class="tktra"></label> thuế theo nội dung tờ trình của đơn vị và sẽ thực hiện <label class="tktra"></label> thuế tại đơn vị vào tháng 
                 <input class="form-control thang_tktra" name="thang_tktra" type="text" required>
             </p>
             {% comment %} <p>- Thời kỳ tiến hành kiểm tra: <input class="so_nam_ktra" name="so_nam_ktra" type="number" min="1" style="width: 48px; text-align: right" required> năm, 

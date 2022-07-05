@@ -45,9 +45,7 @@ $(document).ready(function () {
     $('.ngay_thang_1').val(dNow.getMonth()+1);
     $('.ngay_thang_2').val(dNow.getFullYear());
     
-    // var tkt = $('#tktra').val()
-    // $('.tkt').text(tkt);
-
+    $('.tktra').text($('#tktra_slt').val().trim());
     $('#tktra_slt').change (function () {
         var tktra = $('#tktra_slt').val().trim();
         $('.tktra').text(tktra);
