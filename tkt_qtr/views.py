@@ -494,7 +494,7 @@ def lap_qd_ktra_giai_the(request):
             '<LD_CUC>' : ld_cuc.ld_cv.upper() if ld_cuc.ld_cv != 'Cục trưởng' else '',
             '<ld_cuc_ten>' : ld_cuc.ld_ten,
             '<hinh_thuc_ky>' : ky_ten[ld_cuc.ld_cv.upper()],
-        }       
+        } 
         QD = process_data.lap_qd_ktra_giai_the(tt_qd, doan_ktra)
         QD.empty_media()
         file_path = [QD.to_trinh(), QD.qd_ktra(), QD.qd_gsat(), QD.kh_gsat()]
