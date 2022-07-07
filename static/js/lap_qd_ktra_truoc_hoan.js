@@ -4,6 +4,11 @@ $(document).ready(function () {
         delimiter: '/',
         datePattern: ['d','m','Y']
     });
+    new Cleave('.hs_hoan_ngay', {
+        date: true,
+        delimiter: '/',
+        datePattern: ['d','m','Y']
+    });
     new Cleave('.trinh_ky', {
         date: true,
         delimiter: '/',
@@ -19,11 +24,33 @@ $(document).ready(function () {
         delimiter: '/',
         datePattern: ['Y']
     });
+    new Cleave('.hoan_tien', {
+        numeral: true,
+        numeralThousandsGroupStyle: 'thousand',
+        numeralDecimalMark: ',', delimiter: '.'
+    });
     var dNow = new Date();
     var localdate= dNow.getDate() + '/' + (dNow.getMonth()+1) + '/' + dNow.getFullYear();
     $('.trinh_ky').val(localdate);
     $('.ngay_thang_1').val(dNow.getMonth()+1);
     $('.ngay_thang_2').val(dNow.getFullYear());
+
+    $('.loai_kk').text($('.kk_theo').val().trim());
+    if ($('.kk_theo').val().trim() == 'tháng') {
+        $('.tgian_2').attr('max', '12');
+    } else {
+        $('.tgian_2').attr('max', '4');
+    }
+    $('.kk_theo').change (function () {
+        var kk = $('.kk_theo').val().trim();
+        $('.loai_kk').text(kk);
+        if (kk == 'tháng') {
+            $('.tgian_2').attr('max', '12');
+        } else {
+            $('.tgian_2').attr('max', '4');
+        }
+    });
+
     // jQuery button click event to add a row.
     var rowIdx = 0; 
     $('#addBtn').on('click', function () {
@@ -31,13 +58,13 @@ $(document).ready(function () {
         $('#tbody').append(
             `<tr id="R${++rowIdx}">
                 <td class="row-index">
-                    <p class="cb_gioi_tinh"></p></td>
+                    <p class="form-control cb_gioi_tinh"></p></td>
                 <td class="row-index">
-                    <input class="thanh_vien" name="thanh_vien" type="text" size="24" required></td>
+                    <input class="form-control thanh_vien" name="thanh_vien" type="text" required></td>
                 <td class="row-index">
                     <p class="ngach_cb"></p></td>
                 <td class="row-index">
-                    <p class="cv_doan" name="thanh_vien_cvu"></p></td>
+                    <p class="form-control cv_doan" name="thanh_vien_cvu"></p></td>
                 <td class="text-center">
                     <button class="btn btn-danger remove" 
                         type="button">Xóa</button></td>

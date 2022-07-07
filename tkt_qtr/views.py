@@ -741,8 +741,7 @@ def huy_qd_tktra(request):
             '<luat_qlt_ngay>': luat_qlt.ngay_qd.strftime("ngày %d tháng %m") + " năm " + luat_qlt.ngay_qd.strftime("%Y"),
             '<ngay_thang>' : "ngày      tháng " + thang + " năm " + nam,
             '<ngay_nhan_ttrinh>': request.POST['ngay_nhan_ttrinh'],
-            '<so_ttrinh>': leading_zero(request.POST['so_ttrinh'], 9) if tktra == 'kiểm tra'
-                            else request.POST['so_ttrinh'].strip(),
+            '<so_ttrinh>': request.POST['so_ttrinh'].strip(),
             '<ngay_ttrinh>': request.POST['ngay_ttrinh'],
             '<ten_dv>': nnt.ten_nnt,
             '<mst>': mst,

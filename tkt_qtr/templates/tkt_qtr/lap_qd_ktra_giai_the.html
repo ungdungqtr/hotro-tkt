@@ -6,16 +6,16 @@
     <div class="row" style=" padding: 20px 0 20px 0;">
         <h3 style="margin: auto;">LẬP QUYẾT ĐỊNH KIỂM TRA GIẢI THỂ</h3>
     </div>   
-    <div class="row" style="margin-left: 15%;">
+    <div class="row" style="margin-left: 5%;">
         <form action="" method='POST' id="qd_ktra"> {% csrf_token %}            
             <P>Căn cứ Phiếu đề nghị xử lý về việc chấm dứt hiệu lực mã số thuế của Phòng Kê khai và kế toán thuế ngày 
-            <input class="phieu_xly_ngay" name="phieu_xly_ngay" type="text" size="8" style="text-align: center" required>
+            <input class="form-control phieu_xly_ngay" name="phieu_xly_ngay" type="text" required>
             </P>
             <p>Phòng Thanh tra - Kiểm tra tiến hành kiểm chấp hành Pháp Luật Thuế đối với:</p>
             <p class="ten_dv" style="margin-left: 5%; font-weight: bold;"></p>
-            <p style="margin-left: 5%; font-weight: bold;">Mã số thuế: <input class="mst" name="mst" type="text" size="12" minlength="10" maxlength="14" style="text-align: right" required></p>
+            <p style="margin-left: 5%; font-weight: bold;">Mã số thuế: <input class="form-control mst" name="mst" type="text" minlength="10" maxlength="14" required></p>
             <p class="dia_chi" style="margin-left: 5%; font-weight: bold;"></p>
-            <p>- Thời kỳ tiến hành kiểm tra: từ năm <input class="nam_ktra" name="nam_ktra" type="text" size="4" style="text-align: center" required> đến thời điểm giải thể</p>
+            <p>- Thời kỳ tiến hành kiểm tra: từ năm <input class="form-control  nam_ktra" name="nam_ktra" type="text" required> đến thời điểm giải thể</p>
             <p>- Thành phần Đoàn kiểm tra gồm có:</p>
             <div class="table-responsive" style="margin-left: 5%;">
                 <table class="table table-sm table-borderless" style="border-style:none;">
@@ -27,22 +27,22 @@
             <button class="btn btn-md btn-primary" id="addBtn" type="button">
                 Thêm thành viên
             </button>
-            <p style="margin-top: 20px;">- Thời gian kiểm tra <input class="so_ngay_ktra" name="so_ngay_ktra" type="number" min="1" style="width: 48px; text-align: right" required> ngày, dự kiến từ ngày 
-            <input class="ngay_ktra" name="ngay_ktra" type="text" size="8" style="text-align: center" required></p>
+            <p style="margin-top: 20px;">- Thời gian kiểm tra <input class="form-control so_ngay_ktra" name="so_ngay_ktra" type="number" min="1" required> ngày, dự kiến từ ngày 
+            <input class="form-control ngay_ktra" name="ngay_ktra" type="text" required></p>
             <p>- Địa điểm:  
-                <select name="dia_diem_ktra" id="" class="form-control" style="width: 240px; display:inline;" required>
+                <select name="dia_diem_ktra" id="" class="form-control dia_diem_ktra" required>
                     <option value="tại trụ sở của NNT">tại trụ sở của NNT</option>
                     <option value="tại trụ sở của cơ quan thuế">tại trụ sở của cơ quan thuế</option>
                 </select> 
             </p>
-            <p style="margin-top: 20px;">- Lập trình ký ngày <input class="trinh_ky" name="trinh_ky" type="text" size="8" style="text-align: center" required></p>
+            <p style="margin-top: 20px;">- Lập trình ký ngày <input class="form-control trinh_ky" name="trinh_ky" type="text" required></p>
 
             {% comment %} <input class="dia_diem_ktra" name="dia_diem_ktra" type="text" style="width: 48px; text-align: right" required> {% endcomment %}
             <table class="table table-sm table-borderless text-center" style="width:100%;">
                 <tbody>
                     <tr style="text-align: right;">
                         <td colspan='2'>
-                            <p><em>Quảng Trị, ngày&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tháng <input class="ngay_thang_1" name="ngay_thang_1" type="text" size="1" style="text-align: center" required> năm <input class="ngay_thang_2" name="ngay_thang_2" type="text" size="1" style="text-align: center" required></em></p>
+                            <p><em>Quảng Trị, ngày&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tháng <input class="form-control ngay_thang_1" name="ngay_thang_1" type="text" required> năm <input class="form-control ngay_thang_2" name="ngay_thang_2" type="text" required></em></p>
                         </td>
                     </tr>
                     <tr style="font-weight:bold;">
@@ -70,5 +70,6 @@
     {% include 'tkt_qtr/footer.html' %} 
 {% endblock footer %}
 {% block script %}
-<script src={% static 'js/lap_qd_ktra_giai_the.js' %} type="text/javascript"></script>
+<script src={% static 'js/lap_qd_ktra.js' %} type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/lap_qd.css' %}">
 {% endblock script %}

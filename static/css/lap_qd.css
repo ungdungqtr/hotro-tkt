@@ -1,0 +1,78 @@
+.mst, .so_nam_ktra, .so_ngay_ktra, .nam_ktra, .ngay_ktra, .trinh_ky, .ngay_thang_1, .ngay_thang_2, .thanh_vien {
+    display: inline;
+    font-weight: bold;
+    outline: 1px solid #28a745;
+    border: 0;
+}
+/* Kiểm tra trước hoàn */
+.hs_hoan_so, .hs_hoan_ngay, .kk_theo, .tgian_1, .tgian_2, .hoan_tien, .dia_diem_ktra {
+    display: inline;
+    font-weight: bold;
+    outline: 1px solid #28a745;
+    border: 0;
+}
+/* Kiểm tra giải thể */
+.phieu_xly_ngay {
+    display: inline;
+    font-weight: bold;
+    outline: 1px solid #28a745;
+    border: 0;
+}
+/* Kiểm tra, thanh tra đột xuất */
+.can_cu {
+    display: inline;
+    font-weight: bold;
+    outline: 1px solid #28a745;
+    border: 0;
+    width: 630px;
+}
+/* Hủy quyết định */
+#tktra_slt, .ngay_nhan_ttrinh, .so_ttrinh, .ngay_ttrinh, .thang_tktra, .cv_gia_han, .ngay_cv_gia_han, .qd_tkt_dn, .ngay_qd_tkt_dn, .tg_qua_han {
+    display: inline;
+    font-weight: bold;
+    outline: 1px solid #28a745;
+    border: 0;
+}
+
+.tktra {
+    display: inline;
+}
+.ngay_thang_1,.ngay_thang_2, .tgian_1, .tgian_2 {
+    width: 72px;
+    text-align: center;
+}
+.cb_gioi_tinh, .thanh_vien, .cv_doan {
+    border: 0;
+}
+.thanh_vien {
+    width: 240px;
+}
+.dia_diem_ktra {
+    width: 300px;
+}
+.mst {
+    width: 150px;
+}
+.so_nam_ktra, .so_ngay_ktra, .tg_qua_han {
+    width: 60px; 
+    text-align: center;
+}
+.nam_ktra, .ngay_ktra, .trinh_ky, .phieu_xly_ngay, .hs_hoan_so, .hs_hoan_ngay, .hoan_tien {
+    width: 120px; 
+    text-align: center;
+}
+/* Hủy quyết định */
+.ngay_nhan_ttrinh, .ngay_ttrinh, .ngay_cv_gia_han, .ngay_qd_tkt_dn, .so_ttrinh {
+    text-align: center;
+    width: 120px;
+}
+.kk_theo, .cv_gia_han, .qd_tkt_dn, .thang_tktra {
+    width: 90px;
+    text-align: center;
+}
+#tktra_slt {
+    width: 120px; 
+}
+.tktra {
+    display: inline;
+}
