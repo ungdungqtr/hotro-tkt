@@ -36,7 +36,11 @@ $(document).ready(function () {
     $('.ngay_thang_2').val(dNow.getFullYear());
 
     $('.loai_kk').text($('.kk_theo').val().trim());
-    if ($('.kk_theo').val().trim() == 'tháng') {
+    $('.kk_theo').change (function () {
+        var kk = $('.kk_theo').val().trim();
+        $('.loai_kk').text(kk);
+    });
+    /* if ($('.kk_theo').val().trim() == 'tháng') {
         $('.tgian_2').attr('max', '12');
     } else {
         $('.tgian_2').attr('max', '4');
@@ -49,7 +53,7 @@ $(document).ready(function () {
         } else {
             $('.tgian_2').attr('max', '4');
         }
-    });
+    }); */
 
     // jQuery button click event to add a row.
     var rowIdx = 0; 

@@ -37,7 +37,7 @@
 .tktra {
     display: inline;
 }
-.ngay_thang_1,.ngay_thang_2, .tgian_1, .tgian_2 {
+.ngay_thang_1,.ngay_thang_2 {
     width: 72px;
     text-align: center;
 }
@@ -66,7 +66,7 @@
     text-align: center;
     width: 120px;
 }
-.kk_theo, .cv_gia_han, .qd_tkt_dn, .thang_tktra {
+.kk_theo, .cv_gia_han, .qd_tkt_dn, .thang_tktra, .tgian_1, .tgian_2 {
     width: 90px;
     text-align: center;
 }
