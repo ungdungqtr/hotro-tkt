@@ -63,5 +63,8 @@ urlpatterns = [
     path('thiet_lap_chung/cb_ten_autocomplete/', views.cb_ten_autocomplete, name='cb_ten_autocomplete'),
     path('thiet_lap_chung/cap_nhat_ld/', views.cap_nhat_ld, name='cap_nhat_ld'),
     path('thiet_lap_chung/import_data/', views.import_data, name='import_data'),
-    
+    path('thiet_lap_chung/export_CB/', views.export_CB, name='export_CB'),  
+    path('thiet_lap_chung/export_NNT/', views.export_NNT, name='export_NNT'),  
+    path('thiet_lap_chung/export_QD/', views.export_QD, name='export_QD'),
+    path('thiet_lap_chung/export_LD/', views.export_LD, name='export_LD'),
 ]

@@ -133,6 +133,54 @@ def read_csv_setting(MEDIA_ROOT, filename):
                     ld_gt = row[3],
                 ) 
 
+def export_CB(request):
+    data = CanBo.objects.all()
+
+    # Create the HttpResponse object with the appropriate CSV header.
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'inline; filename="CB.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['ID', 'Ten', 'Gioi_tinh', 'Chuc_vu'])
+
+    for obj in data:
+        writer.writerow([obj.id, obj.ten_cb, obj.gioi_tinh, obj.chuc_vu])
+
+    return response
+
+def export_NNT(request):
+    data = NNT.objects.all()
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="NNT.csv"'
+    writer = csv.writer(response)
+    writer.writerow(['ID', 'MST', 'Ten_NNT', 'Dia_chi', 'CQT'])
+    for obj in data:
+        writer.writerow([obj.id, obj.mst, obj.ten_nnt, obj.dia_chi, obj.cqt])
+
+    return response
+
+def export_QD(request):
+    data = CanCu.objects.all()
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="QD.csv"'
+    writer = csv.writer(response)
+    writer.writerow(['ID', 'So_QD', 'Ten_QD', 'Ngay_QD'])
+    for obj in data:
+        writer.writerow([obj.id, obj.so_qd, obj.ten_qd, obj.ngay_qd])
+
+    return response
+
+def export_LD(request):
+    data = LdPheDuyet.objects.all()
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="LD.csv"'
+    writer = csv.writer(response)
+    writer.writerow(['ID', 'ld_ten', 'ld_cv', 'ld_gt'])
+    for obj in data:
+        writer.writerow([obj.id, obj.ld_ten, obj.ld_cv, obj.ld_gt])
+
+    return response
+
 # Lập quyết định kiểm tra
 #########################################################################################
 #########################################################################################
