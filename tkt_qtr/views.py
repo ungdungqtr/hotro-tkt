@@ -117,7 +117,7 @@ def read_csv_setting(MEDIA_ROOT, filename):
                     cqt = row[4],
                 )
         if 'QD' in filename:
-            # CanCu.objects.all().delete()
+            CanCu.objects.all().delete()
             for row in csvreader:
                 obj = CanCu.objects.create(
                     so_qd = row[1],
