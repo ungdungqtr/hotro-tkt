@@ -30,6 +30,7 @@ class NNT(models.Model):
         )
 
 class CanCu(models.Model):
+    ten_cc= models.CharField(max_length=255, default='')
     so_qd= models.CharField(max_length=25, default='')
     ten_qd = models.CharField(max_length=255, default='')
     ngay_qd = models.DateField()
