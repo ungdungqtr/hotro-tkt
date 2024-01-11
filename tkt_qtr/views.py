@@ -45,14 +45,16 @@ def cap_nhat_qd(request):
     so_qd_1 = request.GET.get('so_qd', None)
     ten_qd_1 = request.GET.get('ten_qd', None)
     ngay_qd_1 = request.GET.get('ngay_qd', None)
+    ten_cc_1 = request.GET.get('ten_cc', None)
 
     obj = CanCu.objects.get(id=id_1)
     obj.so_qd = so_qd_1
     obj.ten_qd = ten_qd_1
     obj.ngay_qd = ngay_qd_1
+    obj.ten_cc = ten_cc_1
     obj.save()
     
-    qd = {'id': obj.id, 'so_qd': obj.so_qd, 'ten_qd': obj.ten_qd, 'ngay_qd': obj.ngay_qd}
+    qd = {'id': obj.id, 'so_qd': obj.so_qd, 'ten_qd': obj.ten_qd, 'ngay_qd': obj.ngay_qd, 'ten_cc': obj.ten_cc}
     return JsonResponse({'qd': qd})
 
 @permission_required('tkt_qtr.ld_edit')
@@ -123,6 +125,7 @@ def read_csv_setting(MEDIA_ROOT, filename):
                     so_qd = row[1],
                     ten_qd = row[2],
                     ngay_qd = row[3],
+                    ten_cc = row[4]
                 )
         if 'LD' in filename:
             LdPheDuyet.objects.all().delete()
@@ -164,9 +167,9 @@ def export_QD(request):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="QD.csv"'
     writer = csv.writer(response)
-    writer.writerow(['ID', 'So_QD', 'Ten_QD', 'Ngay_QD'])
+    writer.writerow(['ID', 'So_QD', 'Ten_QD', 'Ngay_QD', 'Ten_CanCu'])
     for obj in data:
-        writer.writerow([obj.id, obj.so_qd, obj.ten_qd, obj.ngay_qd])
+        writer.writerow([obj.id, obj.so_qd, obj.ten_qd, obj.ngay_qd, obj.ten_cc])
 
     return response
 
