@@ -45,16 +45,16 @@ def cap_nhat_qd(request):
     so_qd_1 = request.GET.get('so_qd', None)
     ten_qd_1 = request.GET.get('ten_qd', None)
     ngay_qd_1 = request.GET.get('ngay_qd', None)
-    ten_cc_1 = request.GET.get('ten_cc', None)
+    # ten_cc_1 = request.GET.get('ten_cc', None)
 
     obj = CanCu.objects.get(id=id_1)
     obj.so_qd = so_qd_1
     obj.ten_qd = ten_qd_1
     obj.ngay_qd = ngay_qd_1
-    obj.ten_cc = ten_cc_1
+    # obj.ten_cc = ten_cc_1
     obj.save()
     
-    qd = {'id': obj.id, 'so_qd': obj.so_qd, 'ten_qd': obj.ten_qd, 'ngay_qd': obj.ngay_qd, 'ten_cc': obj.ten_cc}
+    qd = {'id': obj.id, 'so_qd': obj.so_qd, 'ten_qd': obj.ten_qd, 'ngay_qd': obj.ngay_qd}
     return JsonResponse({'qd': qd})
 
 @permission_required('tkt_qtr.ld_edit')
