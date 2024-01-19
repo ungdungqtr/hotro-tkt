@@ -1,0 +1,110 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-3">
+    <div class="row" style=" padding: 20px 0 20px 0;">
+        <h3 style="margin: auto;">LẬP QUYẾT ĐỊNH KIỂM TRA SAU HOÀN THUẾ GTGT</h3>
+    </div>   
+    <div class="row" style="margin-left: 15%;">
+        <form action="" method='POST' id="qd_ktra"> {% csrf_token %}            
+            <p>Căn cứ hồ sơ đề nghị hoàn thuế GTGT số <input class="form-control hs_hoan_so" name="hs_hoan_so" type="text" required> ngày
+                <input class="form-control hs_hoan_ngay" name="hs_hoan_ngay" type="text" style="text-align: center" required>
+            </p>
+            <p>Căn cứ Quyết định số <input class="form-control qd_hoan_so" name="qd_hoan_so" type="text" required>/QĐ-CTQTR-KĐT ngày
+                <input class="form-control qd_hoan_ngay" name="qd_hoan_ngay" type="text" style="text-align: center" required>
+            </p>
+            <p>Phòng Thanh tra - Kiểm tra tiến hành kiểm tra trước hoàn thuế đối với:</p>
+            <p class="ten_dv" style="margin-left: 5%; font-weight: bold;"></p>
+            <p style="margin-left: 5%; font-weight: bold;">Mã số thuế: <input class="form-control mst" name="mst" type="text" minlength="10" maxlength="14"required></p>
+            <p class="dia_chi" style="margin-left: 5%; font-weight: bold;"></p>
+            <p>- Thời kỳ kiểm tra hoàn thuế: từ 
+                <select class="form-control kk_theo" name="kk_theo" required>
+                    <option value="tháng">tháng</option>
+                    <option value="quý">quý</option>
+                </select>
+            <input class="form-control tgian_1" name="tgian" type="text" required> đến <label class="loai_kk" for="customControlInline"></label>
+            <input class="form-control tgian_2" name="tgian" type="text" required> số tiền là <input class="form-control hoan_tien" name="hoan_tien" type="text" min="1" required> đồng</p>
+            {% comment %} <p>- Trường hợp hoàn:
+                <select multiple  class="form-control" name="th_hoan" style="width: 390px; display:inline;">
+                    <option value="Hoàn thuế GTGT đối với dự án đầu tư">Hoàn thuế GTGT đối với dự án đầu tư</option>
+                    <option value="Hoàn thuế GTGT đối với hàng hóa, DV xuất khẩu">Hoàn thuế GTGT đối với hàng hóa, DV xuất khẩu</option>
+                    <option value="Hoàn thuế đối với tổ chức ở Việt Nam sử dụng tiền viện trợ nhân đạo của tổ chức, cá nhân nước ngoài để mua HHDV phục vụ cho chương trình, dự án viện trợ không hoàn lại, viện trợ nhân đạo tại Việt Nam">
+                        Hoàn thuế đối với tổ chức ở Việt Nam sử dụng tiền viện trợ nhân đạo của tổ chức, <br>cá nhân nước ngoài để mua HHDV phục vụ cho chương trình, dự án viện trợ không hoàn lại, viện trợ nhân đạo tại Việt Nam</option>
+                </select>
+            </p> {% endcomment %}
+            <p>- Trường hợp hoàn:</p>
+                <div class="form-check" style="margin-left: 15px;">
+                    <input class="form-check-input" type="radio" name="th_hoan" id="Radios1" value="Hoàn thuế GTGT đối với dự án đầu tư" checked>
+                    <label class="form-check-label" for="Radios1">
+                        Hoàn thuế GTGT đối với dự án đầu tư
+                    </label>
+                </div>
+                <div class="form-check" style="margin-left: 15px;">
+                    <input class="form-check-input" type="radio" name="th_hoan" id="Radios2" value="Hoàn thuế GTGT đối với hàng hóa, DV xuất khẩu">
+                    <label class="form-check-label" for="Radios2">
+                        Hoàn thuế GTGT đối với hàng hóa, DV xuất khẩu
+                    </label>
+                </div>
+                <div class="form-check" style="margin-left: 15px;">
+                    <input class="form-check-input" type="radio" name="th_hoan" id="Radios3" value="Hoàn thuế GTGT đối với tổ chức sử dụng tiền viện trợ để mua hàng viện trợ tại Việt Nam">
+                    <label class="form-check-label" for="Radios3">
+                        Hoàn thuế GTGT đối với tổ chức sử dụng tiền viện trợ để mua hàng viện trợ tại Việt Nam
+                    </label>
+                </div>
+            <p class="mt-3">- Địa điểm:  
+                <select name="dia_diem_ktra" class="form-control dia_diem_ktra" required>
+                    <option value="tại trụ sở của NNT">tại trụ sở của NNT</option>
+                    <option value="tại trụ sở của cơ quan thuế">tại trụ sở của cơ quan thuế</option>
+                </select> 
+            </p>
+            <p>- Thành phần Đoàn kiểm tra gồm có:</p>
+            <div class="table-responsive" style="margin-left: 5%;">
+                <table class="table table-sm table-borderless" style="border-style:none;">
+                    <tbody id="tbody">
+
+                    </tbody>
+                </table>
+            </div>
+            <button class="btn btn-md btn-primary" id="addBtn" type="button">
+                Thêm thành viên
+            </button>
+            <p style="margin-top: 20px;">- Thời gian kiểm tra <input class="form-control so_ngay_ktra" name="so_ngay_ktra" type="number" min="2" required> ngày, dự kiến từ ngày 
+            <input class="form-control ngay_ktra" name="ngay_ktra" type="text" required></p>
+            <p style="margin-top: 20px;">- Lập trình ký ngày <input class="form-control trinh_ky" name="trinh_ky" type="text" size="8" required></p>
+
+            <table class="table table-sm table-borderless text-center" style="width:100%;">
+                <tbody>
+                    <tr style="text-align: right;">
+                        <td colspan='2'>
+                            <p><em>Quảng Trị, ngày&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tháng <input class="form-control ngay_thang_1" name="ngay_thang_1" type="text" size="1"  required> năm <input class="form-control ngay_thang_2" name="ngay_thang_2" type="text" required></em></p>
+                        </td>
+                    </tr>
+                    <tr style="font-weight:bold;">
+                        <td colspan='2'>Lãnh đạo phê duyệt</td>
+                    </tr>
+                    <tr style="font-weight:bold;">
+                        <td>{{ld_phong.ld_cv|upper}}</td>
+                        <td>{{ld_cuc.ld_cv|upper}}</td>
+                    </tr>
+                    <tr style="font-weight:bold;">
+                        <td>{{ld_phong.ld_ten}}</td>
+                        <td>{{ld_cuc.ld_ten}}</td>
+                    </tr>
+                    <tr style="font-weight:bold;">
+                        <td colspan="2"><button type="submit" class="btn btn-primary mt-4 kx_qd_ktra">Lập QĐ</button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </form>
+    </div>
+</div>
+{% endblock content %}
+{% block footer %}
+    {% include 'tkt_qtr/footer.html' %} 
+{% endblock footer %}
+{% block script %}
+<script src={% static 'js/lap_qd_ktra_sau_hoan.js' %} type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/lap_qd.css' %}">
+{% endblock script %}

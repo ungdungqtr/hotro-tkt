@@ -258,6 +258,64 @@ class lap_qd_ktra_hoan_gtgt:
 #########################################################################################
 #########################################################################################
 #########################################################################################
+class lap_qd_ktra_hoan_gtgt:
+    def __init__(self, tt_qd, doan_ktra):
+            self.tt_qd = tt_qd
+            self.doan_ktra = doan_ktra
+
+    def to_trinh(self):
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "8.to_trinh_ktr_sau_hoan_gtgt.docx"))
+        ghi_du_lieu_para(document, self.tt_qd)
+        filename = self.tt_qd["<mst>"] + "_To_trinh.docx"
+        path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", filename)   
+        document.save(path)
+        return path
+
+    def qd_gsat(self):
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "8.qd_giam_sat_sau_hoan_gtgt.docx"))
+        ghi_du_lieu_para(document, self.tt_qd)
+        filename = self.tt_qd["<mst>"] + "_QD_giam_sat.docx"
+        path = os.path.join(settings.STATICFILES_DIRS[0], "media_store/" + filename)   
+        document.save(path)
+        return path
+
+    def kh_gsat(self):
+        # document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media/2.kh_giam_sat.docx"))
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "8.kh_giam_sat_sau_hoan_gtgt.docx"))
+        ghi_du_lieu_para(document, self.tt_qd)
+        filename = self.tt_qd["<mst>"] + "_KH_giam_sat.docx"
+        # path = os.path.join(settings.STATICFILES_DIRS[0], "media_store/" + filename)
+        path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", filename)
+        document.save(path)
+        return path
+    
+    def qd_ktra(self):
+        # document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media/2.qd_ttra.docx"))
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "8.qd_ktra_hoan_sau_gtgt.docx"))
+        ghi_du_lieu_para(document, self.tt_qd)
+        # ghi dữ liệu thành phần đoàn
+        table = document.tables[0]
+        # del_row(table, len(doan_ktra['<ten_cb>']), len(table.rows))
+        for i in range(len(self.doan_ktra['<ten_cb>'])):
+            row = table.rows[i]
+            for k,v in self.doan_ktra.items():
+                ghi_du_lieu_cell(row, k, v[i])
+        # Xóa các hàng không có dữ liệu
+        del_row(table, len(self.doan_ktra['<ten_cb>']) - 1, len(table.rows))
+        filename = self.tt_qd["<mst>"] + "_QD_kiem_tra.docx"
+        # path = os.path.join(settings.STATICFILES_DIRS[0], "media_store/" + filename)
+        path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", filename)
+        document.save(path)
+        return path
+
+    def empty_media(self):
+        media_store = os.path.join(settings.STATICFILES_DIRS[0], "media_store")
+        for file in os.listdir(media_store):
+            path = os.path.join(media_store, file) 
+            os.remove(path)
+#########################################################################################
+#########################################################################################
+#########################################################################################
 class lap_qd_ktra_giai_the:
     def __init__(self, tt_qd, doan_ktra):
             self.tt_qd = tt_qd

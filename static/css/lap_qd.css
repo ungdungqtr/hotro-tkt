@@ -5,7 +5,7 @@
     border: 0;
 }
 /* Kiểm tra trước hoàn */
-.hs_hoan_so, .hs_hoan_ngay, .kk_theo, .tgian_1, .tgian_2, .hoan_tien, .dia_diem_ktra {
+.hs_hoan_so, .hs_hoan_ngay, .qd_hoan_so, .qd_hoan_ngay, .kk_theo, .tgian_1, .tgian_2, .hoan_tien, .dia_diem_ktra {
     display: inline;
     font-weight: bold;
     outline: 1px solid #28a745;
@@ -57,8 +57,12 @@
     width: 60px; 
     text-align: center;
 }
-.nam_ktra, .ngay_ktra, .trinh_ky, .phieu_xly_ngay, .hs_hoan_so, .hs_hoan_ngay, .hoan_tien {
+.nam_ktra, .ngay_ktra, .trinh_ky, .phieu_xly_ngay, .hs_hoan_so, .hs_hoan_ngay, .qd_hoan_so, .qd_hoan_ngay {
     width: 120px; 
+    text-align: center;
+}
+.hoan_tien {
+    width: 180px; 
     text-align: center;
 }
 /* Hủy quyết định */
