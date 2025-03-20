@@ -90,7 +90,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'tkt-qtr',
         'USER': 'postgres',
-        'PASSWORD': 'cntt-qtr',
+        'PASSWORD': 'cntt-qtr ',
         'HOST': 'localhost',
         'PORT': '5432',
     }
