@@ -445,7 +445,7 @@ def lap_qd_ktra_trc_hoan(request):
         }
         tt_qd = { 
             '<trinh_ky>' : "ngày " + f"{int(trinh_ky[0]):02d}" + " tháng " + leading_zero(trinh_ky[1], 3) + " năm " + trinh_ky[2],
-            '<luat_qlt_ngay>': luat_qlt.ngay_qd.strftime("ngày %d tháng %m") + " năm " + luat_qlt.ngay_qd.strftime("%Y"),
+            '<luat_qlt_ngay>': luat_qlt.ngay_qd.strftime("ngày %d/%m/%Y"),
             '<ngay_thang>' : "ngày      tháng " + thang + " năm " + nam,
             '<hs_hoan_so>' : request.POST['hs_hoan_so'],
             '<hs_hoan_ngay>' : request.POST['hs_hoan_ngay'],
