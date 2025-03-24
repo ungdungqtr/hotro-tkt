@@ -315,13 +315,12 @@ def cb_ten_autocomplete(request):
 
 def lap_qd_ttra(request):
     noi_nhan = {
-        'Cục Thuế tỉnh Quảng Trị': 'Phòng KK&KTT',
-        'CCT KV Đông Hà - Cam Lộ': 'CCT KV Đông Hà - Cam Lộ',
-        'CCT KV Triệu Hải': 'CCT KV Triệu Hải',
-        'CCT KV Vĩnh Linh - Gio Linh': 'CCT KV Vĩnh Linh - Gio Linh',
-        'CCT huyện Đakrông': 'CCT huyện Đakrông',
-        'CCT huyện Hướng Hóa': 'CCT huyện Hướng Hóa',
-        'CCT huyện Cồn Cỏ': 'CCT huyện Cồn Cỏ'
+        'Chi cục Thuế khu vực XI': 'Phòng QLHTDN số 3',
+        'Đội Thuế liên huyện Đông Hà - Cam Lộ': 'Đội Thuế liên huyện Đông Hà - Cam Lộ',
+        'Đội Thuế liên huyện Triệu Hải': 'Đội Thuế liên huyện Triệu Hải',
+        'Đội Thuế liên huyện Vĩnh Linh - Gio Linh': 'Đội Thuế liên huyện Vĩnh Linh - Gio Linh',
+        'Đội Thuế liên huyện Hướng Hóa - Đakrông': 'Đội Thuế liên huyện Hướng Hóa - Đakrông',
+        'Đội Thuế huyện đảo Cồn Cỏ': 'Đội Thuế huyện đảo Cồn Cỏ'
     }
     # Căn cứ
     qd_tkt_tct = CanCu.objects.filter(ten_cc__contains='kế hoạch tkt')[0]
@@ -365,8 +364,8 @@ def lap_qd_ttra(request):
             '<quy_trinh_ttra_rut_gon>': "Quyết định số " + quy_trinh_ttra.so_qd + quy_trinh_ttra.ngay_qd.strftime(" ngày %d/%m/%Y"),
             '<bsung_qtrinh_ttra>': "Quyết định số " + bsung_qtrinh_ttra.so_qd + bsung_qtrinh_ttra.ngay_qd.strftime(" ngày %d tháng %m") + " năm " + bsung_qtrinh_ttra.ngay_qd.strftime("%Y"),
             '<bsung_qtrinh_ttra_rut_gon>': "Quyết định số " + bsung_qtrinh_ttra.so_qd + bsung_qtrinh_ttra.ngay_qd.strftime(" ngày %d/%m/%Y"),
-            '<luat_qlt_ngay>': luat_qlt.ngay_qd.strftime("ngày %d tháng %m") + " năm " + luat_qlt.ngay_qd.strftime("%Y"),
-            '<luat_ttra>': luat_ttra.ngay_qd.strftime("ngày %d tháng %m") + " năm " + luat_ttra.ngay_qd.strftime("%Y"),
+            '<luat_qlt_ngay>': luat_qlt.ngay_qd.strftime("ngày %d/%m/%Y"),
+            '<luat_ttra>': luat_ttra.ngay_qd.strftime("ngày %d/%m/%Y"),
             '<ngay_thang>' : "ngày      tháng " + thang + " năm " + nam,
             '<ten_dv>' : nnt.ten_nnt,# nnt(mst)['ten_nnt'],
             '<mst>' : mst,
@@ -790,7 +789,7 @@ def lap_qd_ttra_dot_xuat(request):
             '<bsung_qtrinh_ttra>': "Quyết định số " + bsung_qtrinh_ttra.so_qd + bsung_qtrinh_ttra.ngay_qd.strftime(" ngày %d tháng %m") + " năm " + bsung_qtrinh_ttra.ngay_qd.strftime("%Y"),
             '<bsung_qtrinh_ttra_rut_gon>': "Quyết định số " + bsung_qtrinh_ttra.so_qd + bsung_qtrinh_ttra.ngay_qd.strftime(" ngày %d/%m/%Y"),
             '<luat_qlt_ngay>': luat_qlt.ngay_qd.strftime("ngày %d tháng %m") + " năm " + luat_qlt.ngay_qd.strftime("%Y"),
-            '<luat_ttra>': luat_ttra.ngay_qd.strftime("ngày %d tháng %m") + " năm " + luat_ttra.ngay_qd.strftime("%Y"),
+            '<luat_ttra>': luat_ttra.ngay_qd.strftime("ngày %d/%m/%Y"),
             '<ngay_thang>' : "ngày      tháng " + thang + " năm " + nam,
             '<ten_dv>' : nnt.ten_nnt,# nnt(mst)['ten_nnt'],
             '<mst>' : mst,
