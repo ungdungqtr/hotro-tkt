@@ -526,7 +526,7 @@ def ktra_sau_hoan(request):
         }
         tt_qd = { 
             '<trinh_ky>' : "ngày " + f"{int(trinh_ky[0]):02d}" + " tháng " + leading_zero(trinh_ky[1], 3) + " năm " + trinh_ky[2],
-            '<luat_qlt_ngay>': luat_qlt.ngay_qd.strftime("ngày %d tháng %m") + " năm " + luat_qlt.ngay_qd.strftime("%Y"),
+            '<luat_qlt_ngay>': luat_qlt.ngay_qd.strftime("ngày %d/%m/%Y"),
             '<ngay_thang>' : "ngày      tháng " + thang + " năm " + nam,
             '<hs_hoan_so>' : request.POST['hs_hoan_so'],
             '<hs_hoan_ngay>' : request.POST['hs_hoan_ngay'],
@@ -608,7 +608,7 @@ def lap_qd_ktra_giai_the(request):
         }
         tt_qd = { 
             '<trinh_ky>' : "ngày " + f"{int(trinh_ky[0]):02d}" + " tháng " + leading_zero(trinh_ky[1], 3) + " năm " + trinh_ky[2],
-            '<luat_qlt_ngay>': luat_qlt.ngay_qd.strftime("ngày %d tháng %m") + " năm " + luat_qlt.ngay_qd.strftime("%Y"),
+            '<luat_qlt_ngay>': luat_qlt.ngay_qd.strftime("ngày %d/%m/%Y"),
             '<quy_trinh_ktra>': "Quyết định số " + quy_trinh_ktra.so_qd + quy_trinh_ktra.ngay_qd.strftime(" ngày %d/%m/%Y"),
             '<ngay_thang>' : "ngày      tháng " + thang + " năm " + nam,
             "<phieu_xly_ngay>": request.POST['phieu_xly_ngay'],
@@ -691,7 +691,7 @@ def lap_qd_ktra_dot_xuat(request):
             '<can_cu>': request.POST['can_cu'],
             '<ngay_thang>' : "ngày      tháng " + thang + " năm " + nam,
             '<qd_tkt_tct>': "Quyết định số " + qd_tkt_tct.so_qd,
-            '<luat_qlt_ngay>': luat_qlt.ngay_qd.strftime("ngày %d tháng %m") + " năm " + luat_qlt.ngay_qd.strftime("%Y"),
+            '<luat_qlt_ngay>': luat_qlt.ngay_qd.strftime("ngày %d/%m/%Y"),
             '<quy_trinh_ktra>': "Quyết định số " + quy_trinh_ktra.so_qd + quy_trinh_ktra.ngay_qd.strftime(" ngày %d tháng %m") + " năm " + quy_trinh_ktra.ngay_qd.strftime("%Y"),
             '<nam_kh_tkt>': datetime.now().strftime("%Y"),
             '<ten_dv>' : nnt.ten_nnt,# nnt(mst)['ten_nnt'],
@@ -788,7 +788,7 @@ def lap_qd_ttra_dot_xuat(request):
             '<quy_trinh_ttra_rut_gon>': "Quyết định số " + quy_trinh_ttra.so_qd + quy_trinh_ttra.ngay_qd.strftime(" ngày %d/%m/%Y"),
             '<bsung_qtrinh_ttra>': "Quyết định số " + bsung_qtrinh_ttra.so_qd + bsung_qtrinh_ttra.ngay_qd.strftime(" ngày %d tháng %m") + " năm " + bsung_qtrinh_ttra.ngay_qd.strftime("%Y"),
             '<bsung_qtrinh_ttra_rut_gon>': "Quyết định số " + bsung_qtrinh_ttra.so_qd + bsung_qtrinh_ttra.ngay_qd.strftime(" ngày %d/%m/%Y"),
-            '<luat_qlt_ngay>': luat_qlt.ngay_qd.strftime("ngày %d tháng %m") + " năm " + luat_qlt.ngay_qd.strftime("%Y"),
+            '<luat_qlt_ngay>': luat_qlt.ngay_qd.strftime("ngày %d/%m/%Y"),
             '<luat_ttra>': luat_ttra.ngay_qd.strftime("ngày %d/%m/%Y"),
             '<ngay_thang>' : "ngày      tháng " + thang + " năm " + nam,
             '<ten_dv>' : nnt.ten_nnt,# nnt(mst)['ten_nnt'],
@@ -874,7 +874,7 @@ def huy_qd_tktra(request):
             '<qd_tkt_tct>': "Quyết định số " + qd_tkt_tct.so_qd,
             '<qd_tkt_tct_ngay_ban_hanh>': qd_tkt_tct.ngay_qd.strftime("ngày %d/%m/%Y"),
             '<nam_kh_tkt>': datetime.now().strftime("%Y"),
-            '<luat_qlt_ngay>': luat_qlt.ngay_qd.strftime("ngày %d tháng %m") + " năm " + luat_qlt.ngay_qd.strftime("%Y"),
+            '<luat_qlt_ngay>': luat_qlt.ngay_qd.strftime("ngày %d/%m/%Y"),
             '<ngay_thang>' : "ngày      tháng " + thang + " năm " + nam,
             '<ngay_nhan_ttrinh>': request.POST['ngay_nhan_ttrinh'],
             '<so_ttrinh>': request.POST['so_ttrinh'].strip(),
