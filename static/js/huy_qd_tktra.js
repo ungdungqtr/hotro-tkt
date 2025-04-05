@@ -5,17 +5,17 @@ $(document).ready(function () {
         datePattern: ['d','m','Y']
     });
 
-    new Cleave('.ngay_nhan_ttrinh', {
-        date: true,
-        delimiter: '/',
-        datePattern: ['d','m','Y']
-    });
+    // new Cleave('.ngay_nhan_ttrinh', {
+    //     date: true,
+    //     delimiter: '/',
+    //     datePattern: ['d','m','Y']
+    // });
 
-    new Cleave('.ngay_cv_gia_han', {
-        date: true,
-        delimiter: '/',
-        datePattern: ['d','m','Y']
-    });
+    // new Cleave('.ngay_cv_gia_han', {
+    //     date: true,
+    //     delimiter: '/',
+    //     datePattern: ['d','m','Y']
+    // });
     
     new Cleave('.ngay_qd_tkt_dn', {
         date: true,
@@ -23,11 +23,11 @@ $(document).ready(function () {
         datePattern: ['d','m','Y']
     });
 
-    new Cleave('.thang_tktra', {
-        date: true,
-        delimiter: '/',
-        datePattern: ['m','Y']
-    });
+    // new Cleave('.thang_tktra', {
+    //     date: true,
+    //     delimiter: '/',
+    //     datePattern: ['m','Y']
+    // });
 
     new Cleave('.ngay_thang_1', {
         date: true,

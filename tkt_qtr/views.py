@@ -192,6 +192,8 @@ def export_LD(request):
 def lap_qd_ktra(request):
     # Căn cứ
     qd_tkt_tct = CanCu.objects.filter(ten_cc__contains='kế hoạch tkt')[0]
+    qd_tkt_cct = CanCu.objects.filter(ten_cc__contains='kế hoạch cct')[0]
+    tham_quyen_ky = CanCu.objects.filter(ten_cc__contains='thẩm quyền ký')[0]
     luat_qlt = CanCu.objects.filter(ten_cc__contains='luật quản lý thuế')[0]
     quy_trinh_ktra = CanCu.objects.filter(ten_cc__contains='phê duyệt quy trình ktra')[0]
     # Lãnh đạo phê duyệt
@@ -221,10 +223,12 @@ def lap_qd_ktra(request):
         tt_qd = { 
             '<trinh_ky>' : "ngày " + f"{int(trinh_ky[0]):02d}" + " tháng " + leading_zero(trinh_ky[1], 3) + " năm " + trinh_ky[2],
             '<ngay_thang>' : "ngày      tháng " + thang + " năm " + nam,
-            '<qd_tkt_tct>': "Quyết định số " + qd_tkt_tct.so_qd,
-            '<qd_tkt_tct_ngay_ban_hanh>': qd_tkt_tct.ngay_qd.strftime("ngày %d/%m/%Y"),
+            '<qd_tkt_tct>': "Quyết định số " + qd_tkt_tct.so_qd + qd_tkt_tct.ngay_qd.strftime(" ngày %d/%m/%Y"),
+            '<qd_tkt_cct>': "Quyết định số " + qd_tkt_cct.so_qd + qd_tkt_cct.ngay_qd.strftime(" ngày %d/%m/%Y"),
+            # '<qd_tkt_tct_ngay_ban_hanh>': qd_tkt_tct.ngay_qd.strftime("ngày %d/%m/%Y"),
             '<luat_qlt_ngay>': luat_qlt.ngay_qd.strftime("ngày %d/%m/%Y"),
-            '<quy_trinh_ktra>': "Quyết định số " + quy_trinh_ktra.so_qd + quy_trinh_ktra.ngay_qd.strftime(" ngày %d tháng %m") + " năm " + quy_trinh_ktra.ngay_qd.strftime("%Y"),
+            '<quy_trinh_ktra>': "Quyết định số " + quy_trinh_ktra.so_qd + quy_trinh_ktra.ngay_qd.strftime(" ngày %d/%m/%Y"),
+            '<tham_quyen_ky>': "Quyết định số " + tham_quyen_ky.so_qd + tham_quyen_ky.ngay_qd.strftime(" ngày %d/%m/%Y"),
             '<nam_kh_tkt>': datetime.now().strftime("%Y"),
             '<ten_dv>' : nnt.ten_nnt,# nnt(mst)['ten_nnt'],
             '<mst>' : mst,
@@ -741,19 +745,18 @@ def lap_qd_ktra_dot_xuat(request):
 
 def lap_qd_ttra_dot_xuat(request):
     noi_nhan = {
-        'Cục Thuế tỉnh Quảng Trị': 'Phòng KK&KTT',
-        'CCT KV Đông Hà - Cam Lộ': 'CCT KV Đông Hà - Cam Lộ',
-        'CCT KV Triệu Hải': 'CCT KV Triệu Hải',
-        'CCT KV Vĩnh Linh - Gio Linh': 'CCT KV Vĩnh Linh - Gio Linh',
-        'CCT huyện Đakrông': 'CCT huyện Đakrông',
-        'CCT huyện Hướng Hóa': 'CCT huyện Hướng Hóa',
-        'CCT huyện Cồn Cỏ': 'CCT huyện Cồn Cỏ'
+        'Chi cục Thuế khu vực XI': 'Phòng QLHTDN số 3',
+        'Đội Thuế liên huyện Đông Hà - Cam Lộ': 'Đội Thuế liên huyện Đông Hà - Cam Lộ',
+        'Đội Thuế liên huyện Triệu Hải': 'Đội Thuế liên huyện Triệu Hải',
+        'Đội Thuế liên huyện Vĩnh Linh - Gio Linh': 'Đội Thuế liên huyện Vĩnh Linh - Gio Linh',
+        'Đội Thuế liên huyện Hướng Hóa - Đakrông': 'Đội Thuế liên huyện Hướng Hóa - Đakrông',
+        'Đội Thuế huyện đảo Cồn Cỏ': 'Đội Thuế huyện đảo Cồn Cỏ'
     }
     # Căn cứ
     qd_tkt_tct = CanCu.objects.filter(ten_cc__contains='kế hoạch tkt')[0]
     luat_qlt = CanCu.objects.filter(ten_cc__contains='luật quản lý thuế')[0]
     luat_ttra = CanCu.objects.filter(ten_cc__contains='luật thanh tra')[0]
-    quy_trinh_ttra = CanCu.objects.filter(ten_cc__contains='quy trình ttra')[0]
+    ttra_dot_xuat = CanCu.objects.filter(ten_cc__contains='thanh tra đột xuất')[0]
     bsung_qtrinh_ttra = CanCu.objects.filter(ten_cc__contains='sửa, bs quy trình thanh tra')[0]
     # Lãnh đạo phê duyệt
     ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='chi cục')[0]
@@ -780,12 +783,12 @@ def lap_qd_ttra_dot_xuat(request):
         }
         tt_qd = { 
             '<trinh_ky>' : "ngày " + f"{int(trinh_ky[0]):02d}" + " tháng " + leading_zero(trinh_ky[1], 3) + " năm " + trinh_ky[2],
-            '<can_cu>': request.POST['can_cu'],
+            # '<can_cu>': request.POST['can_cu'],
             '<qd_tkt_tct>': "Quyết định số " + qd_tkt_tct.so_qd,
             '<qd_tkt_tct_ngay_ban_hanh>': qd_tkt_tct.ngay_qd.strftime("ngày %d tháng %m") + " năm " + qd_tkt_tct.ngay_qd.strftime("%Y"),
             '<nam_kh_tkt>': datetime.now().strftime("%Y"),
-            '<quy_trinh_ttra>': "Quyết định số " + quy_trinh_ttra.so_qd + quy_trinh_ttra.ngay_qd.strftime(" ngày %d tháng %m") + " năm " + quy_trinh_ttra.ngay_qd.strftime("%Y"),
-            '<quy_trinh_ttra_rut_gon>': "Quyết định số " + quy_trinh_ttra.so_qd + quy_trinh_ttra.ngay_qd.strftime(" ngày %d/%m/%Y"),
+            '<ttra_dot_xuat>': "Quyết định số " + ttra_dot_xuat.so_qd + ttra_dot_xuat.ngay_qd.strftime(" ngày %d/%m/%Y"),
+            # '<ttra_dot_xuat_rut_gon>': "Quyết định số " + quy_trinh_ttra.so_qd + quy_trinh_ttra.ngay_qd.strftime(" ngày %d/%m/%Y"),
             '<bsung_qtrinh_ttra>': "Quyết định số " + bsung_qtrinh_ttra.so_qd + bsung_qtrinh_ttra.ngay_qd.strftime(" ngày %d tháng %m") + " năm " + bsung_qtrinh_ttra.ngay_qd.strftime("%Y"),
             '<bsung_qtrinh_ttra_rut_gon>': "Quyết định số " + bsung_qtrinh_ttra.so_qd + bsung_qtrinh_ttra.ngay_qd.strftime(" ngày %d/%m/%Y"),
             '<luat_qlt_ngay>': luat_qlt.ngay_qd.strftime("ngày %d/%m/%Y"),
@@ -840,13 +843,12 @@ def lap_qd_ttra_dot_xuat(request):
 
 def huy_qd_tktra(request):
     noi_nhan = {
-        'Cục Thuế tỉnh Quảng Trị': 'Phòng KK&KTT',
-        'CCT KV Đông Hà - Cam Lộ': 'CCT KV Đông Hà - Cam Lộ',
-        'CCT KV Triệu Hải': 'CCT KV Triệu Hải',
-        'CCT KV Vĩnh Linh - Gio Linh': 'CCT KV Vĩnh Linh - Gio Linh',
-        'CCT huyện Đakrông': 'CCT huyện Đakrông',
-        'CCT huyện Hướng Hóa': 'CCT huyện Hướng Hóa',
-        'CCT huyện Cồn Cỏ': 'CCT huyện Cồn Cỏ'
+        'Chi cục Thuế khu vực XI': 'Phòng QLHTDN số 3',
+        'Đội Thuế liên huyện Đông Hà - Cam Lộ': 'Đội Thuế liên huyện Đông Hà - Cam Lộ',
+        'Đội Thuế liên huyện Triệu Hải': 'Đội Thuế liên huyện Triệu Hải',
+        'Đội Thuế liên huyện Vĩnh Linh - Gio Linh': 'Đội Thuế liên huyện Vĩnh Linh - Gio Linh',
+        'Đội Thuế liên huyện Hướng Hóa - Đakrông': 'Đội Thuế liên huyện Hướng Hóa - Đakrông',
+        'Đội Thuế huyện đảo Cồn Cỏ': 'Đội Thuế huyện đảo Cồn Cỏ'
     }
     # Căn cứ
     qd_tkt_tct = CanCu.objects.filter(ten_cc__contains='kế hoạch tkt')[0]
@@ -875,21 +877,22 @@ def huy_qd_tktra(request):
             '<qd_tkt_tct_ngay_ban_hanh>': qd_tkt_tct.ngay_qd.strftime("ngày %d/%m/%Y"),
             '<nam_kh_tkt>': datetime.now().strftime("%Y"),
             '<luat_qlt_ngay>': luat_qlt.ngay_qd.strftime("ngày %d/%m/%Y"),
+            '<quy_trinh_ktra>': "Quyết định số " + quy_trinh_ktra.so_qd + quy_trinh_ktra.ngay_qd.strftime(" ngày %d/%m/%Y"),
             '<ngay_thang>' : "ngày      tháng " + thang + " năm " + nam,
-            '<ngay_nhan_ttrinh>': request.POST['ngay_nhan_ttrinh'],
+            # '<ngay_nhan_ttrinh>': request.POST['ngay_nhan_ttrinh'],
             '<so_ttrinh>': request.POST['so_ttrinh'].strip(),
             '<ngay_ttrinh>': request.POST['ngay_ttrinh'],
             '<ten_dv>': nnt.ten_nnt,
             '<mst>': mst,
             '<dia_chi>': nnt.dia_chi,
-            '<cv_gia_han>': leading_zero(request.POST['cv_gia_han'], 9),
-            '<ngay_cv_gia_han>': request.POST['ngay_cv_gia_han'],
+            # '<cv_gia_han>': leading_zero(request.POST['cv_gia_han'], 9),
+            # '<ngay_cv_gia_han>': request.POST['ngay_cv_gia_han'],
             '<quy_trinh_tktra>': quy_trinh_ktra.so_qd + quy_trinh_ktra.ngay_qd.strftime(" ngày %d/%m/%Y") if tktra == 'kiểm tra'
                                 else quy_trinh_ttra.so_qd + quy_trinh_ttra.ngay_qd.strftime(" ngày %d/%m/%Y"),
             '<qd_tkt_dn>': leading_zero(request.POST['qd_tkt_dn'], 9),
-            '<ngay_qd_tkt_dn>': f"{ngay_qd_tkt_dn[0]} tháng {ngay_qd_tkt_dn[1]} năm {ngay_qd_tkt_dn[2]}",
+            '<ngay_qd_tkt_dn>': f"{ngay_qd_tkt_dn[0]}/{ngay_qd_tkt_dn[1]}/{ngay_qd_tkt_dn[2]}",
             '<tg_qua_han>': leading_zero(request.POST['tg_qua_han'], 9),
-            '<thang_tktra>' : request.POST['thang_tktra'],
+            # '<thang_tktra>' : request.POST['thang_tktra'],
             '<LD_PHONG>' : ld_phong.ld_cv.upper(),
             '<ld_phong>' : ld_phong.ld_cv,
             '<ld_phong_ten>' : ld_phong.ld_ten,
@@ -901,10 +904,12 @@ def huy_qd_tktra(request):
         QD = process_data.huy_qd_tktra(tt_qd)
         QD.empty_media()
         if tktra == 'kiểm tra':
-            file_path = [QD.tb_chap_nhan(), QD.dx_bai_bo_qd_ktra(), QD.huy_qd_ktra()]
+            file_path = [QD.dx_bai_bo_qd_ktra(), QD.huy_qd_ktra()]
+            # file_path = [QD.tb_chap_nhan(), QD.dx_bai_bo_qd_ktra(), QD.huy_qd_ktra()]
             zip_path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", mst + "_huy_qd_ktra.zip")
         else:
-            file_path = [QD.tb_chap_nhan(), QD.dx_bai_bo_qd_ttra(), QD.huy_qd_ttra()]
+            file_path = [QD.dx_bai_bo_qd_ttra(), QD.huy_qd_ttra()]
+            # file_path = [QD.tb_chap_nhan(), QD.dx_bai_bo_qd_ttra(), QD.huy_qd_ttra()]
             zip_path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", mst + "_huy_qd_ttra.zip")
         # writing files to a zipfile
         with ZipFile(zip_path,'w') as zip:
