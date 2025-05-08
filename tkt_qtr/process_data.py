@@ -98,7 +98,8 @@ class lap_qd_ktra:
 
     def kh_gsat(self):
         # document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media/2.kh_giam_sat.docx"))
-        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "1.kh_giam_sat_ktr.docx"))
+        # document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "1.kh_giam_sat_ktr.docx"))
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "1.kh_giam_sat_ktr_HT.docx"))
         ghi_du_lieu_para(document, self.tt_qd)
         filename = self.tt_qd["<mst>"] + "_KH_giam_sat.docx"
         # path = os.path.join(settings.STATICFILES_DIRS[0], "media_store/" + filename)
@@ -317,7 +318,8 @@ class lap_qd_ktra_sau_hoan_gtgt:
 
     def kh_gsat(self):
         # document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media/2.kh_giam_sat.docx"))
-        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "8.kh_giam_sat_sau_hoan_gtgt.docx"))
+        # document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "8.kh_giam_sat_sau_hoan_gtgt.docx"))
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "8.kh_giam_sat_sau_hoan_gtgt_HT.docx"))
         ghi_du_lieu_para(document, self.tt_qd)
         filename = self.tt_qd["<mst>"] + "_KH_giam_sat.docx"
         # path = os.path.join(settings.STATICFILES_DIRS[0], "media_store/" + filename)

@@ -77,12 +77,12 @@
                         {% comment %} <div class="dropdown-divider"></div> {% endcomment %}
                         {% comment %} <a class="dropdown-item" href={% url 'tkt_qt:qd_ttr' %}>TTR</a> {% endcomment %}
                         <a class="dropdown-item" href="{% url 'tkt:lap_qd_ktra' %}">QĐ Kiểm tra</a>
-                        <a class="dropdown-item" href="{% url 'tkt:lap_qd_ttra' %}">QĐ Thanh tra</a>
+                        {% comment %} <a class="dropdown-item" href="{% url 'tkt:lap_qd_ttra' %}">QĐ Thanh tra</a> {% endcomment %}
                         <a class="dropdown-item" href="{% url 'tkt:lap_qd_ktra_trc_hoan' %}">QĐ Kiểm tra trước hoàn </a>
                         <a class="dropdown-item" href="{% url 'tkt:lap_qd_ktra_sau_hoan' %}">QĐ Kiểm tra sau hoàn </a>
                         <a class="dropdown-item" href="{% url 'tkt:lap_qd_ktra_giai_the' %}">QĐ Kiểm tra giải thể</a>
                         <a class="dropdown-item" href="{% url 'tkt:lap_qd_ktra_dot_xuat' %}">QĐ Kiểm tra đột xuất</a>
-                        <a class="dropdown-item" href="{% url 'tkt:lap_qd_ttra_dot_xuat' %}">QĐ Thanh tra đột xuất</a>
+                        {% comment %} <a class="dropdown-item" href="{% url 'tkt:lap_qd_ttra_dot_xuat' %}">QĐ Thanh tra đột xuất</a> {% endcomment %}
                         <a class="dropdown-item" href="{% url 'tkt:huy_qd_tktra' %}">Hủy QĐ thanh kiểm tra</a>
                         {% comment %} <a class="dropdown-item" href="#">Hủy QĐ thanh kiểm tra</a> {% endcomment %}
                     </div>
