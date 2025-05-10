@@ -706,7 +706,7 @@ def lap_qd_ktra_dot_xuat(request):
         truong_doan = CanBo.objects.get(ten_cb=thanh_vien[0])
         tt_qd = { 
             '<trinh_ky>' : "ngày " + f"{int(trinh_ky[0]):02d}" + " tháng " + leading_zero(trinh_ky[1], 3) + " năm " + trinh_ky[2],
-            '<can_cu>': request.POST['can_cu'],
+            # '<can_cu>': request.POST['can_cu'],
             '<ngay_thang>' : "ngày      tháng " + thang + " năm " + nam,
             '<qd_tkt_tct>': "Quyết định số " + qd_tkt_tct.so_qd,
             '<luat_qlt_ngay>': luat_qlt.ngay_qd.strftime("ngày %d/%m/%Y"),
