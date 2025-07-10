@@ -18,8 +18,8 @@ import csv
 from datetime import datetime
 
 ky_ten = {
-    'PHÓ CHI CỤC TRƯỞNG' : 'KT.CHI CỤC TRƯỞNG',
-    'CHI CỤC TRƯỞNG': 'PHÓ CHI CỤC TRƯỞNG'
+    'PHÓ TRƯỞNG THUÊ TỈNH' : 'KT.TRƯỞNG THUÊ TỈNH',
+    'TRƯỞNG THUÊ TỈNH': 'PHÓ TRƯỞNG THUÊ TỈNH'
 }
 
 
@@ -645,7 +645,7 @@ def lap_qd_ktra_giai_the(request):
             '<LD_PHONG>' : ld_phong.ld_cv.upper(),
             '<ld_phong>' : ld_phong.ld_cv,
             '<ld_phong_ten>' : ld_phong.ld_ten,
-            '<LD_CUC>' : ld_cuc.ld_cv.upper() if ld_cuc.ld_cv != 'Cục trưởng' else '',
+            '<LD_CUC>' : ld_cuc.ld_cv.upper() if ld_cuc.ld_cv != 'Trưởng Thuế tỉnh' else '',
             '<ld_cuc_ten>' : ld_cuc.ld_ten,
             '<hinh_thuc_ky>' : ky_ten[ld_cuc.ld_cv.upper()],
         } 
