@@ -598,7 +598,7 @@ def lap_qd_ktra_giai_the(request):
     luat_qlt = CanCu.objects.filter(ten_cc__contains='luật quản lý thuế')[0]
     quy_trinh_ktra = CanCu.objects.filter(ten_cc__contains='phê duyệt quy trình ktra')[0]
     # Lãnh đạo phê duyệt
-    ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='thuế tỉnh')[0]
+    ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='Thuế tỉnh')[0]
     ld_phong = LdPheDuyet.objects.filter(ld_cv__contains='phòng')[0]
     context = {
         'ld_cuc': ld_cuc,
