@@ -600,6 +600,7 @@ def lap_qd_ktra_giai_the(request):
     # Lãnh đạo phê duyệt
     ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='Thuế tỉnh')[0]
     ld_phong = LdPheDuyet.objects.filter(ld_cv__contains='phòng')[0]
+    print(ld_cuc.ld_cv.upper())
     context = {
         'ld_cuc': ld_cuc,
         'ld_phong': ld_phong
