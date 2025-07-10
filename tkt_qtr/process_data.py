@@ -374,8 +374,7 @@ class lap_qd_ktra_giai_the:
             self.doan_ktra = doan_ktra
     
     def to_trinh(self):
-        # document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "4.to_trinh_ktr_giai_the.docx"))
-        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "4.to_trinh_ktr_giai_the_HT.docx"))
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "4.to_trinh_ktr_giai_the.docx"))
         ghi_du_lieu_para(document, self.tt_qd)
         # ghi dữ liệu thành phần đoàn
         table = document.tables[0]
@@ -412,9 +411,7 @@ class lap_qd_ktra_giai_the:
         return path
 
     def qd_ktra(self):
-        # document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media/2.qd_ttra.docx"))
-        # document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "4.qd_ktr_giai_the.docx"))
-        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "4.qd_ktr_giai_the_HT.docx"))
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "4.qd_ktr_giai_the.docx"))
         ghi_du_lieu_para(document, self.tt_qd)
         # ghi dữ liệu thành phần đoàn
         table = document.tables[0]
