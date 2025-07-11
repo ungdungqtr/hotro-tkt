@@ -704,12 +704,12 @@ def lap_qd_ktra_dot_xuat(request):
         thanh_vien = request.POST.getlist('thanh_vien', None)
         cv = ['Trưởng đoàn']
         cv.extend(["Thành viên"] * (len(thanh_vien)-1))
+        truong_doan = CanBo.objects.get(ten_cb=thanh_vien[0])
         doan_ktra = {
             "<ten_cb>" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + ": " + tv) for tv in thanh_vien],
-            "<ngach_cb>" : [CanBo.objects.get(ten_cb=tv).chuc_vu for tv in thanh_vien],
+            "<cv_cb>" : [CanBo.objects.get(ten_cb=tv).chuc_vu for tv in thanh_vien],
             "<cv_doan>" : cv
         }
-        truong_doan = CanBo.objects.get(ten_cb=thanh_vien[0])
         tt_qd = { 
             '<trinh_ky>' : "ngày " + f"{int(trinh_ky[0]):02d}" + " tháng " + leading_zero(trinh_ky[1], 3) + " năm " + trinh_ky[2],
             # '<can_cu>': request.POST['can_cu'],
