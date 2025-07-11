@@ -431,6 +431,15 @@ class lap_qd_ktra_dot_xuat:
     def to_trinh(self):
         document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "5.to_trinh_ktr_dot_xuat.docx"))
         ghi_du_lieu_para(document, self.tt_qd)
+        # ghi dữ liệu thành phần đoàn
+        table = document.tables[0]
+        # del_row(table, len(doan_ktra['<ten_cb>']), len(table.rows))
+        for i in range(len(self.doan_ktra['<ten_cb>'])):
+            row = table.rows[i]
+            for k,v in self.doan_ktra.items():
+                ghi_du_lieu_cell(row, k, v[i])
+        # Xóa các hàng không có dữ liệu
+        del_row(table, len(self.doan_ktra['<ten_cb>']) - 1, len(table.rows))
         filename = self.tt_qd["<mst>"] + "_To_trinh.docx"
         path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", filename)      
         document.save(path)
