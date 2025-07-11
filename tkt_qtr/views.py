@@ -421,7 +421,9 @@ def lap_qd_ttra(request):
 def lap_qd_ktra_trc_hoan(request):
     # Căn cứ
     qd_tkt_tct = CanCu.objects.filter(ten_cc__contains='kế hoạch tkt')[0]
+    tham_quyen_ky = CanCu.objects.filter(ten_cc__contains='thẩm quyền ký')[0]
     luat_qlt = CanCu.objects.filter(ten_cc__contains='luật quản lý thuế')[0]
+    quy_trinh_ktra = CanCu.objects.filter(ten_cc__contains='phê duyệt quy trình ktra')[0]
     # Lãnh đạo phê duyệt
     ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='Thuế tỉnh')[0]
     ld_phong = LdPheDuyet.objects.filter(ld_cv__contains='phòng')[0]
@@ -450,6 +452,8 @@ def lap_qd_ktra_trc_hoan(request):
         tt_qd = { 
             '<trinh_ky>' : "ngày " + f"{int(trinh_ky[0]):02d}" + " tháng " + leading_zero(trinh_ky[1], 3) + " năm " + trinh_ky[2],
             '<luat_qlt_ngay>': luat_qlt.ngay_qd.strftime("ngày %d/%m/%Y"),
+            '<quy_trinh_ktra>': "Quyết định số " + quy_trinh_ktra.so_qd + quy_trinh_ktra.ngay_qd.strftime(" ngày %d/%m/%Y"),
+            '<tham_quyen_ky>': "Quyết định số " + tham_quyen_ky.so_qd + tham_quyen_ky.ngay_qd.strftime(" ngày %d/%m/%Y"),
             '<ngay_thang>' : "ngày      tháng " + thang + " năm " + nam,
             '<hs_hoan_so>' : request.POST['hs_hoan_so'],
             '<hs_hoan_ngay>' : request.POST['hs_hoan_ngay'],
