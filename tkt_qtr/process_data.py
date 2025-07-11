@@ -57,8 +57,7 @@ class lap_qd_ktra:
         self.doan_ktra = doan_ktra
 
     def to_trinh(self):
-        # document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "1.to_trinh_ktr.docx"))
-        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "1.to_trinh_ktr_HT.docx"))
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "1.to_trinh_ktr.docx"))
         ghi_du_lieu_para(document, self.tt_qd)
         # ghi dữ liệu thành phần đoàn
         doc_table = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "doan_ktra_table.docx"))
@@ -88,8 +87,7 @@ class lap_qd_ktra:
         return path
     
     def qd_gsat(self):
-        # document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "1.qd_giam_sat_ktr.docx"))
-        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "1.qd_giam_sat_ktr_HT.docx"))
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "1.qd_giam_sat_ktr.docx"))
         ghi_du_lieu_para(document, self.tt_qd)
         filename = self.tt_qd["<mst>"] + "_QD_giam_sat.docx"
         path = os.path.join(settings.STATICFILES_DIRS[0], "media_store/" + filename)   
@@ -97,9 +95,7 @@ class lap_qd_ktra:
         return path
 
     def kh_gsat(self):
-        # document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media/2.kh_giam_sat.docx"))
-        # document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "1.kh_giam_sat_ktr.docx"))
-        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "1.kh_giam_sat_ktr_HT.docx"))
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "1.kh_giam_sat_ktr.docx"))
         ghi_du_lieu_para(document, self.tt_qd)
         filename = self.tt_qd["<mst>"] + "_KH_giam_sat.docx"
         # path = os.path.join(settings.STATICFILES_DIRS[0], "media_store/" + filename)
@@ -108,8 +104,7 @@ class lap_qd_ktra:
         return path
 
     def qd_ktra(self):
-        # document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "1.qd_ktra.docx"))
-        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "1.qd_ktra_HT.docx"))
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "1.qd_ktra.docx"))
         ghi_du_lieu_para(document, self.tt_qd)
         # ghi dữ liệu thành phần đoàn
         doc_table = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "doan_ktra_table.docx"))
