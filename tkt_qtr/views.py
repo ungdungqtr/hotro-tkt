@@ -197,7 +197,7 @@ def lap_qd_ktra(request):
     luat_qlt = CanCu.objects.filter(ten_cc__contains='luật quản lý thuế')[0]
     quy_trinh_ktra = CanCu.objects.filter(ten_cc__contains='phê duyệt quy trình ktra')[0]
     # Lãnh đạo phê duyệt
-    ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='chi cục')[0]
+    ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='Thuế tỉnh')[0]
     ld_phong = LdPheDuyet.objects.filter(ld_cv__contains='phòng')[0]
     context = {
         'ld_cuc': ld_cuc,
@@ -334,7 +334,7 @@ def lap_qd_ttra(request):
     bsung_qtrinh_ttra = CanCu.objects.filter(ten_cc__contains='sửa, bs quy trình thanh tra')[0]
     qd_ttr_bct = CanCu.objects.filter(ten_cc__contains='ke hoach ttra chuyen nganh')[0]
     # Lãnh đạo phê duyệt
-    ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='chi cục')[0]
+    ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='Thuế tỉnh')[0]
     ld_phong = LdPheDuyet.objects.filter(ld_cv__contains='phòng')[0]
     context = {
         'ld_cuc': ld_cuc,
@@ -423,7 +423,7 @@ def lap_qd_ktra_trc_hoan(request):
     qd_tkt_tct = CanCu.objects.filter(ten_cc__contains='kế hoạch tkt')[0]
     luat_qlt = CanCu.objects.filter(ten_cc__contains='luật quản lý thuế')[0]
     # Lãnh đạo phê duyệt
-    ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='chi cục')[0]
+    ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='Thuế tỉnh')[0]
     ld_phong = LdPheDuyet.objects.filter(ld_cv__contains='phòng')[0]
     context = {
         'ld_cuc': ld_cuc,
@@ -507,7 +507,7 @@ def ktra_sau_hoan(request):
     luat_qlt = CanCu.objects.filter(ten_cc__contains='luật quản lý thuế')[0]
     quy_trinh_ktra = CanCu.objects.filter(ten_cc__contains='phê duyệt quy trình ktra')[0]
     # Lãnh đạo phê duyệt
-    ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='chi cục')[0]
+    ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='Thuế tỉnh')[0]
     ld_phong = LdPheDuyet.objects.filter(ld_cv__contains='phòng')[0]
     context = {
         'ld_cuc': ld_cuc,
@@ -600,7 +600,6 @@ def lap_qd_ktra_giai_the(request):
     # Lãnh đạo phê duyệt
     ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='Thuế tỉnh')[0]
     ld_phong = LdPheDuyet.objects.filter(ld_cv__contains='phòng')[0]
-    print(ld_cuc.ld_cv.upper())
     context = {
         'ld_cuc': ld_cuc,
         'ld_phong': ld_phong
@@ -681,7 +680,7 @@ def lap_qd_ktra_dot_xuat(request):
     luat_qlt = CanCu.objects.filter(ten_cc__contains='luật quản lý thuế')[0]
     quy_trinh_ktra = CanCu.objects.filter(ten_cc__contains='phê duyệt quy trình ktra')[0]
     # Lãnh đạo phê duyệt
-    ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='chi cục')[0]
+    ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='Thuế tỉnh')[0]
     ld_phong = LdPheDuyet.objects.filter(ld_cv__contains='phòng')[0]
     context = {
         'ld_cuc': ld_cuc,
@@ -728,7 +727,7 @@ def lap_qd_ktra_dot_xuat(request):
             '<LD_PHONG>' : ld_phong.ld_cv.upper(),
             '<ld_phong>' : ld_phong.ld_cv,
             '<ld_phong_ten>' : ld_phong.ld_ten,
-            '<LD_CUC>' : ld_cuc.ld_cv.upper() if ld_cuc.ld_cv != 'Chi cục trưởng' else '',
+            '<LD_CUC>' : ld_cuc.ld_cv.upper() if ld_cuc.ld_cv != 'Trưởng Thuế tỉnh' else '',
             '<ld_cuc_ten>' : ld_cuc.ld_ten,
             '<hinh_thuc_ky>' : ky_ten[ld_cuc.ld_cv.upper()],
             # '<noi_nhan>': noi_nhan[nnt.cqt],
@@ -774,7 +773,7 @@ def lap_qd_ttra_dot_xuat(request):
     ttra_dot_xuat = CanCu.objects.filter(ten_cc__contains='thanh tra đột xuất')[0]
     bsung_qtrinh_ttra = CanCu.objects.filter(ten_cc__contains='sửa, bs quy trình thanh tra')[0]
     # Lãnh đạo phê duyệt
-    ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='chi cục')[0]
+    ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='Thuế tỉnh')[0]
     ld_phong = LdPheDuyet.objects.filter(ld_cv__contains='phòng')[0]
     context = {
         'ld_cuc': ld_cuc,
@@ -825,7 +824,7 @@ def lap_qd_ttra_dot_xuat(request):
             '<LD_PHONG>' : ld_phong.ld_cv.upper(),
             '<ld_phong>' : ld_phong.ld_cv,
             '<ld_phong_ten>' : ld_phong.ld_ten,
-            '<LD_CUC>' : ld_cuc.ld_cv.upper() if ld_cuc.ld_cv != 'Chi cục trưởng' else '',
+            '<LD_CUC>' : ld_cuc.ld_cv.upper() if ld_cuc.ld_cv != 'Trưởng Thuế tỉnh' else '',
             '<ld_cuc_ten>' : ld_cuc.ld_ten,
             '<hinh_thuc_ky>' : ky_ten[ld_cuc.ld_cv.upper()],
             '<noi_nhan>': noi_nhan[nnt.cqt],
@@ -872,7 +871,7 @@ def huy_qd_tktra(request):
     quy_trinh_ttra = CanCu.objects.filter(ten_cc__contains='quy trình thanh tra')[0]
 
     # Lãnh đạo phê duyệt
-    ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='chi cục')[0]
+    ld_cuc = LdPheDuyet.objects.filter(ld_cv__contains='Thuế tỉnh')[0]
     ld_phong = LdPheDuyet.objects.filter(ld_cv__contains='phòng')[0]
     context = {
         'ld_cuc': ld_cuc,
@@ -911,7 +910,7 @@ def huy_qd_tktra(request):
             '<LD_PHONG>' : ld_phong.ld_cv.upper(),
             '<ld_phong>' : ld_phong.ld_cv,
             '<ld_phong_ten>' : ld_phong.ld_ten,
-            '<LD_CUC>' : ld_cuc.ld_cv.upper() if ld_cuc.ld_cv != 'Chi cục trưởng' else '',
+            '<LD_CUC>' : ld_cuc.ld_cv.upper() if ld_cuc.ld_cv != 'Trưởng Thuế tỉnh' else '',
             '<ld_cuc_ten>' : ld_cuc.ld_ten,
             '<hinh_thuc_ky>' : ky_ten[ld_cuc.ld_cv.upper()],
             '<noi_nhan>': noi_nhan[nnt.cqt],
