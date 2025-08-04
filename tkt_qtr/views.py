@@ -432,6 +432,7 @@ def lap_qd_ttra(request):
 def lap_qd_ktra_trc_hoan(request):
     # Căn cứ
     qd_tkt_tct = CanCu.objects.filter(ten_cc__contains='kế hoạch tkt')[0]
+    qd_tkt_cct = CanCu.objects.filter(ten_cc__contains='kế hoạch cct')[0]
     tham_quyen_ky = CanCu.objects.filter(ten_cc__contains='thẩm quyền ký')[0]
     luat_qlt = CanCu.objects.filter(ten_cc__contains='luật quản lý thuế')[0]
     quy_trinh_ktra = CanCu.objects.filter(ten_cc__contains='phê duyệt quy trình ktra')[0]
@@ -463,6 +464,8 @@ def lap_qd_ktra_trc_hoan(request):
         tt_qd = { 
             '<trinh_ky>' : "ngày " + f"{int(trinh_ky[0]):02d}" + " tháng " + leading_zero(trinh_ky[1], 3) + " năm " + trinh_ky[2],
             '<luat_qlt_ngay>': dinh_dang_ngay(luat_qlt.ngay_qd),#luat_qlt.ngay_qd.strftime("ngày %d/%m/%Y"),
+            '<qd_tkt_tct>': "Quyết định số " + qd_tkt_tct.so_qd + dinh_dang_ngay(qd_tkt_tct.ngay_qd),#dinh_dang_ngay(qd_tkt_tct.ngay_qd),#qd_tkt_tct.ngay_qd.strftime(" ngày %d/%m/%Y"),
+            '<qd_tkt_cct>': "Quyết định số " + qd_tkt_cct.so_qd + dinh_dang_ngay(qd_tkt_cct.ngay_qd),#dinh_dang_ngay(qd_tkt_cct.ngay_qd),#qd_tkt_cct.ngay_qd.strftime(" ngày %d/%m/%Y"),
             '<quy_trinh_ktra>': "Quyết định số " + quy_trinh_ktra.so_qd + dinh_dang_ngay(quy_trinh_ktra.ngay_qd),#quy_trinh_ktra.ngay_qd.strftime(" ngày %d/%m/%Y"),
             '<tham_quyen_ky>': "Quyết định số " + tham_quyen_ky.so_qd + dinh_dang_ngay(tham_quyen_ky.ngay_qd),#tham_quyen_ky.ngay_qd.strftime(" ngày %d/%m/%Y"),
             '<ngay_thang>' : "ngày      tháng " + thang + " năm " + nam,
