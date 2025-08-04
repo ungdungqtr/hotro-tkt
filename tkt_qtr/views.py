@@ -470,7 +470,7 @@ def lap_qd_ktra_trc_hoan(request):
             '<tham_quyen_ky>': "Quyết định số " + tham_quyen_ky.so_qd + dinh_dang_ngay(tham_quyen_ky.ngay_qd),#tham_quyen_ky.ngay_qd.strftime(" ngày %d/%m/%Y"),
             '<ngay_thang>' : "ngày      tháng " + thang + " năm " + nam,
             '<hs_hoan_so>' : request.POST['hs_hoan_so'],
-            '<hs_hoan_ngay>' : request.POST['hs_hoan_ngay'],
+            '<hs_hoan_ngay>' : dinh_dang_ngay(datetime.strptime(request.POST['hs_hoan_ngay'], "%d/%m/%Y")),
             '<ky_hoan_thue>' : kk_theo + " " + tgian[0] + " đến " + kk_theo + " " + tgian[1],
             '<hoan_tien>' : request.POST['hoan_tien'],
             '<th_hoan>': request.POST['th_hoan'],
