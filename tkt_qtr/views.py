@@ -206,8 +206,8 @@ def lap_qd_ktra(request):
     if request.method == 'POST':
         mst = request.POST['mst']
         nnt = NNT.objects.get(mst=mst)
-        tu_ngay =   request.POST['tu_ngay'].split("/")
-        den_ngay =   request.POST['den_ngay'].split("/")
+        # tu_ngay =   request.POST['tu_ngay']
+        # den_ngay =   request.POST['den_ngay']
         thang = leading_zero(request.POST['ngay_thang_1'], 3)
         nam = ngay_thang = request.POST['ngay_thang_2']
         trinh_ky =   request.POST['trinh_ky'].split("/")   
@@ -237,8 +237,8 @@ def lap_qd_ktra(request):
             "<sl_cb>" : f"{len(thanh_vien):02d}",
             "<cb_cv>" : truong_doan.gioi_tinh.lower() + " " + thanh_vien[0] + " - " + truong_doan.chuc_vu,
             # '<so_nam_ktra>' : leading_zero(request.POST['so_nam_ktra'], 10),
-            '<tu_ngay>': f"{int(tu_ngay[0]):02d}/{leading_zero(tu_ngay[1], 3)}/{tu_ngay[2]}",
-            '<den_ngay>': f"{int(den_ngay[0]):02d}/{leading_zero(den_ngay[1], 3)}/{den_ngay[2]}",
+            '<tu_ngay>': request.POST['tu_ngay'],
+            '<den_ngay>': request.POST['den_ngay'],
             # '<nam_ktra>' : request.POST['nam_ktra'],
             '<so_ngay_ktra>' : f"{int(request.POST['so_ngay_ktra']):02d}",         
             '<ngay_ktra>' : "ngày " + ngay_ktra[0] + " tháng " + leading_zero(ngay_ktra[1], 3) + " năm " + ngay_ktra[2],
