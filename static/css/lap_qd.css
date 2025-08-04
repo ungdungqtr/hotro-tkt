@@ -1,4 +1,4 @@
-.mst, .so_nam_ktra, .so_ngay_ktra, .nam_ktra, .ngay_ktra, .trinh_ky, .ngay_thang_1, .ngay_thang_2, .thanh_vien {
+.mst, .so_nam_ktra, .so_ngay_ktra, .nam_ktra, .ngay_ktra, .trinh_ky, .ngay_thang_1, .ngay_thang_2, .thanh_vien, .tu_nam, .den_nam {
     display: inline;
     font-weight: bold;
     outline: 1px solid #28a745;
@@ -57,7 +57,7 @@
     width: 60px; 
     text-align: center;
 }
-.nam_ktra, .ngay_ktra, .trinh_ky, .phieu_xly_ngay, .hs_hoan_so, .hs_hoan_ngay, .qd_hoan_so, .qd_hoan_ngay , .tu_nam, .den_nam {
+.nam_ktra, .ngay_ktra, .trinh_ky, .phieu_xly_ngay, .hs_hoan_so, .hs_hoan_ngay, .qd_hoan_so, .qd_hoan_ngay {
     width: 120px; 
     text-align: center;
 }
