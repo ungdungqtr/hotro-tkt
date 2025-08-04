@@ -4,7 +4,17 @@ $(document).ready(function () {
         delimiter: '/',
         datePattern: ['d','m','Y']
     });
-    new Cleave('.trinh_ky', '.tu_ngay', '.den_ngay', {
+    new Cleave('.trinh_ky', {
+        date: true,
+        delimiter: '/',
+        datePattern: ['d','m','Y']
+    });
+    new Cleave('.tu_ngay', {
+        date: true,
+        delimiter: '/',
+        datePattern: ['d','m','Y']
+    });
+    new Cleave('.den_ngay', {
         date: true,
         delimiter: '/',
         datePattern: ['d','m','Y']
