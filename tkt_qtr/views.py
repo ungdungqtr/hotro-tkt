@@ -222,10 +222,10 @@ def lap_qd_ktra(request):
         tt_qd = { 
             '<trinh_ky>' : "ngày " + f"{int(trinh_ky[0]):02d}" + " tháng " + leading_zero(trinh_ky[1], 3) + " năm " + trinh_ky[2],
             '<ngay_thang>' : "ngày      tháng " + thang + " năm " + nam,
-            '<qd_tkt_tct>': "Quyết định số " + qd_tkt_tct.so_qd + qd_tkt_tct.ngay_qd.strftime(" ngày %d/%m/%Y"),
-            '<qd_tkt_cct>': "Quyết định số " + qd_tkt_cct.so_qd + qd_tkt_cct.ngay_qd.strftime(" ngày %d/%m/%Y"),
+            '<qd_tkt_tct>': "Quyết định số " + qd_tkt_tct.so_qd + dinh_dang_ngay(qd_tkt_tct.ngay_qd),#qd_tkt_tct.ngay_qd.strftime(" ngày %d/%m/%Y"),
+            '<qd_tkt_cct>': "Quyết định số " + qd_tkt_cct.so_qd + dinh_dang_ngay(qd_tkt_cct.ngay_qd),#qd_tkt_cct.ngay_qd.strftime(" ngày %d/%m/%Y"),
             # '<qd_tkt_tct_ngay_ban_hanh>': qd_tkt_tct.ngay_qd.strftime("ngày %d/%m/%Y"),
-            '<luat_qlt_ngay>': luat_qlt.ngay_qd.strftime("ngày %d/%m/%Y"),
+            '<luat_qlt_ngay>': dinh_dang_ngay(luat_qlt.ngay_qd),#luat_qlt.ngay_qd.strftime("ngày %d/%m/%Y"),
             '<quy_trinh_ktra>': "Quyết định số " + quy_trinh_ktra.so_qd + quy_trinh_ktra.ngay_qd.strftime(" ngày %d/%m/%Y"),
             '<tham_quyen_ky>': "Quyết định số " + tham_quyen_ky.so_qd + tham_quyen_ky.ngay_qd.strftime(" ngày %d/%m/%Y"),
             '<nam_kh_tkt>': datetime.now().strftime("%Y"),
@@ -273,6 +273,16 @@ def lap_qd_ktra(request):
 def leading_zero(s, max):
     s = int(s)
     return ('0' + str(s)) if s < max else str(s)
+
+def dinh_dang_ngay(date_obj):
+    day = date_obj.day
+    month = date_obj.month
+    year = date_obj.year
+
+    if month > 3:
+        return f"ngày {day:02}/{month}/{year}"  # không thêm số 0 cho tháng
+    else:
+        return f"ngày {day:02}/{month:02}/{year}"  # giữ số 0 cho tháng nếu cần
 
 def nnt_thong_tin(request):
     mst = request.GET.get('mst', None)
