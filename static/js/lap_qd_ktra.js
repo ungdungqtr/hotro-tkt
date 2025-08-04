@@ -9,17 +9,7 @@ $(document).ready(function () {
         delimiter: '/',
         datePattern: ['d','m','Y']
     });
-    new Cleave('.tu_ngay', {
-        date: true,
-        delimiter: '/',
-        datePattern: ['d','m','Y']
-    });
-    new Cleave('.den_ngay', {
-        date: true,
-        delimiter: '/',
-        datePattern: ['d','m','Y']
-    });
-    /* new Cleave('.phieu_xly_ngay', {
+       /* new Cleave('.phieu_xly_ngay', {
         date: true,
         delimiter: '/',
         datePattern: ['d','m','Y']
