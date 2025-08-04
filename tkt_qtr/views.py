@@ -469,6 +469,7 @@ def lap_qd_ktra_trc_hoan(request):
             '<quy_trinh_ktra>': "Quyết định số " + quy_trinh_ktra.so_qd + dinh_dang_ngay(quy_trinh_ktra.ngay_qd),#quy_trinh_ktra.ngay_qd.strftime(" ngày %d/%m/%Y"),
             '<tham_quyen_ky>': "Quyết định số " + tham_quyen_ky.so_qd + dinh_dang_ngay(tham_quyen_ky.ngay_qd),#tham_quyen_ky.ngay_qd.strftime(" ngày %d/%m/%Y"),
             '<ngay_thang>' : "ngày      tháng " + thang + " năm " + nam,
+            '<nam_kh_tkt>': datetime.now().strftime("%Y"),
             '<hs_hoan_so>' : request.POST['hs_hoan_so'],
             '<hs_hoan_ngay>' : dinh_dang_ngay(datetime.strptime(request.POST['hs_hoan_ngay'], "%d/%m/%Y")),
             '<ky_hoan_thue>' : kk_theo + " " + tgian[0] + " đến " + kk_theo + " " + tgian[1],
