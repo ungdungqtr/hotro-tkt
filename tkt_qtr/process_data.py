@@ -60,27 +60,6 @@ class lap_qd_ktra:
         document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "1.to_trinh_ktr.docx"))
         ghi_du_lieu_para(document, self.tt_qd)
         # ghi dữ liệu thành phần đoàn
-        doc_table = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "doan_ktra_table.docx"))
-        table = doc_table.tables[0]
-        # del_row(table, len(doan_ktra['<ten_cb>']), len(table.rows))
-        for i in range(len(self.doan_ktra['<ten_cb>'])):
-            row = table.rows[i]
-            for k,v in self.doan_ktra.items():
-                ghi_du_lieu_cell(row, k, v[i])
-        # Xóa các hàng không có dữ liệu
-        del_row(table, len(self.doan_ktra['<ten_cb>']) - 1, len(table.rows))
-        # doc_table.save("doan_ktra.docx")
-        # tb = Document("doan_ktra.docx")
-        # template = tb.tables[0]
-        tbl = table._tbl
-        # tbl = template._tbl
-        # Tìm vị trí '[*]' (vị trí đánh dấu)
-        # Copy bảng thành viên vào vị trí đánh dấu
-        loc = vi_tri_bang(document, '[*]')
-        # template = tb.tables[0]
-        # tbl = template._tbl
-        p = document.paragraphs[loc]._p
-        p.addnext(tbl)
         filename = self.tt_qd["<mst>"] + "_To_trinh.docx"
         path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", filename)   
         document.save(path)
@@ -229,15 +208,6 @@ class lap_qd_ktra_hoan_gtgt:
     def to_trinh(self):
         document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "3.to_trinh_ktr_hoan_gtgt.docx"))
         ghi_du_lieu_para(document, self.tt_qd)
-        # ghi dữ liệu thành phần đoàn
-        table = document.tables[0]
-        # del_row(table, len(doan_ktra['<ten_cb>']), len(table.rows))
-        for i in range(len(self.doan_ktra['<ten_cb>'])):
-            row = table.rows[i]
-            for k,v in self.doan_ktra.items():
-                ghi_du_lieu_cell(row, k, v[i])
-        # Xóa các hàng không có dữ liệu
-        del_row(table, len(self.doan_ktra['<ten_cb>']) - 1, len(table.rows))
         filename = self.tt_qd["<mst>"] + "_To_trinh.docx"
         path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", filename)   
         document.save(path)
@@ -294,15 +264,6 @@ class lap_qd_ktra_sau_hoan_gtgt:
     def to_trinh(self):
         document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "8.to_trinh_ktr_sau_hoan_gtgt.docx"))
         ghi_du_lieu_para(document, self.tt_qd)
-        # ghi dữ liệu thành phần đoàn
-        table = document.tables[0]
-        # del_row(table, len(doan_ktra['<ten_cb>']), len(table.rows))
-        for i in range(len(self.doan_ktra['<ten_cb>'])):
-            row = table.rows[i]
-            for k,v in self.doan_ktra.items():
-                ghi_du_lieu_cell(row, k, v[i])
-        # Xóa các hàng không có dữ liệu
-        del_row(table, len(self.doan_ktra['<ten_cb>']) - 1, len(table.rows))
         filename = self.tt_qd["<mst>"] + "_To_trinh.docx"
         path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", filename)   
         document.save(path)
@@ -359,15 +320,6 @@ class lap_qd_ktra_giai_the:
     def to_trinh(self):
         document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "4.to_trinh_ktr_giai_the.docx"))
         ghi_du_lieu_para(document, self.tt_qd)
-        # ghi dữ liệu thành phần đoàn
-        table = document.tables[0]
-        # del_row(table, len(doan_ktra['<ten_cb>']), len(table.rows))
-        for i in range(len(self.doan_ktra['<ten_cb>'])):
-            row = table.rows[i]
-            for k,v in self.doan_ktra.items():
-                ghi_du_lieu_cell(row, k, v[i])
-        # Xóa các hàng không có dữ liệu
-        del_row(table, len(self.doan_ktra['<ten_cb>']) - 1, len(table.rows))
         filename = self.tt_qd["<mst>"] + "_To_trinh.docx"
         path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", filename)   
         document.save(path)
@@ -425,15 +377,6 @@ class lap_qd_ktra_dot_xuat:
     def to_trinh(self):
         document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "5.to_trinh_ktr_dot_xuat.docx"))
         ghi_du_lieu_para(document, self.tt_qd)
-        # ghi dữ liệu thành phần đoàn
-        table = document.tables[0]
-        # del_row(table, len(doan_ktra['<ten_cb>']), len(table.rows))
-        for i in range(len(self.doan_ktra['<ten_cb>'])):
-            row = table.rows[i]
-            for k,v in self.doan_ktra.items():
-                ghi_du_lieu_cell(row, k, v[i])
-        # Xóa các hàng không có dữ liệu
-        del_row(table, len(self.doan_ktra['<ten_cb>']) - 1, len(table.rows))
         filename = self.tt_qd["<mst>"] + "_To_trinh.docx"
         path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", filename)      
         document.save(path)

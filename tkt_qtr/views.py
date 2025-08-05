@@ -222,6 +222,7 @@ def lap_qd_ktra(request):
         tt_qd = { 
             '<trinh_ky>' : "ngày " + f"{int(trinh_ky[0]):02d}" + " tháng " + leading_zero(trinh_ky[1], 3) + " năm " + trinh_ky[2],
             '<ngay_thang>' : "ngày      tháng " + thang + " năm " + nam,
+            '<kh_ktra>': f"{int(thang):02d}/{nam}",
             '<qd_tkt_tct>': "Quyết định số " + qd_tkt_tct.so_qd + dinh_dang_ngay(qd_tkt_tct.ngay_qd),#dinh_dang_ngay(qd_tkt_tct.ngay_qd),#qd_tkt_tct.ngay_qd.strftime(" ngày %d/%m/%Y"),
             '<qd_tkt_cct>': "Quyết định số " + qd_tkt_cct.so_qd + dinh_dang_ngay(qd_tkt_cct.ngay_qd),#dinh_dang_ngay(qd_tkt_cct.ngay_qd),#qd_tkt_cct.ngay_qd.strftime(" ngày %d/%m/%Y"),
             # '<qd_tkt_tct_ngay_ban_hanh>': qd_tkt_tct.ngay_qd.strftime("ngày %d/%m/%Y"),
@@ -563,7 +564,7 @@ def ktra_sau_hoan(request):
             '<hs_hoan_ngay>' : dinh_dang_ngay(datetime.strptime(request.POST['hs_hoan_ngay'], "%d/%m/%Y")),
             '<qd_hoan_so>' : request.POST['qd_hoan_so'],
             '<qd_hoan_ngay>' : dinh_dang_ngay(datetime.strptime(request.POST['qd_hoan_ngay'], "%d/%m/%Y")),
-            '<ky_hoan_thue>' : "từ " + kk_theo + " " + tgian[0] + " đến " + kk_theo + " " + tgian[1],
+            '<ky_hoan_thue>' : "Từ " + kk_theo + " " + tgian[0] + " đến " + kk_theo + " " + tgian[1],
             '<hoan_tien>' : request.POST['hoan_tien'],
             '<th_hoan>': request.POST['th_hoan'],
             '<dia_diem_ktra>' : request.POST['dia_diem_ktra'],
