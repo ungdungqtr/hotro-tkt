@@ -18,7 +18,7 @@ import csv
 from datetime import datetime
 
 ky_ten = {
-    'PHÓ TRƯỞNG THUẾ TỈNH' : 'KT.TRƯỞNG THUẾ TỈNH',
+    'PHÓ TRƯỞNG THUẾ TỈNH' : 'KT. TRƯỞNG THUẾ TỈNH',
     'TRƯỞNG THUẾ TỈNH': 'PHÓ TRƯỞNG THUẾ TỈNH'
 }
 
