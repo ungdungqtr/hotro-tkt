@@ -143,10 +143,11 @@ def export_CB(request):
     response['Content-Disposition'] = 'inline; filename="CB.csv"'
 
     writer = csv.writer(response)
-    writer.writerow(['ID', 'Ten', 'Gioi_tinh', 'Chuc_vu'])
+    writer.writerow(['ID', 'Ten', 'Gioi_tinh', 'Chuc_vu', 'Vi_tri'])
 
     for obj in data:
-        writer.writerow([obj.id, obj.ten_cb, obj.gioi_tinh, obj.chuc_vu])
+        
+        writer.writerow([obj.id, obj.ten_cb, obj.gioi_tinh, obj.chuc_vu, obj.vi_tri])
 
     return response
 
@@ -225,9 +226,8 @@ def lap_qd_ktra(request):
             '<kh_ktra>': f"{int(thang):02d}/{nam}",
             '<qd_tkt_tct>': f"Quyết định số {qd_tkt_tct.so_qd} {dinh_dang_ngay(qd_tkt_tct.ngay_qd)}",#dinh_dang_ngay(qd_tkt_tct.ngay_qd),#qd_tkt_tct.ngay_qd.strftime(" ngày %d/%m/%Y"),
             '<qd_tkt_cct>': f"Quyết định số {qd_tkt_cct.so_qd} {dinh_dang_ngay(qd_tkt_cct.ngay_qd)}",#dinh_dang_ngay(qd_tkt_cct.ngay_qd),#qd_tkt_cct.ngay_qd.strftime(" ngày %d/%m/%Y"),
-            # '<qd_tkt_tct_ngay_ban_hanh>': qd_tkt_tct.ngay_qd.strftime("ngày %d/%m/%Y"),
             '<luat_qlt_ngay>': dinh_dang_ngay(luat_qlt.ngay_qd),#dinh_dang_ngay(luat_qlt.ngay_qd),#luat_qlt.ngay_qd.strftime("ngày %d/%m/%Y"),
-            '<quy_trinh_ktra>': "Quyết định số " + quy_trinh_ktra.so_qd + dinh_dang_ngay(quy_trinh_ktra.ngay_qd),#dinh_dang_ngay(quy_trinh_ktra.ngay_qd),#quy_trinh_ktra.ngay_qd.strftime(" ngày %d/%m/%Y"),
+            '<quy_trinh_ktra>': f"Quyết định số {quy_trinh_ktra.so_qd} {dinh_dang_ngay(quy_trinh_ktra.ngay_qd)}",#dinh_dang_ngay(quy_trinh_ktra.ngay_qd),#quy_trinh_ktra.ngay_qd.strftime(" ngày %d/%m/%Y"),
             '<tham_quyen_ky>': f"Quyết định số {tham_quyen_ky.so_qd} {dinh_dang_ngay(tham_quyen_ky.ngay_qd)}",#dinh_dang_ngay(tham_quyen_ky.ngay_qd),#tham_quyen_ky.ngay_qd.strftime(" ngày %d/%m/%Y"),
             '<nam_kh_tkt>': datetime.now().strftime("%Y"),
             '<ten_dv>' : nnt.ten_nnt,# nnt(mst)['ten_nnt'],
@@ -402,7 +402,7 @@ def lap_qd_ttra(request):
             '<LD_CUC>' : ld_cuc.ld_cv.upper() if ld_cuc.ld_cv != 'Cục trưởng' else '',
             '<ld_cuc_ten>' : ld_cuc.ld_ten,
             '<hinh_thuc_ky>' : ky_ten[ld_cuc.ld_cv.upper()],
-            '<noi_nhan>': noi_nhan[nnt.cqt],
+            # '<noi_nhan>': noi_nhan[nnt.cqt],
         }        
         QD = process_data.lap_qd_ttra(tt_qd, doan_ttra)
         QD.empty_media()
@@ -467,7 +467,7 @@ def lap_qd_ktra_trc_hoan(request):
             '<luat_qlt_ngay>': dinh_dang_ngay(luat_qlt.ngay_qd),#luat_qlt.ngay_qd.strftime("ngày %d/%m/%Y"),
             '<qd_tkt_tct>': f"Quyết định số {qd_tkt_tct.so_qd} {dinh_dang_ngay(qd_tkt_tct.ngay_qd)}",#dinh_dang_ngay(qd_tkt_tct.ngay_qd),#qd_tkt_tct.ngay_qd.strftime(" ngày %d/%m/%Y"),
             '<qd_tkt_cct>': f"Quyết định số {qd_tkt_cct.so_qd} {dinh_dang_ngay(qd_tkt_cct.ngay_qd)}",#dinh_dang_ngay(qd_tkt_cct.ngay_qd),#qd_tkt_cct.ngay_qd.strftime(" ngày %d/%m/%Y"),
-            '<quy_trinh_ktra>': "Quyết định số " + quy_trinh_ktra.so_qd + dinh_dang_ngay(quy_trinh_ktra.ngay_qd),#quy_trinh_ktra.ngay_qd.strftime(" ngày %d/%m/%Y"),
+            '<quy_trinh_ktra>': f"Quyết định số {quy_trinh_ktra.so_qd} {dinh_dang_ngay(quy_trinh_ktra.ngay_qd)}",#quy_trinh_ktra.ngay_qd.strftime(" ngày %d/%m/%Y"),
             '<tham_quyen_ky>': f"Quyết định số {tham_quyen_ky.so_qd} {dinh_dang_ngay(tham_quyen_ky.ngay_qd)}",#tham_quyen_ky.ngay_qd.strftime(" ngày %d/%m/%Y"),
             '<ngay_thang>' : "ngày      tháng " + thang + " năm " + nam,
             '<nam_kh_tkt>': datetime.now().strftime("%Y"),
@@ -557,7 +557,7 @@ def ktra_sau_hoan(request):
             '<ngay_thang>' : "ngày      tháng " + thang + " năm " + nam,
             '<qd_tkt_tct>': f"Quyết định số {qd_tkt_tct.so_qd} {dinh_dang_ngay(qd_tkt_tct.ngay_qd)}",#qd_tkt_tct.ngay_qd.strftime(" ngày %d/%m/%Y"),
             '<qd_tkt_cct>': f"Quyết định số {qd_tkt_cct.so_qd} {dinh_dang_ngay(qd_tkt_cct.ngay_qd)}",#qd_tkt_cct.ngay_qd.strftime(" ngày %d/%m/%Y"),
-            '<quy_trinh_ktra>': "Quyết định số " + quy_trinh_ktra.so_qd + dinh_dang_ngay(quy_trinh_ktra.ngay_qd),#quy_trinh_ktra.ngay_qd.strftime(" ngày %d/%m/%Y"),
+            '<quy_trinh_ktra>': f"Quyết định số {quy_trinh_ktra.so_qd} {dinh_dang_ngay(quy_trinh_ktra.ngay_qd)}",#quy_trinh_ktra.ngay_qd.strftime(" ngày %d/%m/%Y"),
             '<tham_quyen_ky>': f"Quyết định số {tham_quyen_ky.so_qd} {dinh_dang_ngay(tham_quyen_ky.ngay_qd)}",#tham_quyen_ky.ngay_qd.strftime(" ngày %d/%m/%Y"),
             '<nam_kh_tkt>': datetime.now().strftime("%Y"),
             '<hs_hoan_so>' : request.POST['hs_hoan_so'],
@@ -647,7 +647,7 @@ def lap_qd_ktra_giai_the(request):
             '<qd_tkt_cct>': f"Quyết định số {qd_tkt_cct.so_qd} {dinh_dang_ngay(qd_tkt_cct.ngay_qd)}",#qd_tkt_cct.ngay_qd.strftime(" ngày %d/%m/%Y"),
             '<tham_quyen_ky>': f"Quyết định số {tham_quyen_ky.so_qd} {dinh_dang_ngay(tham_quyen_ky.ngay_qd)}",#tham_quyen_ky.ngay_qd.strftime(" ngày %d/%m/%Y"),
             '<nam_kh_tkt>': datetime.now().strftime("%Y"),
-            '<quy_trinh_ktra>': "Quyết định số " + quy_trinh_ktra.so_qd + dinh_dang_ngay(quy_trinh_ktra.ngay_qd),#quy_trinh_ktra.ngay_qd.strftime(" ngày %d/%m/%Y"),
+            '<quy_trinh_ktra>': f"Quyết định số {quy_trinh_ktra.so_qd} {dinh_dang_ngay(quy_trinh_ktra.ngay_qd)}",#quy_trinh_ktra.ngay_qd.strftime(" ngày %d/%m/%Y"),
             '<ngay_thang>' : "ngày      tháng " + thang + " năm " + nam,
             "<phieu_xly_ngay>": request.POST['phieu_xly_ngay'],
             '<ten_dv>' : nnt.ten_nnt,
@@ -916,7 +916,7 @@ def huy_qd_tktra(request):
             '<qd_tkt_tct_ngay_ban_hanh>': qd_tkt_tct.ngay_qd.strftime("ngày %d/%m/%Y"),
             '<nam_kh_tkt>': datetime.now().strftime("%Y"),
             '<luat_qlt_ngay>': dinh_dang_ngay(luat_qlt.ngay_qd),#luat_qlt.ngay_qd.strftime("ngày %d/%m/%Y"),
-            '<quy_trinh_ktra>': "Quyết định số " + quy_trinh_ktra.so_qd + dinh_dang_ngay(quy_trinh_ktra.ngay_qd),#quy_trinh_ktra.ngay_qd.strftime(" ngày %d/%m/%Y"),
+            '<quy_trinh_ktra>': f"Quyết định số {quy_trinh_ktra.so_qd} {dinh_dang_ngay(quy_trinh_ktra.ngay_qd)}",#quy_trinh_ktra.ngay_qd.strftime(" ngày %d/%m/%Y"),
             '<ngay_thang>' : "ngày      tháng " + thang + " năm " + nam,
             # '<ngay_nhan_ttrinh>': request.POST['ngay_nhan_ttrinh'],
             '<so_ttrinh>': request.POST['so_ttrinh'].strip(),
@@ -938,7 +938,7 @@ def huy_qd_tktra(request):
             '<LD_CUC>' : ld_cuc.ld_cv.upper() if ld_cuc.ld_cv != 'Trưởng Thuế tỉnh' else '',
             '<ld_cuc_ten>' : ld_cuc.ld_ten,
             '<hinh_thuc_ky>' : ky_ten[ld_cuc.ld_cv.upper()],
-            '<noi_nhan>': noi_nhan[nnt.cqt],
+            # '<noi_nhan>': noi_nhan[nnt.cqt],
         }        
         QD = process_data.huy_qd_tktra(tt_qd)
         QD.empty_media()
@@ -994,14 +994,16 @@ def them_moi_cb(request):
     gioi_tinh_1 = request.GET.get('gioi_tinh', None)
     ten_cb_1 = request.GET.get('ten_cb', None)
     chuc_vu_1 = request.GET.get('chuc_vu', None)
+    vi_tri_1 = request.GET.get('vi_tri', None)
 
     obj = CanBo.objects.create(
         gioi_tinh = gioi_tinh_1,
         ten_cb = ten_cb_1,
         chuc_vu = chuc_vu_1,
+        vi_tri = vi_tri_1
     )
 
-    user = {'id': obj.id, 'ten_cb': obj.ten_cb, 'gioi_tinh': obj.gioi_tinh, 'chuc_vu': obj.chuc_vu}
+    user = {'id': obj.id, 'ten_cb': obj.ten_cb, 'gioi_tinh': obj.gioi_tinh, 'chuc_vu': obj.chuc_vu, 'vi_tri': obj.vi_tri}
 
     return JsonResponse({'user': user})
 
@@ -1011,14 +1013,16 @@ def cap_nhat_thong_tin(request):
     gioi_tinh_1 = request.GET.get('gioi_tinh', None)
     ten_cb_1 = request.GET.get('ten_cb', None)
     chuc_vu_1 = request.GET.get('chuc_vu', None)
+    vi_tri_1 = request.GET.get('vi_tri', None)
 
     obj = CanBo.objects.get(id=id_1)
     obj.ten_cb = ten_cb_1
     obj.gioi_tinh = gioi_tinh_1
     obj.chuc_vu = chuc_vu_1
+    obj.vi_tri = vi_tri_1
     obj.save()
 
-    user = {'id': obj.id, 'ten_cb': obj.ten_cb, 'gioi_tinh': obj.gioi_tinh, 'chuc_vu': obj.chuc_vu}
+    user = {'id': obj.id, 'ten_cb': obj.ten_cb, 'gioi_tinh': obj.gioi_tinh, 'chuc_vu': obj.chuc_vu, 'vi_tri': obj.vi_tri}
 
     return JsonResponse({'user': user})
 
