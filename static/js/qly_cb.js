@@ -5,13 +5,17 @@ $(document).ready(function () {
         var gioi_tinh_input = $('select[name=gioi_tinh]').val();
         var ten_cb_input = $('input[name=ten_cb]').val().trim();
         var chuc_vu_input = $('select[name=chuc_vu]').val();
-        if (gioi_tinh_input && ten_cb_input && chuc_vu_input) {
+        var vi_tri_input = $('select[name=vi_tri]').val();
+        var phong_input = $('select[name=phong]').val();
+        if (gioi_tinh_input && ten_cb_input && chuc_vu_input && vi_tri_input) {
             $.ajax({
                 url: "them_moi_cb",
                 data: {
                     'gioi_tinh' : gioi_tinh_input,
                     'ten_cb' : ten_cb_input,
-                    'chuc_vu' : chuc_vu_input
+                    'chuc_vu' : chuc_vu_input,
+                    'vi_tri' : vi_tri_input,
+                    'phong' : phong_input,
                 },
                 dataType: "json",
                 success: function (data) {
@@ -34,6 +38,8 @@ $(document).ready(function () {
                 <td class="userGtinh userData" name="gioi_tinh">${user.gioi_tinh}</td>
                 <td class="userTen userData" name="ten_cb">${user.ten_cb}</td>
                 <td class="userCvu userData" name="chuc_vu">${user.chuc_vu}</td>
+                <td class="userCvu userData" name="vi_tri">${user.vi_tri}</td>
+                <td class="userCvu userData" name="phong">${user.phong}</td>
                 <td align="center">
                 <button type="button" class="btn btn-success btn-sm form-control update_cb" value="{{user.id}}" 
                         data-toggle="modal" data-target="#UpdateModal">
@@ -76,11 +82,15 @@ $(document).ready(function () {
             gioi_tinh = $(tr_id).find('.userGtinh').text();
             ten_cb = $(tr_id).find('.userTen').text();
             chuc_vu = $(tr_id).find('.userCvu').text();
+            vi_tri = $(tr_id).find('.userVtri').text();
+            phong = $(tr_id).find('.userPhong').text();
             $('#form-id').val(id);
             // $('#form-gtinh option[value=${gioi_tinh}]').attr("selected",true);
             $('#form-gtinh').val(gioi_tinh);
             $('#form-ten').val(ten_cb);
             $('#form-cvu').val(chuc_vu);
+            $('#form-vtri').val(vi_tri);
+            $('#form-phong').val(phong);
         }
     });
     //Cập nhật thông tin cán bộ
@@ -90,6 +100,8 @@ $(document).ready(function () {
         var gtinhInput = $('select[name="formGtinh"]').val();
         var tenInput = $('input[name="formTen"]').val().trim();
         var cvuInput = $('select[name="formCvu"]').val();
+        var vtriInput = $('select[name="formVtri"]').val();
+        var phongInput = $('select[name="formPhong"]').val();
 
         if (gtinhInput && tenInput && cvuInput) {
             $.ajax({
@@ -99,6 +111,8 @@ $(document).ready(function () {
                     'gioi_tinh': gtinhInput,
                     'ten_cb': tenInput,
                     'chuc_vu': cvuInput,
+                    'vi_tri': vtriInput,
+                    'phong': phongInput,
                 },
                 dataType: "json",
                 success: function (data) {
@@ -123,8 +137,12 @@ $(document).ready(function () {
                 $(this).text(user.gioi_tinh);
             } else if (attr == "ten_cb") {
                 $(this).text(user.ten_cb);
-            } else {
+            } else if (attr == "chuc_vu") {
                 $(this).text(user.chuc_vu);
+            } else if (attr == "vi_tri") {
+                $(this).text(user.vi_tri);
+            } else if (attr == "phong") {
+                $(this).text(user.phong);
             }
         }); 
     }

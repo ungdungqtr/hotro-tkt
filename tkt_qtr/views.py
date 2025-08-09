@@ -106,7 +106,9 @@ def read_csv_setting(MEDIA_ROOT, filename):
                 obj = CanBo.objects.create(
                     ten_cb = row[1],
                     gioi_tinh = row[2],
-                    chuc_vu = row[3]
+                    chuc_vu = row[3],
+                    vi_tri = row[4],
+                    phong = row[5],
                 )
         if 'NNT' in filename:
             NNT.objects.all().delete()
@@ -147,7 +149,7 @@ def export_CB(request):
 
     for obj in data:
         
-        writer.writerow([obj.id, obj.ten_cb, obj.gioi_tinh, obj.chuc_vu, obj.vi_tri])
+        writer.writerow([obj.id, obj.ten_cb, obj.gioi_tinh, obj.chuc_vu, obj.vi_tri, obj.phong])
 
     return response
 
@@ -184,6 +186,40 @@ def export_LD(request):
 
     return response
 
+def dinh_dang_doan_kiem_tra(doan_ktra):
+    ket_qua = []
+    n = len(doan_ktra["ten_cb"])
+
+    for i in range(n):
+        ten = doan_ktra["ten_cb"][i]
+        vi_tri = doan_ktra["vi_tri"][i]
+        chuc_vu = doan_ktra["chuc_vu"][i].strip()
+        phong = doan_ktra["phong"][i].strip()
+        cv_doan = doan_ktra["cv_doan"][i].strip()
+
+        # Mô tả cơ bản: tên + vị trí
+        mo_ta = f"{ten}, {vi_tri}"
+
+        # Thêm chức vụ nếu khác "nhan vien"
+        if chuc_vu != "Nhân viên":
+            mo_ta += f", {chuc_vu.replace(' phòng', '')}"
+
+        if phong:
+            mo_ta += f" {phong}"
+        # Thêm chức vụ trong đoàn (kể cả "thanh vien")
+        if cv_doan:
+            mo_ta += f" - {cv_doan}"
+
+        ket_qua.append(mo_ta)
+
+    # Đánh số và thêm ; hoặc .
+    ket_qua_danh_so = []
+    for idx, dong in enumerate(ket_qua):
+        dau_cuoi = ";" if idx < len(ket_qua) - 1 else "."
+        ket_qua_danh_so.append(f"{idx + 1}. {dong}{dau_cuoi}")
+
+    return ket_qua_danh_so
+
 # Lập quyết định kiểm tra
 #########################################################################################
 #########################################################################################
@@ -214,10 +250,17 @@ def lap_qd_ktra(request):
         thanh_vien = request.POST.getlist('thanh_vien', None)
         cv = ['Trưởng đoàn']
         cv.extend(["Thành viên"] * (len(thanh_vien)-1))
+        # doan_ktra = {
+        #     "<ten_cb>" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + ": " + tv) for tv in thanh_vien],
+        #     "<ngach_cb>" : [CanBo.objects.get(ten_cb=tv).chuc_vu for tv in thanh_vien],
+        #     "<cv_doan>" : cv
+        # }
         doan_ktra = {
-            "<ten_cb>" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + ": " + tv) for tv in thanh_vien],
-            "<ngach_cb>" : [CanBo.objects.get(ten_cb=tv).chuc_vu for tv in thanh_vien],
-            "<cv_doan>" : cv
+            "ten_cb" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + ": " + tv) for tv in thanh_vien],
+            "chuc_vu" : [CanBo.objects.get(ten_cb=tv).chuc_vu for tv in thanh_vien],
+            "vi_tri" : [CanBo.objects.get(ten_cb=tv).vi_tri for tv in thanh_vien],
+            "phong" : [CanBo.objects.get(ten_cb=tv).phong for tv in thanh_vien],
+            "cv_doan" : cv
         }
         truong_doan = CanBo.objects.get(ten_cb=thanh_vien[0])
         tt_qd = { 
@@ -252,7 +295,7 @@ def lap_qd_ktra(request):
             '<hinh_thuc_ky>' : ky_ten[ld_cuc.ld_cv.upper()],
             # '<noi_nhan>': noi_nhan[nnt.cqt],
         }
-        QD = process_data.lap_qd_ktra(tt_qd, doan_ktra)
+        QD = process_data.lap_qd_ktra(tt_qd, dinh_dang_doan_kiem_tra(doan_ktra))
         QD.empty_media()
         file_path = [QD.to_trinh(), QD.qd_ktra(), QD.qd_gsat(), QD.kh_gsat()]
         zip_path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", mst + "_QD_ktra.zip")
@@ -458,9 +501,11 @@ def lap_qd_ktra_trc_hoan(request):
         cv.extend(["Thành viên"] * (len(thanh_vien)-1))
         truong_doan = CanBo.objects.get(ten_cb=thanh_vien[0])
         doan_ktra = {
-            "<ten_cb>" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + ": " + tv) for tv in thanh_vien],
-            "<cv_cb>" : [CanBo.objects.get(ten_cb=tv).chuc_vu for tv in thanh_vien],
-            "<cv_doan>" : cv
+            "ten_cb" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + ": " + tv) for tv in thanh_vien],
+            "chuc_vu" : [CanBo.objects.get(ten_cb=tv).chuc_vu for tv in thanh_vien],
+            "vi_tri" : [CanBo.objects.get(ten_cb=tv).vi_tri for tv in thanh_vien],
+            "phong" : [CanBo.objects.get(ten_cb=tv).phong for tv in thanh_vien],
+            "cv_doan" : cv
         }
         tt_qd = { 
             '<trinh_ky>' : "ngày " + f"{int(trinh_ky[0]):02d}" + " tháng " + leading_zero(trinh_ky[1], 3) + " năm " + trinh_ky[2],
@@ -494,7 +539,7 @@ def lap_qd_ktra_trc_hoan(request):
             '<ld_cuc_ten>' : ld_cuc.ld_ten,
             '<hinh_thuc_ky>' : ky_ten[ld_cuc.ld_cv.upper()],
         }       
-        QD = process_data.lap_qd_ktra_hoan_gtgt(tt_qd, doan_ktra)
+        QD = process_data.lap_qd_ktra_hoan_gtgt(tt_qd, dinh_dang_doan_kiem_tra(doan_ktra))
         QD.empty_media()
         file_path = [QD.to_trinh(), QD.qd_ktra(), QD.qd_gsat(), QD.kh_gsat()]
         zip_path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", mst + "_QD_ktra_hoan_gtgt.zip")
@@ -547,9 +592,11 @@ def ktra_sau_hoan(request):
         cv.extend(["Thành viên"] * (len(thanh_vien)-1))
         truong_doan = CanBo.objects.get(ten_cb=thanh_vien[0])
         doan_ktra = {
-            "<ten_cb>" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + ": " + tv) for tv in thanh_vien],
-            "<cv_cb>" : [CanBo.objects.get(ten_cb=tv).chuc_vu for tv in thanh_vien],
-            "<cv_doan>" : cv
+            "ten_cb" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + ": " + tv) for tv in thanh_vien],
+            "chuc_vu" : [CanBo.objects.get(ten_cb=tv).chuc_vu for tv in thanh_vien],
+            "vi_tri" : [CanBo.objects.get(ten_cb=tv).vi_tri for tv in thanh_vien],
+            "phong" : [CanBo.objects.get(ten_cb=tv).phong for tv in thanh_vien],
+            "cv_doan" : cv
         }
         tt_qd = { 
             '<trinh_ky>' : "ngày " + f"{int(trinh_ky[0]):02d}" + " tháng " + leading_zero(trinh_ky[1], 3) + " năm " + trinh_ky[2],
@@ -585,7 +632,7 @@ def ktra_sau_hoan(request):
             '<ld_cuc_ten>' : ld_cuc.ld_ten,
             '<hinh_thuc_ky>' : ky_ten[ld_cuc.ld_cv.upper()],
         }       
-        QD = process_data.lap_qd_ktra_sau_hoan_gtgt(tt_qd, doan_ktra)
+        QD = process_data.lap_qd_ktra_sau_hoan_gtgt(tt_qd, dinh_dang_doan_kiem_tra(doan_ktra))
         QD.empty_media()
         file_path = [QD.to_trinh(), QD.qd_ktra(), QD.qd_gsat(), QD.kh_gsat()]
         zip_path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", mst + "_QD_ktra_sau_hoan.zip")
@@ -636,9 +683,11 @@ def lap_qd_ktra_giai_the(request):
         cv.extend(["Thành viên"] * (len(thanh_vien)-1))
         truong_doan = CanBo.objects.get(ten_cb=thanh_vien[0])
         doan_ktra = {
-            "<ten_cb>" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + ": " + tv) for tv in thanh_vien],
-            "<cv_cb>" : [CanBo.objects.get(ten_cb=tv).chuc_vu for tv in thanh_vien],
-            "<cv_doan>" : cv
+            "ten_cb" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + ": " + tv) for tv in thanh_vien],
+            "chuc_vu" : [CanBo.objects.get(ten_cb=tv).chuc_vu for tv in thanh_vien],
+            "vi_tri" : [CanBo.objects.get(ten_cb=tv).vi_tri for tv in thanh_vien],
+            "phong" : [CanBo.objects.get(ten_cb=tv).phong for tv in thanh_vien],
+            "cv_doan" : cv
         }
         tt_qd = { 
             '<trinh_ky>' : "ngày " + f"{int(trinh_ky[0]):02d}" + " tháng " + leading_zero(trinh_ky[1], 3) + " năm " + trinh_ky[2],
@@ -669,7 +718,7 @@ def lap_qd_ktra_giai_the(request):
             '<ld_cuc_ten>' : ld_cuc.ld_ten,
             '<hinh_thuc_ky>' : ky_ten[ld_cuc.ld_cv.upper()],
         } 
-        QD = process_data.lap_qd_ktra_giai_the(tt_qd, doan_ktra)
+        QD = process_data.lap_qd_ktra_giai_the(tt_qd, dinh_dang_doan_kiem_tra(doan_ktra))
         QD.empty_media()
         file_path = [QD.to_trinh(), QD.qd_ktra(), QD.qd_gsat(), QD.kh_gsat()]
         zip_path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", mst + "_QD_ktra_giai_the.zip")
@@ -721,9 +770,11 @@ def lap_qd_ktra_dot_xuat(request):
         cv.extend(["Thành viên"] * (len(thanh_vien)-1))
         truong_doan = CanBo.objects.get(ten_cb=thanh_vien[0])
         doan_ktra = {
-            "<ten_cb>" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + ": " + tv) for tv in thanh_vien],
-            "<cv_cb>" : [CanBo.objects.get(ten_cb=tv).chuc_vu for tv in thanh_vien],
-            "<cv_doan>" : cv
+            "ten_cb" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + ": " + tv) for tv in thanh_vien],
+            "chuc_vu" : [CanBo.objects.get(ten_cb=tv).chuc_vu for tv in thanh_vien],
+            "vi_tri" : [CanBo.objects.get(ten_cb=tv).vi_tri for tv in thanh_vien],
+            "phong" : [CanBo.objects.get(ten_cb=tv).phong for tv in thanh_vien],
+            "cv_doan" : cv
         }
         tt_qd = { 
             '<trinh_ky>' : "ngày " + f"{int(trinh_ky[0]):02d}" + " tháng " + leading_zero(trinh_ky[1], 3) + " năm " + trinh_ky[2],
@@ -757,7 +808,7 @@ def lap_qd_ktra_dot_xuat(request):
             '<hinh_thuc_ky>' : ky_ten[ld_cuc.ld_cv.upper()],
             # '<noi_nhan>': noi_nhan[nnt.cqt],
         }
-        QD = process_data.lap_qd_ktra_dot_xuat(tt_qd, doan_ktra)
+        QD = process_data.lap_qd_ktra_dot_xuat(tt_qd, dinh_dang_doan_kiem_tra(doan_ktra))
         QD.empty_media()
         file_path = [QD.to_trinh(), QD.qd_ktra(), QD.qd_gsat(), QD.kh_gsat()]
         zip_path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", mst + "_QD_ktra_dot_xuat.zip")
@@ -995,15 +1046,17 @@ def them_moi_cb(request):
     ten_cb_1 = request.GET.get('ten_cb', None)
     chuc_vu_1 = request.GET.get('chuc_vu', None)
     vi_tri_1 = request.GET.get('vi_tri', None)
+    phong_1 = request.GET.get('phong', None)
 
     obj = CanBo.objects.create(
         gioi_tinh = gioi_tinh_1,
         ten_cb = ten_cb_1,
         chuc_vu = chuc_vu_1,
-        vi_tri = vi_tri_1
+        vi_tri = vi_tri_1,
+        phong = phong_1
     )
 
-    user = {'id': obj.id, 'ten_cb': obj.ten_cb, 'gioi_tinh': obj.gioi_tinh, 'chuc_vu': obj.chuc_vu, 'vi_tri': obj.vi_tri}
+    user = {'id': obj.id, 'ten_cb': obj.ten_cb, 'gioi_tinh': obj.gioi_tinh, 'chuc_vu': obj.chuc_vu, 'vi_tri': obj.vi_tri, 'phong': obj.phong}
 
     return JsonResponse({'user': user})
 
@@ -1014,12 +1067,14 @@ def cap_nhat_thong_tin(request):
     ten_cb_1 = request.GET.get('ten_cb', None)
     chuc_vu_1 = request.GET.get('chuc_vu', None)
     vi_tri_1 = request.GET.get('vi_tri', None)
+    phong_1 = request.GET.get('phong', None)
 
     obj = CanBo.objects.get(id=id_1)
     obj.ten_cb = ten_cb_1
     obj.gioi_tinh = gioi_tinh_1
     obj.chuc_vu = chuc_vu_1
     obj.vi_tri = vi_tri_1
+    obj.phong = phong_1
     obj.save()
 
     user = {'id': obj.id, 'ten_cb': obj.ten_cb, 'gioi_tinh': obj.gioi_tinh, 'chuc_vu': obj.chuc_vu, 'vi_tri': obj.vi_tri}
