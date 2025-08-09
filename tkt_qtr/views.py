@@ -251,12 +251,12 @@ def lap_qd_ktra(request):
         cv = ['Trưởng đoàn']
         cv.extend(["Thành viên"] * (len(thanh_vien)-1))
         # doan_ktra = {
-        #     "<ten_cb>" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + ": " + tv) for tv in thanh_vien],
+        #     "<ten_cb>" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + " " + tv) for tv in thanh_vien],
         #     "<ngach_cb>" : [CanBo.objects.get(ten_cb=tv).chuc_vu for tv in thanh_vien],
         #     "<cv_doan>" : cv
         # }
         doan_ktra = {
-            "ten_cb" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + ": " + tv) for tv in thanh_vien],
+            "ten_cb" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + " " + tv) for tv in thanh_vien],
             "chuc_vu" : [CanBo.objects.get(ten_cb=tv).chuc_vu for tv in thanh_vien],
             "vi_tri" : [CanBo.objects.get(ten_cb=tv).vi_tri for tv in thanh_vien],
             "phong" : [CanBo.objects.get(ten_cb=tv).phong for tv in thanh_vien],
@@ -407,7 +407,7 @@ def lap_qd_ttra(request):
         cv.extend(["Thành viên"] * (len(thanh_vien)-1))
         truong_doan = CanBo.objects.get(ten_cb=thanh_vien[0])
         doan_ttra = {
-            "<ten_cb>" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + ": " + tv) for tv in thanh_vien],
+            "<ten_cb>" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + " " + tv) for tv in thanh_vien],
             "<ngach_cb>" : [CanBo.objects.get(ten_cb=tv).chuc_vu for tv in thanh_vien],
             "<cv_doan>" : cv
         }
@@ -501,7 +501,7 @@ def lap_qd_ktra_trc_hoan(request):
         cv.extend(["Thành viên"] * (len(thanh_vien)-1))
         truong_doan = CanBo.objects.get(ten_cb=thanh_vien[0])
         doan_ktra = {
-            "ten_cb" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + ": " + tv) for tv in thanh_vien],
+            "ten_cb" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + " " + tv) for tv in thanh_vien],
             "chuc_vu" : [CanBo.objects.get(ten_cb=tv).chuc_vu for tv in thanh_vien],
             "vi_tri" : [CanBo.objects.get(ten_cb=tv).vi_tri for tv in thanh_vien],
             "phong" : [CanBo.objects.get(ten_cb=tv).phong for tv in thanh_vien],
@@ -592,7 +592,7 @@ def ktra_sau_hoan(request):
         cv.extend(["Thành viên"] * (len(thanh_vien)-1))
         truong_doan = CanBo.objects.get(ten_cb=thanh_vien[0])
         doan_ktra = {
-            "ten_cb" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + ": " + tv) for tv in thanh_vien],
+            "ten_cb" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + " " + tv) for tv in thanh_vien],
             "chuc_vu" : [CanBo.objects.get(ten_cb=tv).chuc_vu for tv in thanh_vien],
             "vi_tri" : [CanBo.objects.get(ten_cb=tv).vi_tri for tv in thanh_vien],
             "phong" : [CanBo.objects.get(ten_cb=tv).phong for tv in thanh_vien],
@@ -683,7 +683,7 @@ def lap_qd_ktra_giai_the(request):
         cv.extend(["Thành viên"] * (len(thanh_vien)-1))
         truong_doan = CanBo.objects.get(ten_cb=thanh_vien[0])
         doan_ktra = {
-            "ten_cb" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + ": " + tv) for tv in thanh_vien],
+            "ten_cb" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + " " + tv) for tv in thanh_vien],
             "chuc_vu" : [CanBo.objects.get(ten_cb=tv).chuc_vu for tv in thanh_vien],
             "vi_tri" : [CanBo.objects.get(ten_cb=tv).vi_tri for tv in thanh_vien],
             "phong" : [CanBo.objects.get(ten_cb=tv).phong for tv in thanh_vien],
@@ -770,7 +770,7 @@ def lap_qd_ktra_dot_xuat(request):
         cv.extend(["Thành viên"] * (len(thanh_vien)-1))
         truong_doan = CanBo.objects.get(ten_cb=thanh_vien[0])
         doan_ktra = {
-            "ten_cb" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + ": " + tv) for tv in thanh_vien],
+            "ten_cb" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + " " + tv) for tv in thanh_vien],
             "chuc_vu" : [CanBo.objects.get(ten_cb=tv).chuc_vu for tv in thanh_vien],
             "vi_tri" : [CanBo.objects.get(ten_cb=tv).vi_tri for tv in thanh_vien],
             "phong" : [CanBo.objects.get(ten_cb=tv).phong for tv in thanh_vien],
@@ -867,7 +867,7 @@ def lap_qd_ttra_dot_xuat(request):
         cv.extend(["Thành viên"] * (len(thanh_vien)-1))
         truong_doan = CanBo.objects.get(ten_cb=thanh_vien[0])
         doan_ttra = {
-            "<ten_cb>" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + ": " + tv) for tv in thanh_vien],
+            "<ten_cb>" : [(CanBo.objects.get(ten_cb=tv).gioi_tinh + " " + tv) for tv in thanh_vien],
             "<ngach_cb>" : [CanBo.objects.get(ten_cb=tv).chuc_vu for tv in thanh_vien],
             "<cv_doan>" : cv
         }
