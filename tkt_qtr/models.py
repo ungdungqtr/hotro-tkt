@@ -3,9 +3,12 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class CanBo(models.Model):
+    id = models.AutoField(primary_key=True)
     ten_cb = models.CharField(max_length=30, default='')
     gioi_tinh = models.CharField(max_length=3, default='')
     chuc_vu = models.CharField(max_length=30, default='')
+    vi_tri = models.CharField(max_length=30, default='')
+    phong = models.CharField(max_length=50, default='')
 
     class Meta:
         permissions = (
@@ -16,6 +19,7 @@ class CanBo(models.Model):
         )
 
 class NNT(models.Model):
+    id = models.AutoField(primary_key=True)
     mst = models.CharField(max_length=14, unique=True, blank=True, null=True)
     ten_nnt = models.CharField(max_length=120, blank=True, null=True)
     dia_chi = models.CharField(max_length=255, blank=True, null=True)
@@ -30,6 +34,7 @@ class NNT(models.Model):
         )
 
 class CanCu(models.Model):
+    id = models.AutoField(primary_key=True)
     ten_cc= models.CharField(max_length=255, default='')
     so_qd= models.CharField(max_length=25, default='')
     ten_qd = models.CharField(max_length=255, default='')
@@ -44,6 +49,7 @@ class CanCu(models.Model):
         )
     
 class LdPheDuyet(models.Model):
+    id = models.AutoField(primary_key=True)
     ld_gt= models.CharField(max_length=3, default='')
     ld_ten = models.CharField(max_length=30, default='')
     ld_cv = models.CharField(max_length=20, default='')
