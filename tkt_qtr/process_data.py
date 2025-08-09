@@ -224,7 +224,7 @@ class lap_qd_ktra_hoan_gtgt:
             self.doan_ktra = doan_ktra
 
     def to_trinh(self):
-        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "to_trinh.docx"))
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "to_trinh_hoan.docx"))
         ghi_du_lieu_para(document, self.tt_qd)
         filename = self.tt_qd["<mst>"] + "_To_trinh.docx"
         path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", filename)   
@@ -281,7 +281,7 @@ class lap_qd_ktra_sau_hoan_gtgt:
             self.doan_ktra = doan_ktra
 
     def to_trinh(self):
-        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "to_trinh.docx"))
+        document = Document(os.path.join(settings.STATICFILES_DIRS[0], "media", "to_trinh_hoan.docx"))
         ghi_du_lieu_para(document, self.tt_qd)
         filename = self.tt_qd["<mst>"] + "_To_trinh.docx"
         path = os.path.join(settings.STATICFILES_DIRS[0], "media_store", filename)   
