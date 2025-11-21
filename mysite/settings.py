@@ -90,7 +90,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'tkt-qtr',
         'USER': 'postgres',
-        'PASSWORD': 'cntt-qtr',
+        'PASSWORD': 'cntt-qtr ',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -151,6 +151,8 @@ DATABASES['default'].update(db_from_env)
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# Redirect to home URL after login
+LOGIN_URL = '/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

@@ -4,16 +4,16 @@ $(document).ready(function () {
         delimiter: '/',
         datePattern: ['d','m','Y']
     });
+    new Cleave('.qd_hoan_ngay', {
+        date: true,
+        delimiter: '/',
+        datePattern: ['d','m','Y']
+    });
     new Cleave('.trinh_ky', {
         date: true,
         delimiter: '/',
         datePattern: ['d','m','Y']
     });
-       /* new Cleave('.phieu_xly_ngay', {
-        date: true,
-        delimiter: '/',
-        datePattern: ['d','m','Y']
-    }); */
     new Cleave('.ngay_thang_1', {
         date: true,
         delimiter: '/',
@@ -24,14 +24,37 @@ $(document).ready(function () {
         delimiter: '/',
         datePattern: ['Y']
     });
-
-    
+    new Cleave('.hoan_tien', {
+        numeral: true,
+        numeralThousandsGroupStyle: 'thousand',
+        numeralDecimalMark: ',', delimiter: '.'
+    });
     var dNow = new Date();
     var localdate= dNow.getDate() + '/' + (dNow.getMonth()+1) + '/' + dNow.getFullYear();
     $('.trinh_ky').val(localdate);
     $('.ngay_thang_1').val(dNow.getMonth()+1);
     $('.ngay_thang_2').val(dNow.getFullYear());
-    
+
+    $('.loai_kk').text($('.kk_theo').val().trim());
+    $('.kk_theo').change (function () {
+        var kk = $('.kk_theo').val().trim();
+        $('.loai_kk').text(kk);
+    });
+    /* if ($('.kk_theo').val().trim() == 'tháng') {
+        $('.tgian_2').attr('max', '12');
+    } else {
+        $('.tgian_2').attr('max', '4');
+    }
+    $('.kk_theo').change (function () {
+        var kk = $('.kk_theo').val().trim();
+        $('.loai_kk').text(kk);
+        if (kk == 'tháng') {
+            $('.tgian_2').attr('max', '12');
+        } else {
+            $('.tgian_2').attr('max', '4');
+        }
+    }); */
+
     // jQuery button click event to add a row.
     var rowIdx = 0; 
     $('#addBtn').on('click', function () {
@@ -133,24 +156,6 @@ $(document).ready(function () {
         });
     });  
 
-    // Phê duyệt tờ trình
-    /* $('.ten_ld_to_trinh').change(function () {
-        var ten_cb = $('.ten_ld_to_trinh').val().trim();
-        $.ajax({
-            url: 'cb_thong_tin',
-            data: {'ten_cb' : ten_cb},
-            dataType: 'json',
-            success: function (data) {
-                if($.isEmptyObject(data)) {
-                    alert("Lãnh đạo không có tên trong danh sách\nVui lòng cập nhật");
-                    $('.ten_ld_to_trinh').val('');   
-                } else {
-                        $('.ld_to_trinh').text(data.chuc_vu);               
-                }          
-            }
-        });
-    }); */
-
     /* function leading_zero (str, max) {
     str = parseInt(str);
     return str < max ? ("0" + str) : str.toString();
@@ -161,12 +166,4 @@ $(document).ready(function () {
         //source: mst
         source: 'mst_autocomplete',
     });
-    /* var i = 0;
-    var tencb = []; var ngachcb = []; var cvdoan = [];
-    $('#tbody tr').each(function() {
-        tencb[i] = $(this).find(".cb_gioi_tinh").html() + ": " + $(this).find(".thanh_vien").val();
-        ngachcb[i] = $(this).find(".ngach_cb").html(); 
-        cvdoan[i] = $(this).find(".cv_doan").html(); 
-        ++i;
-    }); */
 });

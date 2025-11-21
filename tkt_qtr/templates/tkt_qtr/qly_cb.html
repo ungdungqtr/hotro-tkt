@@ -19,19 +19,33 @@
                 <div class="form-group">
                     <select name="chuc_vu" id="" class="form-control" required>
                         <option value="" disable selected>--Chức vụ--</option>
-                        <option value="Cục trưởng">Cục trưởng</option>
-                        <option value="Phó Cục trưởng">Phó Cục trưởng</option>
+                        <option value="Trưởng Thuế tỉnh">Trưởng Thuế tỉnh</option>
+                        <option value="Phó Trưởng Thuế tỉnh">Phó Trưởng Thuế tỉnh</option>
                         <option value="Trưởng phòng">Trưởng phòng</option>
-                        <option value="Phó trưởng phòng">Phó trưởng phòng</option>
-                        <option value="Kiểm tra viên chính thuế">Kiểm tra viên chính thuế</option>
-                        <option value="Kiểm soát viên chính thuế">Kiểm soát viên chính thuế</option>
-                        <option value="Kiểm tra viên thuế">Kiểm tra viên thuế</option>
-                        <option value="Kiểm soát viên thuế">Kiểm soát viên thuế</option>
+                        <option value="Phó Trưởng phòng">Phó Trưởng phòng</option>
+                        <option value="Nhân viên">Nhân viên</option>
+                    </select>
+                </div>  
+                <div class="form-group">
+                    <select name="vi_tri" id="" class="form-control" required>
+                        <option value="" disable selected>--Vị trí--</option>
                         <option value="Chuyên viên">Chuyên viên</option>
+                        <option value="Kiểm tra viên thuế">Kiểm tra viên thuế</option>
+                        <option value="Kiểm tra viên chính thuế">Kiểm tra viên chính thuế</option>
+                        <option value="Chuyên viên chính thuế">Chuyên viên chính thuế</option>
+                        <option value="Kiểm soát viên chính thuế">Kiểm soát viên chính thuế</option>
+                        <option value="Kiểm soát viên thuế">Kiểm soát viên thuế</option>
                         <option value="KTV TC thuế">Kiểm tra viên trung cấp thuế</option>
                         <option value="Cán sự">Cán sự</option>
                     </select>
-                </div>  
+                </div> 
+                <div class="form-group">
+                    <select name="phong" id="" class="form-control" required>
+                        <option value="" disable selected>--Phòng--</option>
+                        <option value="phòng Kiểm tra số 2">Phòng Kiểm tra số 2</option>
+                        <option value="phòng Quản lý, hỗ trợ doanh nghiệp số 2">Phòng Quản lý, hỗ trợ doanh nghiệp số 2</option>
+                    </select>
+                </div> 
                 <button type="submit" class="btn btn-primary form-control">Thêm mới cán bộ</button>
             </form>
         </div>
@@ -41,6 +55,8 @@
                     <th></th>
                     <th>Tên</th>
                     <th>Chức vụ</th>
+                    <th>Vị trí</th>
+                    <th>Phòng</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -50,6 +66,8 @@
                     <td class="userGtinh userData" name="gioi_tinh">{{user.gioi_tinh}}</td>
                     <td class="userTen userData" name="ten_cb">{{user.ten_cb}}</td>
                     <td class="userCvu userData" name="chuc_vu">{{user.chuc_vu}}</td>
+                    <td class="userVtri userData" name="vi_tri">{{user.vi_tri}}</td>
+                    <td class="userPhong userData" name="phong">{{user.phong}}</td>
                     <td align="center">
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-success btn-sm form-control update_cb" value="{{user.id}}" data-toggle="modal" data-target="#UpdateModal">
@@ -136,17 +154,29 @@
                     <label for="chuc_vu">Chức vụ</label>
                     <select class="form-control" id="form-cvu" name="formCvu" required>
                         <option value="" disable selected>--Chức vụ--</option>
-                        <option value="Cục trưởng">Cục trưởng</option>
-                        <option value="Phó Cục trưởng">Phó Cục trưởng</option>
+                        <option value="Trưởng Thuế tỉnh">Trưởng Thuế tỉnh</option>
+                        <option value="Phó Trưởng Thuế tỉnh">Phó Trưởng Thuế tỉnh</option>
                         <option value="Trưởng phòng">Trưởng phòng</option>
-                        <option value="Phó Trưởng phòng">Phó trưởng phòng</option>
-                        <option value="Kiểm tra viên chính thuế">Kiểm tra viên chính thuế</option>
-                        <option value="Kiểm soát viên chính thuế">Kiểm tra soát chính thuế</option>
-                        <option value="Kiểm tra viên thuế">Kiểm tra viên thuế</option>
-                        <option value="Kiểm soát viên thuế">Kiểm soát viên thuế</option>
+                        <option value="Phó Trưởng phòng">Phó Trưởng phòng</option>
+                        <option value="Nhân viên">Nhân viên</option>
+                    </select>
+                    <label for="chuc_vu">Vị trí</label>
+                    <select class="form-control" id="form-vtri" name="formVtri" required>
+                        <option value="" disable selected>--Vị trí--</option>
                         <option value="Chuyên viên">Chuyên viên</option>
+                        <option value="Kiểm tra viên thuế">Kiểm tra viên thuế</option>
+                        <option value="Kiểm tra viên chính thuế">Kiểm tra viên chính thuế</option>
+                        <option value="Chuyên viên chính thuế">Chuyên viên chính thuế</option>
+                        <option value="Kiểm soát viên chính thuế">Kiểm soát viên chính thuế</option>
+                        <option value="Kiểm soát viên thuế">Kiểm soát viên thuế</option>
                         <option value="KTV TC thuế">Kiểm tra viên trung cấp thuế</option>
                         <option value="Cán sự">Cán sự</option>
+                    </select>
+                    <label for="phong">Phòng</label>
+                    <select class="form-control" id="form-phong" name="formPhong" required>
+                        <option value="" disable selected>--Phòng--</option>
+                        <option value="phòng Kiểm tra số 2">Phòng Kiểm tra số 2</option>
+                        <option value="phòng Quản lý, hỗ trợ doanh nghiệp số 2">Phòng Quản lý, hỗ trợ doanh nghiệp số 2</option>
                     </select>
                 </div>
                 <div class="modal-footer">

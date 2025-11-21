@@ -4,7 +4,7 @@ $(document).ready(function () {
         delimiter: '/',
         datePattern: ['d','m','Y']
     });
-    new Cleave('#trinh_ky', {
+    new Cleave('.trinh_ky', {
         date: true,
         delimiter: '/',
         datePattern: ['d','m','Y']
@@ -21,7 +21,7 @@ $(document).ready(function () {
     });
     var dNow = new Date();
     var localdate= dNow.getDate() + '/' + (dNow.getMonth()+1) + '/' + dNow.getFullYear();
-    $('#trinh_ky').val(localdate);
+    $('.trinh_ky').val(localdate);
     $('.ngay_thang_1').val(dNow.getMonth()+1);
     $('.ngay_thang_2').val(dNow.getFullYear());
     // jQuery button click event to add a row.
@@ -31,13 +31,13 @@ $(document).ready(function () {
         $('#tbody').append(
             `<tr id="R${++rowIdx}">
                 <td class="row-index">
-                    <p class="cb_gioi_tinh"></p></td>
+                    <p class="form-control cb_gioi_tinh"></p></td>
                 <td class="row-index">
-                    <input class="thanh_vien" name="thanh_vien" type="text" size="24" required></td>
+                    <input class="form-control thanh_vien" name="thanh_vien" type="text" size="24" required></td>
                 <td class="row-index">
                     <p class="ngach_cb"></p></td>
                 <td class="row-index">
-                    <p class="cv_doan"></p></td>
+                    <p class="form-control cv_doan"></p></td>
                 <td class="text-center">
                     <button class="btn btn-danger remove" 
                         type="button">Xóa</button></td>

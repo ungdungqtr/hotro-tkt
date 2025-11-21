@@ -22,6 +22,12 @@ urlpatterns = [
     path('lap_qd_ktr_truoc_hoan/cb_ten_autocomplete/', views.cb_ten_autocomplete, name = 'cb_ten_autocomplete'),
     path('lap_qd_ktr_truoc_hoan/nnt_thong_tin/', views.nnt_thong_tin, name = 'nnt_thong_tin'),
     path('lap_qd_ktr_truoc_hoan/cb_thong_tin/', views.cb_thong_tin, name = 'cb_thong_tin'),
+    # Kiểm tra sau hoàn thuế GTGT
+    path('lap_qd_ktra_sau_hoan/', views.ktra_sau_hoan, name = 'lap_qd_ktra_sau_hoan'),
+    path('lap_qd_ktra_sau_hoan/mst_autocomplete/', views.mst_autocomplete, name = 'mst_autocomplete'),
+    path('lap_qd_ktra_sau_hoan/cb_ten_autocomplete/', views.cb_ten_autocomplete, name = 'cb_ten_autocomplete'),
+    path('lap_qd_ktra_sau_hoan/nnt_thong_tin/', views.nnt_thong_tin, name = 'nnt_thong_tin'),
+    path('lap_qd_ktra_sau_hoan/cb_thong_tin/', views.cb_thong_tin, name = 'cb_thong_tin'),
     # Lập quyết định kiểm tra giải thể
     path('lap_qd_ktra_giai_the/', views.lap_qd_ktra_giai_the, name = 'lap_qd_ktra_giai_the'),
     path('lap_qd_ktra_giai_the/mst_autocomplete/', views.mst_autocomplete, name = 'mst_autocomplete'),
@@ -40,6 +46,11 @@ urlpatterns = [
     path('lap_qd_ttra_dot_xuat/cb_ten_autocomplete/', views.cb_ten_autocomplete, name = 'cb_ten_autocomplete'),
     path('lap_qd_ttra_dot_xuat/nnt_thong_tin/', views.nnt_thong_tin, name = 'nnt_thong_tin'),
     path('lap_qd_ttra_dot_xuat/cb_thong_tin/', views.cb_thong_tin, name = 'cb_thong_tin'),   
+    # Hủy quyết định thanh tra, kiểm tra
+    path('huy_qd_tktra/', views.huy_qd_tktra, name = 'huy_qd_tktra'),
+    path('huy_qd_tktra/mst_autocomplete/', views.mst_autocomplete, name = 'mst_autocomplete'),
+    path('huy_qd_tktra/nnt_thong_tin/', views.nnt_thong_tin, name = 'nnt_thong_tin'),
+
     # Quản lý cán bộ
     path('qly_cb/', views.qly_cb, name = 'qly_cb'),
     path('qly_cb/them_moi_cb/', views.them_moi_cb, name = 'them_moi_cb'),
@@ -58,5 +69,8 @@ urlpatterns = [
     path('thiet_lap_chung/cb_ten_autocomplete/', views.cb_ten_autocomplete, name='cb_ten_autocomplete'),
     path('thiet_lap_chung/cap_nhat_ld/', views.cap_nhat_ld, name='cap_nhat_ld'),
     path('thiet_lap_chung/import_data/', views.import_data, name='import_data'),
-    
+    path('thiet_lap_chung/export_CB/', views.export_CB, name='export_CB'),  
+    path('thiet_lap_chung/export_NNT/', views.export_NNT, name='export_NNT'),  
+    path('thiet_lap_chung/export_QD/', views.export_QD, name='export_QD'),
+    path('thiet_lap_chung/export_LD/', views.export_LD, name='export_LD'),
 ]

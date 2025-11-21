@@ -4,14 +4,17 @@
 {% block content %}
 <div class="container mt-3">
     <div class="row" style=" padding: 20px 0 20px 0;">
-        <h3 style="margin: auto;">LẬP QUYẾT ĐỊNH KIỂM TRA TRƯỚC HOÀN THUẾ GTGT</h3>
+        <h3 style="margin: auto;">LẬP QUYẾT ĐỊNH KIỂM TRA SAU HOÀN THUẾ GTGT</h3>
     </div>   
     <div class="row" style="margin-left: 15%;">
         <form action="" method='POST' id="qd_ktra"> {% csrf_token %}            
-            <P>Căn cứ Giấy đề nghị hoàn trả khoản thu NSNN số <input class="form-control hs_hoan_so" name="hs_hoan_so" type="text" required> ngày
-            <input class="form-control hs_hoan_ngay" name="hs_hoan_ngay" type="text" style="text-align: center" required>
-            </P>
-            <p>Phòng Thanh tra - Kiểm tra số 4 tiến hành kiểm tra trước hoàn thuế GTGT đối với:</p>
+            <p>Căn cứ Giấy đề nghị hoàn trả khoản thu NSNN số <input class="form-control hs_hoan_so" name="hs_hoan_so" type="text" required> ngày
+                <input class="form-control hs_hoan_ngay" name="hs_hoan_ngay" type="text" style="text-align: center" required>
+            </p>
+            <p>Căn cứ Quyết định số <input class="form-control qd_hoan_so" name="qd_hoan_so" type="text" required>/QĐ-QTR-KĐT ngày
+                <input class="form-control qd_hoan_ngay" name="qd_hoan_ngay" type="text" style="text-align: center" required>
+            </p>
+            <p>Phòng Thanh tra - Kiểm tra số 4 tiến hành kiểm tra sau hoàn thuế GTGT đối với:</p>
             <p class="ten_dv" style="margin-left: 5%; font-weight: bold;"></p>
             <p style="margin-left: 5%; font-weight: bold;">Mã số thuế: <input class="form-control mst" name="mst" type="text" minlength="10" maxlength="14"required></p>
             <p class="dia_chi" style="margin-left: 5%; font-weight: bold;"></p>
@@ -32,21 +35,21 @@
             </p> {% endcomment %}
             <p>- Trường hợp hoàn:</p>
                 <div class="form-check" style="margin-left: 15px;">
-                    <input class="form-check-input" type="radio" name="th_hoan" id="Radios1" value="Kiểm tra hoàn thuế GTGT đối với dự án đầu tư" checked>
+                    <input class="form-check-input" type="radio" name="th_hoan" id="Radios1" value="Kiểm tra sau hoàn thuế GTGT đối với dự án đầu tư" checked>
                     <label class="form-check-label" for="Radios1">
-                        Kiểm tra hoàn thuế GTGT đối với dự án đầu tư
+                        Hoàn thuế GTGT đối với dự án đầu tư
                     </label>
                 </div>
                 <div class="form-check" style="margin-left: 15px;">
-                    <input class="form-check-input" type="radio" name="th_hoan" id="Radios2" value="Kiểm tra hoàn thuế GTGT đối với hàng hóa, dịch vụ xuất khẩu">
+                    <input class="form-check-input" type="radio" name="th_hoan" id="Radios2" value="Kiểm tra sau hoàn thuế GTGT đối với hàng hóa, dịch vụ xuất khẩu">
                     <label class="form-check-label" for="Radios2">
-                        Kiểm tra hoàn thuế GTGT đối với hàng hóa, dịch vụ xuất khẩu
+                        Hoàn thuế GTGT đối với hàng hóa, dịch vụ xuất khẩu
                     </label>
                 </div>
                 <div class="form-check" style="margin-left: 15px;">
-                    <input class="form-check-input" type="radio" name="th_hoan" id="Radios3" value="Kiểm tra hoàn thuế GTGT đối với tổ chức sử dụng tiền viện trợ để mua hàng viện trợ tại Việt Nam">
+                    <input class="form-check-input" type="radio" name="th_hoan" id="Radios3" value="Kiểm tra sau hoàn thuế GTGT đối với tổ chức sử dụng tiền viện trợ để mua hàng viện trợ tại Việt Nam">
                     <label class="form-check-label" for="Radios3">
-                        Kiểm tra hoàn thuế GTGT đối với tổ chức sử dụng tiền viện trợ để mua hàng viện trợ tại Việt Nam
+                        Hoàn thuế GTGT đối với tổ chức sử dụng tiền viện trợ để mua hàng viện trợ tại Việt Nam
                     </label>
                 </div>
             <p class="mt-3">- Địa điểm:  
@@ -102,6 +105,6 @@
     {% include 'tkt_qtr/footer.html' %} 
 {% endblock footer %}
 {% block script %}
-<script src={% static 'js/lap_qd_ktra_truoc_hoan.js' %} type="text/javascript"></script>
+<script src={% static 'js/lap_qd_ktra_sau_hoan.js' %} type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'css/lap_qd.css' %}">
 {% endblock script %}

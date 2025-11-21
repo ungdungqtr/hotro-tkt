@@ -42,7 +42,7 @@ $(document).ready(function () {
             });
         }       
         $('form#modal_qd_form').trigger("reset");
-        $('#UpdateQD').modal('hide');
+        // $('#UpdateQD').modal('hide');
         return false;
     });
 

@@ -1,0 +1,38 @@
+#tktra_slt {
+    width: 120px; 
+}
+
+#tktra_slt, .ngay_nhan_ttrinh, .so_ttrinh, .ngay_ttrinh, .mst, .thang_tktra, .ngay_thang_1, .ngay_thang_2 {
+    display: inline;
+    font-weight: bold;
+    outline: 1px solid #278BE4;
+}
+
+.tktra {
+    display: inline;
+}
+    
+.cv_gia_han, .ngay_cv_gia_han, .qd_tkt_dn, .ngay_qd_tkt_dn, .tg_qua_han {
+    display: inline;
+    font-weight: bold;
+    outline: 1px solid #278BE4;
+}
+
+.so_ttrinh {
+    text-align: right;
+    width: 120px;
+}
+
+.cv_gia_han, .qd_tkt_dn, .tg_qua_han {
+    text-align: right;
+    width: 81px; 
+}
+
+.mst, .ngay_nhan_ttrinh, .ngay_ttrinh, .ngay_cv_gia_han, .ngay_qd_tkt_dn, .thang_tktra, .ngay_thang_1, .ngay_thang_2 {
+    text-align: center;
+    width: 120px;
+}
+
+.ngay_thang_1,.ngay_thang_2 {
+    width: fit-content;
+}
